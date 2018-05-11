@@ -1,4 +1,4 @@
-package com.zb.tcc.mappers.user;
+package com.zb.tcc.mapper.user;
 
 import com.zb.tcc.domain.user.User;
 
