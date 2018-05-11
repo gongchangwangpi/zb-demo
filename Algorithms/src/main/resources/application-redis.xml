@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" >
+        <property name="hostName" value="172.18.8.22"/>
+        <property name="password" value="jintoufs" />
+        <property name="port" value="6379" />
+        <property name="usePool" value="true" />
+    </bean>
+
+    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+
+    <bean id="jackson2JsonRedisSerializer" class="org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer">
+        <constructor-arg name="type" value="java.lang.Object"/>
+    </bean>
+
+    <!-- redisTemplate配置.redisTemplate是JEDIS对REDIS操作的扩展,封装使操作更便捷 -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory" />
+        <property name="keySerializer" ref="stringRedisSerializer" />
+        <!-- 使用Jackson序列化为json存入redis-->
+        <property name="valueSerializer" ref="stringRedisSerializer"/>
+        <!--<property name="valueSerializer" ref="jackson2JsonRedisSerializer"/>-->
+        <!--<property name="hashKeySerializer" ref="stringRedisSerializer" />-->
+        <!--<property name="hashValueSerializer" ref="stringRedisSerializer" />-->
+    </bean>
+    
+</beans>

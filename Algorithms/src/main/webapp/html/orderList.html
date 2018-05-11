@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!--page style-->
+    <style type="text/css">
+        body {
+            background-color: transparent;
+        }
+        .btsDiv {
+            margin: 6px 0px 0px 0px;
+        }
+        table, thead th{
+            text-align: center;
+        }
+
+        /*a {*/
+        /*color: white;*/
+        /*}*/
+        /*a:HOVER {*/
+        /*text-decoration: none;*/
+        /*color: white;*/
+        /*}*/
+    </style>
+    <!-- jQuery -->
+    <script src='../assets/js/jquery.min.js' type="text/javascript"></script>
+    <script src="../assets/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="../assets/js/jquery.validate.extend.js" type="text/javascript"></script>
+
+    <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+
+    <script src="../assets/js/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="../assets/js/My97DatePicker/WdatePicker.js"></script>
+
+    <!-- AJAX遮罩 -->
+    <!--<script src="../js/loading/work.js"></script>-->
+
+    <script type="text/javascript">
+        var root = "/jhj-chexian-man-web";
+        var imageServer = "http://img.jhjhome.com";
+    </script><link rel="stylesheet" href="../assets/css/chosen.css" />
+
+    <script src="../assets/js/chosen.jquery.min.js"></script>
+
+    <script src="../js/order/list.js"></script>
+</head>
+<body>
+<!--banner-->
+<div class="breadcrumbs" style="padding-top: 5px" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">车险管理系统</a>
+        </li>
+        <li><i class="ace-icon fa fa-leaf home-icon"></i><a href="#">订单管理</a></li>
+        <li class="active">线上订单列表</li>
+    </ul>
+</div>
+<!--search widget-->
+<div id="order" class="page-content">
+    <div class="panel-group" id="accordion">
+        <form id="orderSearchForm" action="../carins/order/list" method="post">
+            <input type="hidden" id="page" name="page" value="1">
+            <div class="widget-box">
+                <div class="widget-header widget-header-small">
+                    <h5 class="widget-title lighter">搜索栏</h5>
+                </div>
+                <div class="panel-group" style="padding-top: 15px;">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="col-xs-3">
+                                <span>区域：</span>
+                                <select id="drivingCityCode" name="drivingCityCode">
+                                    <option value="">-全部-</option>
+                                    <option value="1000.510100" >成都分公司</option>
+                                    <option value="1001.500000" >重庆分公司</option>
+                                </select>
+                            </div>
+
+                            <div class="col-xs-3">
+                                <span>渠道：</span>
+                                <select id="memberChannel" name="memberChannel">
+                                    <option value="">-全部-</option>
+                                </select>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <span>门店：</span>
+                                <select id="memberSite" name="memberSite">
+                                    <option value="">-全部-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-4"></div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="col-xs-3">
+                                <span>车&ensp;牌&ensp;号：</span><input type="text" name="carPlate" value=""/>
+                            </div>
+                            <div class="col-xs-3">
+                                <span>会员手机：</span><input type="text" name="memberMobile" value=""/>
+                            </div>
+                            <div class="col-xs-6">
+                                <span>下单时间：</span>
+                                <input id="beginCreateTime" type="text" name="beginCreateTime" value=""
+                                       onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endCreateTime\')}'})">
+                                <span style="margin-left: 5px;"></span>至<span style="margin-left: 5px;"></span>
+                                <input id="endCreateTime" type="text" name="endCreateTime" value=""
+                                       onFocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginCreateTime\')}'})">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-4"></div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="col-xs-3">
+                                <span>订&ensp;单&ensp;号：</span><input type="text" name="orderCode" value=""/>
+                            </div>
+                            <div class="col-xs-3">
+                                <span>订单状态：</span>
+                                <select name="orderStatus">
+                                    <option value="">-全部-</option>
+                                    <option value="0" >待核保</option>
+                                    <option value="1" >待支付</option>
+                                    <option value="21" >待出单,待线下付费</option>
+                                    <option value="22" >待出单,待打印保单</option>
+                                    <option value="3" >待配送</option>
+                                    <option value="4" >待收单</option>
+                                    <option value="5" >已完成</option>
+                                    <option value="6" >已取消,未支付</option>
+                                    <option value="7" >已退款</option>
+                                    <option value="8" >已取消,待核保</option>
+                                    <option value="9" >已取消,核保失败</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="space-4"></div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="col-xs-3">
+                                <span>保险公司：</span>
+                                <select name="insCompanyName">
+                                    <option value="">-全部-</option>
+                                    <option value="安诚" >安诚</option>
+                                    <option value="信达" >信达</option>
+                                    <option value="中国太平" >中国太平</option>
+                                    <option value="中华联合" >中华联合</option>
+                                    <option value="国泰" >国泰</option>
+                                    <option value="安盛天平" >安盛天平</option>
+                                    <option value="华安" >华安</option>
+                                    <option value="人寿财产" >人寿财产</option>
+                                    <option value="人保" >人保</option>
+                                    <option value="太平洋" >太平洋</option>
+                                    <option value="平安" >平安</option>
+                                    <option value="永诚" >永诚</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-3">
+                                <span>数据来源：</span>
+                                <select name="dataSource">
+                                    <option value="">-全部-</option>
+                                    <option value="3" >金惠家保险微信</option>
+                                    <option value="4" >OUTSIDE</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-3">
+                                <span>渠道来源：</span>
+                                <select name="channelSource">
+                                    <option value="">-全部-</option>
+                                    <option value="1" >速递易APP</option>
+                                    <option value="2" >速递易微信</option>
+                                    <option value="3" >金惠家APP</option>
+                                    <option value="4" >金惠家微信</option>
+                                    <option value="127" >其他</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-4"></div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="col-xs-3">
+                                <span>报价来源：</span>
+                                <select name="orderCat">
+                                    <option value="">-全部-</option>
+                                    <option value="1" >自动报价</option>
+                                    <option value="2" >人工报价</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-3">
+                                <span>出单方式：</span>
+                                <select name="policyCreateCat">
+                                    <option value="">-全部-</option>
+                                    <option value="1" >线上</option>
+                                    <option value="2" >线下</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-3">
+                                <!-- button -->
+                                <button type="submit" class="btn btn-primary btn-sm tooltip-success">
+                                    <i class="ace-icon fa fa-search icon-on-right bigger-110"></i> 查询
+                                </button>
+                                <button type="button" class="btn btn-sm tooltip-success" onclick="location.href='../carins/order/list'">
+                                    <i class="ace-icon fa fa-undo icon-on-right bigger-110"></i> 清空
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-striped table-bordered table-hover dataTable" style="width: 75%;word-break: break-all;word-wrap: break-word;">
+        <thead>
+        <tr>
+            <th class="sorting_disabled"></th>
+            <th class="sorting_disabled">订单号</th>
+            <th class="sorting_disabled">车牌号</th>
+            <th class="sorting_disabled">商业险投保单号</th>
+            <th class="sorting_disabled">商业险保单号</th>
+            <th class="sorting_disabled">手机号码</th>
+            <th class="sorting_disabled">行驶城市</th>
+            <th class="sorting_disabled">保险公司</th>
+            <th class="sorting_disabled">订单总价</th>
+            <th class="sorting_disabled">平台渠道</th>
+            <th class="sorting_disabled">返奖金额</th>
+            <th class="sorting_disabled">实付金额</th>
+            <th class="sorting_disabled">订单状态</th>
+            <th class="sorting_disabled">下单时间</th>
+            <th class="sorting_disabled">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>20170615100628202464792</td>
+            <td>川A0Q7Q0</td>
+            <td></td>
+            <td></td>
+            <td>13980574543</td>
+            <td>成都市</td>
+            <td>人寿财产</td>
+            <td>3451.00</td>
+            <td>金惠家APP</td>
+            <td>582.75</td>
+            <td></td>
+            <td>
+                待支付
+            </td>
+            <td>2017-06-15 10:06:28</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170615100628202464792'">详情</button>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>20170615100313335523190</td>
+            <td>川A8B3U3</td>
+            <td>TDAA201751940000090014</td>
+            <td>PDAA201751010111290143</td>
+            <td>13980574543</td>
+            <td>成都市</td>
+            <td>人保</td>
+            <td>2377.81</td>
+            <td>金惠家APP</td>
+            <td>228.07</td>
+            <td>4976.55</td>
+            <td>
+                待收单
+            </td>
+            <td>2017-06-15 10:03:13</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170615100313335523190'">详情</button>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>20170614170133981684861</td>
+            <td>川AVL809</td>
+            <td></td>
+            <td></td>
+            <td>15680062376</td>
+            <td>成都市</td>
+            <td>平安</td>
+            <td>11300.00</td>
+            <td>金惠家APP</td>
+            <td></td>
+            <td></td>
+            <td>
+                已取消,未支付
+            </td>
+            <td>2017-06-14 17:01:34</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170614170133981684861'">详情</button>
+            </td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>20170614164336425583316</td>
+            <td>川AVJ820</td>
+            <td>50523036020170000367</td>
+            <td></td>
+            <td>18683367717</td>
+            <td>成都市</td>
+            <td>永诚</td>
+            <td>11132.80</td>
+            <td>金惠家APP</td>
+            <td>482.50</td>
+            <td></td>
+            <td>
+                已取消,待核保
+            </td>
+            <td>2017-06-14 16:43:36</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170614164336425583316'">详情</button>
+            </td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>20170613172030339740867</td>
+            <td>川A8B3U3</td>
+            <td>TDAA201751940000089295</td>
+            <td></td>
+            <td>13980574543</td>
+            <td>成都市</td>
+            <td>人保</td>
+            <td>2377.86</td>
+            <td>金惠家保险微信</td>
+            <td>456.15</td>
+            <td></td>
+            <td>
+                已取消,未支付
+            </td>
+            <td>2017-06-13 17:20:30</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170613172030339740867'">详情</button>
+            </td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>20170613172012600043634</td>
+            <td>川AQ027H</td>
+            <td>50523036020170000355</td>
+            <td></td>
+            <td>13438262797</td>
+            <td>成都市</td>
+            <td>永诚</td>
+            <td>24985.10</td>
+            <td>金惠家保险微信</td>
+            <td>2354.45</td>
+            <td></td>
+            <td>
+                已取消,待核保
+            </td>
+            <td>2017-06-13 17:20:12</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170613172012600043634'">详情</button>
+            </td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>20170613171236939747078</td>
+            <td>川A955AB</td>
+            <td></td>
+            <td></td>
+            <td>13438262797</td>
+            <td>成都市</td>
+            <td>人寿财产</td>
+            <td>6087.27</td>
+            <td>金惠家APP</td>
+            <td>1298.81</td>
+            <td></td>
+            <td>
+                已取消,未支付
+            </td>
+            <td>2017-06-13 17:12:36</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170613171236939747078'">详情</button>
+            </td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>20170613164001868417417</td>
+            <td>川A8B3U3</td>
+            <td></td>
+            <td></td>
+            <td>13980574543</td>
+            <td>成都市</td>
+            <td>华安</td>
+            <td>800.00</td>
+            <td>金惠家保险微信</td>
+            <td>5.00</td>
+            <td></td>
+            <td>
+                已取消,未支付
+            </td>
+            <td>2017-06-13 16:40:01</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170613164001868417417'">详情</button>
+            </td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>20170613163643178046922</td>
+            <td>川A8B3U3</td>
+            <td>52696023900345295055</td>
+            <td></td>
+            <td>15680062376</td>
+            <td>成都市</td>
+            <td>平安</td>
+            <td>2377.81</td>
+            <td>金惠家APP</td>
+            <td></td>
+            <td></td>
+            <td>
+                已取消,未支付
+            </td>
+            <td>2017-06-13 16:36:43</td>
+            <td style="text-align: left;">
+                <button class="btn btn-xs btn-primary"
+                        onclick="location.href='../carins/order/detail?orderCode=20170613163643178046922'">详情</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="dataTables_info" id="sample-table-2_info">当前显示 1 - 9, 共 9 条数据</div>
+        </div>
+        <div class="col-xs-6">
+            <div class="dataTables_paginate paging_bootstrap">
+                <ul class="pagination">
+                    <li class="prev disabled">
+                        <a href="javascript:;">
+                            <i class="fa fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="prev disabled">
+                        <a href="javascript:;"><i class="fa fa-angle-left"></i></a>
+                    </li>
+                    <li class="active"><a href="javascript:void(0);">1</a></li>
+
+                    <li class="next disabled">
+                        <a href="javascript:;">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="next disabled">
+                        <a href="javascript:;">
+                            <i class="fa fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/org/selCascade.js"></script>
+</body>
+</html>

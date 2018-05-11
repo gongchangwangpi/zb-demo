@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/home/hyb/logs/zhangbo-test/rolling.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/home/hyb/logs/zhangbo-test/rolling.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory> <!-- 只保留最近30天的日志文件 -->
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- project default level -->
+	<logger name="com.books.spring" level="INFO" />
+	
+	<!-- test environment enable -->
+	<logger name="com.books.spring.dao" level="DEBUG" />
+	<logger name="org.springframework.jdbc.datasource" level="DEBUG" />
+
+	
+	<!--log4jdbc -->
+	<logger name="jdbc.sqltiming" level="INFO" />
+	
+	<!-- root -->
+	<root level="info">
+	<!--<root level="INFO">-->
+		<appender-ref ref="console" />
+		<appender-ref ref="rollingFile" />
+	</root>
+	
+</configuration>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复杂请求参数示例</title>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+
+</head>
+<body>
+
+<button type="button" onclick="submitBtn()">提交</button>
+
+<script>
+    var param = {
+        "id": 1,
+        "username": "name1",
+        "age": 11,
+        "user": {
+            "id": 2,
+            "username" : "name2",
+            "age": 12
+        },
+        "jobs": [
+            {
+                "id": 3,
+                "jobName" : "jobName3"
+            },
+            {
+                "id": 4,
+                "jobName" : "jobName4"
+            }
+        ]
+    };
+
+    console.log(JSON.stringify(param));
+
+    function submitBtn() {
+        var url = "/complexRequest";
+        $.post(url, JSON.stringify(param), function (data) {
+           console.log(data);
+        });
+
+        /*$.ajax({
+            url: url,
+            type: "POST",
+            data: JSON.stringify(param),
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+            }
+        });*/
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="description" content="jQuery-图片的放大镜显示效果" />
+    <meta name="description" content="张鑫旭web前端学习之css，jQuery学习实例页面" />
+    <meta name="keywords" content="张鑫旭,鑫空间-鑫生活,博客,web前端,css,jQuery,特效,图片放大镜效果,js插件,demo页面,学习," />
+    <meta name="author" content="张鑫旭,zhangxixnu" />
+    <title>jQuery-图片的放大镜显示效果</title>
+    <link rel="shortcut icon" href="http://www.zhangxinxu.com/zxx_ico.png" />
+    <link rel="stylesheet" href="../css/common.css" type="text/css" />
+    <style type="text/css">
+        img{max-width:none;}
+        .zxx_image_zoom_list{display:inline-block; width:1.2em; height:1.1em; text-align:center; font-size:128px;}
+        .zxx_image_zoom_list img.zxx_zoom_image{padding:3px; border:1px solid #cccccc; background:white; vertical-align:middle; position:relative;}
+        .zxx_image_zoom_list:hover,.zxx_image_zoom_list:hover img.zxx_zoom_image{border-color:#ff3300;}
+        .zxx_image_zoom_div{width:200px; height:200px; padding:3px; background:white; border:1px solid #cccccc; text-align:center; position:absolute; z-index:1000; left:0; top:0; overflow:hidden;}
+    </style>
+    <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../js/jqzoom.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("img.zxx_zoom_image").jqueryzoom();
+        });
+    </script>
+</head>
+
+<body>
+<div class="zxx_out_box">
+    <div class="zxx_in_box">
+        <div class="zxx_main_con">
+            <a href="http://image.zhangxinxu.com/image/study/s/s512/mm1.jpg" class="zxx_image_zoom_list">
+                <img class="zxx_zoom_image" src="http://image.zhangxinxu.com/image/study/s/s128/mm1.jpg" />
+            </a>
+            <a href="http://image.zhangxinxu.com/image/study/s/s512/mm2.jpg" class="zxx_image_zoom_list">
+                <img class="zxx_zoom_image" src="http://image.zhangxinxu.com/image/study/s/s128/mm2.jpg" />
+            </a>
+            <a href="http://image.zhangxinxu.com/image/study/s/s512/mm3.jpg" class="zxx_image_zoom_list">
+                <img class="zxx_zoom_image" src="http://image.zhangxinxu.com/image/study/s/s128/mm3.jpg" />
+            </a>
+            <a href="http://image.zhangxinxu.com/image/study/s/s512/mm4.jpg" class="zxx_image_zoom_list">
+                <img class="zxx_zoom_image" src="http://image.zhangxinxu.com/image/study/s/s128/mm4.jpg" />
+            </a>
+            <a href="http://image.zhangxinxu.com/image/study/s/s512/mm5.jpg" class="zxx_image_zoom_list">
+                <img class="zxx_zoom_image" src="http://image.zhangxinxu.com/image/study/s/s128/mm5.jpg" />
+            </a>
+            <a href="../image/122.jpg" class="zxx_image_zoom_list">
+                <img class="zxx_zoom_image" src="../image/122.jpg" style="width: 150px;max-height: 150px;"/>
+            </a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

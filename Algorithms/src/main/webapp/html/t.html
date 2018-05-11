@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+
+<select id="mySelect">
+    <option>-全部-</option>
+    <option>123</option>
+    <option onselect="showInput()">456</option>
+</select>
+
+<input id="myInput" type="hidden">
+
+<script>
+    console.log($('#mySelect').val());
+
+    function showInput() {
+        console.log(arguments);
+        $("#myInput").show();
+    }
+    
+//    var ws = new WebSocket("");
+</script>
+</body>
+</html>

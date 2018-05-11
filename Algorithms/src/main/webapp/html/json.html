@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <style>
+        body{font-size: 0}
+    </style>
+</head>
+<body>
+
+你好好啊
+你好啊
+我好啊
+
+<script>
+    var stat = {
+        totalPremium: 100.01,
+        totalWithdraw: 200.55
+    };
+
+    $(function () {
+        for(var key in stat) {
+            console.log(key);
+            console.log(stat[key]);
+        }
+    });
+</script>
+</body>
+</html>

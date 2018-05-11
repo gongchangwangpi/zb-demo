@@ -1,0 +1,11 @@
+label.error {
+	color: red;
+	font-weight: bold;
+	font-size: 12px;
+	background: transparent url('images/unchecked.gif') no-repeat scroll 0 50%;
+	padding-left: 18px;
+}
+
+label.success {
+	background: transparent url('images/checked.gif') no-repeat scroll 50% 50%;
+} 

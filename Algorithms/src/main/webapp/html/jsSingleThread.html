@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS 单线程</title>
+</head>
+<body>
+<h1>JS 单线程</h1>
+<script>
+    // 以下代码会全部执行完 first， 在执行 second
+    // 尽管整个执行时间超过5毫秒
+    function foo() {
+        console.log('first' );
+        setTimeout(
+            ( function(){
+                console.log( 'second' );
+            } ), 5);
+
+    }
+
+    window.onload = function () {
+        for (var i = 0; i < 100000; i++) {
+            foo();
+        }
+    };
+</script>
+</body>
+</html>

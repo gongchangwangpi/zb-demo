@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+身份证<input onkeyup="isIdNo(this.value)">
+手机号<input onkeyup="isMobile(this.value)">
+变大写<input onkeyup="toUpper(this)">
+
+<script>
+
+    function isIdNo(idNo) {
+        var reg = /^[0-9]{17}[X0-9]$/;
+        console.log(reg.test(idNo));
+    }
+
+    function isMobile(mobile) {
+        var reg = /^[1]+\d{10}$/;
+        console.log(reg.test(mobile));
+    }
+
+    function toUpper(input) {
+        input.value = input.value.toUpperCase();
+    }
+</script>
+
+</body>
+</html>

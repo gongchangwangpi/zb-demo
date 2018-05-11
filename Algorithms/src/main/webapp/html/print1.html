@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!--page style-->
+    <style type="text/css">
+        body {
+            background-color: transparent;
+        }
+        .btsDiv {
+            margin: 6px 0px 0px 0px;
+        }
+        table, thead th{
+            text-align: center;
+        }
+    </style>
+    <style>
+        table,th,td {
+            -webkit-text-size-adjust: none;
+            word-break: break-all;
+            word-wrap: break-word;
+            padding:0 1em 0;
+            table-layout: fixed;
+            border-style: solid;
+            border-width: thin;
+            border-collapse: collapse;
+            font-size: 6px;
+        }
+        table th {
+            background-color: rgba(68,64,65,0.23);
+            color: #2a6496;
+        }
+        table td {
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-4">
+            <img src="../image/logo-jhj.png" style="max-height: 25px;max-width: 25px;">
+        </div>
+        <div class="col-xs-4">
+            <h4>车险佣金详情&ensp;$!{serviceFlag}期</h4>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="4%">序号</th>
+                <th width="11%">承保公司</th>
+                <th width="7%">商业险保单号</th>
+                <th width="7%">交强险保单号</th>
+                <th width="5%">投保人</th>
+                <th width="5%">被保人</th>
+                <th width="6%">出单时间</th>
+                <th width="5%">商业险保费</th>
+                <th width="5%">交强险保费</th>
+                <th width="5%">车船税</th>
+                <th width="5%">保费合计</th>
+                <th width="5%">代理人姓名</th>
+                <th width="5%">代理人注册手机</th>
+                <th width="5%">商业险结出费率</th>
+                <th width="5%">商业险结出佣金</th>
+                <th width="5%">交强险结出费率</th>
+                <th width="5%">交强险结出佣金</th>
+                <th width="5%">应结佣金合计</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>17050013</td>
+            <td>中国人民财产保险股份有限公司四川省分公司国际业务营业部</td>
+            <td>SYX201705190002</td>
+            <td>JQX201705190002</td>
+            <td>何渝</td>
+            <td>何渝</td>
+            <td>2017-05-19 15:02:20</td>
+            <td>4970.78</td>
+            <td>665.00</td>
+            <td>360.00</td>
+            <td>5995.78</td>
+            <td>彭小丹</td>
+            <td>15680062376</td>
+            <td>40%</td>
+            <td>1000.00</td>
+            <td>10%</td>
+            <td>200.00</td>
+            <td>1200.00</td>
+        </tr>
+        <tr>
+            <td>17050012</td>
+            <td>太平财产保险有限公司四川分公司</td>
+            <td>SYX201705190001</td>
+            <td></td>
+            <td>马小娟</td>
+            <td>马小娟</td>
+            <td>2017-05-19 11:17:28</td>
+            <td>1625.11</td>
+            <td>665.00</td>
+            <td>150.00</td>
+            <td>2440.11</td>
+            <td>彭小丹</td>
+            <td>15680062376</td>
+            <td>41%</td>
+            <td>1000.00</td>
+            <td>11%</td>
+            <td>200.00</td>
+            <td>1200.00</td>
+        </tr>
+        <tr>
+            <td>17050011</td>
+            <td>中国人民财产保险股份有限公司四川省分公司国际业务营业部</td>
+            <td>PDAA201751010111290143</td>
+            <td>PDZA201751112000342831</td>
+            <td>罗学军</td>
+            <td>罗学军</td>
+            <td>2017-05-19 10:15:14</td>
+            <td>1251.71</td>
+            <td>760.00</td>
+            <td>300.00</td>
+            <td>2311.71</td>
+            <td>彭小丹</td>
+            <td>15680062376</td>
+            <td>42%</td>
+            <td>1000.00</td>
+            <td>12%</td>
+            <td>200.00</td>
+            <td>1200.00</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

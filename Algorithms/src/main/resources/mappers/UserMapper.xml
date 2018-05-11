@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spring.dao.UserMapper">
+
+	<resultMap id="BaseResultMap" type="com.spring.domain.User">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="agentName" property="username" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Common_Query">
+		<where>
+			<if test="id != null">
+				AND id != #{id}
+			</if>
+			<if test="agentName != null and agentName != ''">
+				AND agentName = #{username}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		SELECT *
+		FROM user
+		WHERE id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="selectListByQuery" parameterType="com.spring.domain.query.UserQuery" resultMap="BaseResultMap">
+		SELECT *
+		FROM user
+		<include refid="Common_Query" />
+	</select>
+
+	<select id="selectCountByQuery" parameterType="UserQuery" resultType="long">
+		SELECT COUNT(*) FROM user <include refid="Common_Query" />
+	</select>
+	
+	 <delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM user
+		WHERE id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="com.spring.domain.User" keyProperty="userId" useGeneratedKeys="true">
+		INSERT INTO user
+		(
+			agentName, age
+		)
+		VALUES (#{username,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="batchInsert" parameterType="list">
+		<!--<foreach collection="list" item="user" >
+			INSERT INTO user (agentName)
+			VALUES (#{user.agentName,jdbcType=VARCHAR});
+		</foreach>-->
+		INSERT INTO user (agentName)
+		VALUES
+		<foreach collection="list" item="user" separator=",">
+			(#{user.username,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.spring.domain.User">
+		UPDATE user
+		<set>
+			<if test="agentName != null and agentName != ''">
+				agentName = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				age = #{age,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="id != null">
+			WHERE id = #{id,jdbcType=BIGINT}
+		</if>
+	</update>
+</mapper>
