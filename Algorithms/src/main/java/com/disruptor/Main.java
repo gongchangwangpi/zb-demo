@@ -10,9 +10,12 @@ import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.EventHandlerGroup;
 import com.lmax.disruptor.dsl.ProducerType;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author zhangbo
  */
+@Slf4j
 public class Main {
 
     public static void main(String[] args) {
@@ -34,12 +37,11 @@ public class Main {
         handlerGroup.then(soutHandler);
 
         // 启动disruptor
-        disruptor.start();
-        
-        // 获取RingBuffer,RingBuffer中的每个事件对象不会销毁，
-        // 每个事件对象在第二次被发布和消费时，仍然是第一次时的对象引用，只是里面的值被重新修改过了
-        RingBuffer<User> ringBuffer = disruptor.getRingBuffer();
+        RingBuffer<User> ringBuffer = disruptor.start();
 
+        // 获取RingBuffer，RingBuffer中的每个事件对象不会销毁，有效避免垃圾回收，
+        // 每个事件对象在第n次被发布和消费时，仍然是第一次时的对象引用，只是里面的值被重新修改过了
+        
         for (int i = 0; i < ringBufferSize << 2; i++) {
             // 获取下一个事件序号
             long sequence = ringBuffer.next();
@@ -53,6 +55,7 @@ public class Main {
             }
             user.setAge(i);
             // 发布事件
+            log.warn("--------->>> {} -- {}", user, sequence);
             ringBuffer.publish(sequence);
         }
 
