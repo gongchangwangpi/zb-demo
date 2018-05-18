@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 /**
  * 时间处理工具类

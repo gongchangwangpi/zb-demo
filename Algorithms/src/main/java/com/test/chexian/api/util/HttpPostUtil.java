@@ -8,7 +8,7 @@ import com.test.chexian.api.encrypt.DigitalSignUtils;
 import com.test.chexian.api.encrypt.MessageDigestUtils;
 import com.test.chexian.api.encrypt.SymmetricEncryptionUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author books

@@ -1,12 +1,13 @@
 package com.test.chexian.api.encrypt;
 
-import org.apache.commons.codec.CharEncoding;
-import org.apache.commons.lang.StringUtils;
+import java.security.Key;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import java.security.Key;
+
+import org.apache.commons.codec.CharEncoding;
+import org.apache.commons.lang3.StringUtils;
 
 
 /**

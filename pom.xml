@@ -13,6 +13,7 @@
 	
 	<modules>
 		<module>commons-util</module>
+		<module>Algorithms</module>
 	</modules>
 	
 

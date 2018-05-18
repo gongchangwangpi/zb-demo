@@ -1,7 +1,13 @@
 package com.util;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -16,11 +22,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 /**
