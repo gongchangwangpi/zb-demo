@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author zhangbo
  */
 @Slf4j
-public class UserEventHandler implements EventHandler<User> {
+public class UserEventLogHandler implements EventHandler<User> {
     
     @Override
     public void onEvent(User event, long sequence, boolean endOfBatch) throws Exception {
