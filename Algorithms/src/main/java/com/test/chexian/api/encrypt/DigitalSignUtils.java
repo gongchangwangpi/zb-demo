@@ -3,6 +3,7 @@ package com.test.chexian.api.encrypt;
 import com.test.chexian.api.dto.RestfulRequestDto;
 import com.test.chexian.api.dto.RestfulResultDto;
 import com.test.chexian.api.util.AppId;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,12 +23,11 @@ public final class DigitalSignUtils {
 		StringBuilder textBuilder = new StringBuilder("%" + requestDto.getAppId() + "^" + AppId.APP_SECRET + "&");
 		
 		//%appId^appSecret&requestTime*
+		//%appId^appSecret&requestTime*
 		textBuilder.append(requestDto.getRequestTime()).append("*");
 
 		String body = requestDto.getBody();
-		if (body != null) {
-			textBuilder.append(body);
-		}
+		textBuilder.append(body);
 		
 		return textBuilder.toString();
 	}

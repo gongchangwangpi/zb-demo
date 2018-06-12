@@ -20,7 +20,7 @@ public class QuoteQueryTest {
         
         requestDto.setBody(JSON.toJSONString(quoteQueryRequest));
 
-        HttpPostUtil.postCarInsApi("/quote/getResult", requestDto);
+        HttpPostUtil.postEncode("/quote/getResult", requestDto);
     }
     
 }

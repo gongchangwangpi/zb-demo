@@ -14,7 +14,7 @@ public class DrivingCityTest {
 
         RestfulRequestDto requestDto = new RestfulRequestDto(true);
 
-        HttpPostUtil.postCarInsApi("/cfg/getDrivingCities", requestDto);
+        HttpPostUtil.postEncode("/cfg/getDrivingCities", requestDto);
     }
     
 }

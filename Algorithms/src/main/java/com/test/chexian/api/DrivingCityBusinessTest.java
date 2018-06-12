@@ -14,7 +14,7 @@ public class DrivingCityBusinessTest {
 
         requestDto.setBody("{\"cityCode\":\"510100\"}");
 
-        HttpPostUtil.postCarInsApi("/cfg/getCityBusinesses", requestDto);
+        HttpPostUtil.postEncode("/cfg/getCityBusinesses", requestDto);
     }
     
 }

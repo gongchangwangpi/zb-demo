@@ -45,7 +45,7 @@ public class EchoServer {
     
 
     public static void main(String[] args) throws Exception {
-        new EchoServer(65535).start();
+        new EchoServer(8760).start();
     }
 
 }

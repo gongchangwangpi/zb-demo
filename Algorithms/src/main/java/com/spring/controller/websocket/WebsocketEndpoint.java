@@ -45,6 +45,7 @@ public class WebsocketEndpoint extends TextWebSocketHandler {
             webSocketSession.sendMessage(new TextMessage("auto send : " + c));
             SleepUtils.millis(500);
         }
+//        webSocketSession.close();
         webSocketSession = null;
     }
 }

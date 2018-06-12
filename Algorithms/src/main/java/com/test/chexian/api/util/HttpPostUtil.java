@@ -16,9 +16,11 @@ import org.apache.commons.lang3.StringUtils;
 @Slf4j
 public class HttpPostUtil {
     
-    private static final String CAR_INS_SERVER = "http://localhost:8080/car_ins_api";
+//    private static final String CAR_INS_SERVER = "http://localhost:8080/car_ins_api";
+//    private static final String SERVER_URL = "http://localhost:9999/api-gateway";
+    private static final String SERVER_URL = "http://test.jhjhome.com/api-gateway";
     
-    public static void postCarInsApi(String url, RestfulRequestDto requestDto) {
+    public static void postEncode(String url, RestfulRequestDto requestDto) {
 
         String requestDtoBody = requestDto.getBody();
         if (StringUtils.isNotEmpty(requestDtoBody)) {
@@ -34,21 +36,17 @@ public class HttpPostUtil {
         
         SimpleHttpClient simpleHttpClient = new SimpleHttpClient();
         simpleHttpClient.init();
-        url = CAR_INS_SERVER + url;
+        url = SERVER_URL + url;
         log.info("request url : {}", url);
 
         String param = JSON.toJSONString(requestDto);
         log.info("request param : {}", param);
 
-        String res = simpleHttpClient.postByJsonString(url, param);
-//        String res = simpleHttpClient.postByJsonString("http://localhost/requestBody/attr", "{\"agentName\":\"test\",\"age\":17}");
+        String res = simpleHttpClient.post(url, param);
 
         log.info("response result : {}", res);
 
         RestfulResultDto resultDto = JSON.parseObject(res, RestfulResultDto.class);
-
-        boolean validate = DigitalSignUtils.validateResultDigitalSign(resultDto);
-        log.info("response 校验数字签名 : {}", validate);
 
         Object body = resultDto.getBody();
         if (body != null) {

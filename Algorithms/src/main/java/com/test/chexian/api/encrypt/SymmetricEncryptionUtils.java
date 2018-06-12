@@ -82,7 +82,7 @@ public final class SymmetricEncryptionUtils {
 			
 			//解密(AES)
 			byte[] original = cipher.doFinal(encrypted);
-			return new String(original);
+			return new String(original, "UTF-8");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("aes decrypt failed");
