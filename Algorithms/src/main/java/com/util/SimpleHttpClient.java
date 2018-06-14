@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -15,6 +17,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -29,6 +32,7 @@ import org.springframework.http.MediaType;
  * HTTP client 工具类
  *
  */
+@Slf4j
 public class SimpleHttpClient {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleHttpClient.class);
@@ -71,13 +75,14 @@ public class SimpleHttpClient {
         CloseableHttpClient httpClient = closeableHttpClient;
         HttpPost httpPost = new HttpPost(url);
         String body = null;
-        
-        if (headers != null && !headers.isEmpty()) {
-            for (Map.Entry<String, String> header : headers.entrySet()) {
-                httpPost.addHeader(header.getKey(), header.getValue());
-            }
+
+        if (log.isInfoEnabled()) {
+            log.info("HTTP POST URL: {}", url);
+            log.info("HTTP POST PARAMS: {}", stringParam);
         }
 
+        addHeaders(httpPost, headers);
+        
         try {
             if (!StringUtils.isEmpty(stringParam)) {
                 httpPost.setEntity(new StringEntity(stringParam, charset));
@@ -87,6 +92,11 @@ public class SimpleHttpClient {
             HttpEntity entity = httpResponse.getEntity();
 
             body = EntityUtils.toString(entity);
+            
+            if (log.isInfoEnabled()) {
+                log.info("HTTP POST RESPONSE: {}", body);
+            }
+            
             EntityUtils.consumeQuietly(entity);
         } catch (IOException e) {
             httpPost.abort();
@@ -108,6 +118,11 @@ public class SimpleHttpClient {
         HttpPost httpPost = new HttpPost(url);
         String body = null;
 
+        if (log.isInfoEnabled()) {
+            log.info("HTTP POST URL: {}", url);
+            log.info("HTTP POST PARAMS: {}", JSON.toJSONString(paramMap));
+        }
+        
         try {
             if (paramMap != null && !paramMap.isEmpty()) {
                 List<NameValuePair> params = parseFromParamMap(paramMap);
@@ -120,6 +135,11 @@ public class SimpleHttpClient {
             HttpEntity entity = httpResponse.getEntity();
 
             body = EntityUtils.toString(entity);
+            
+            if (log.isInfoEnabled()) {
+                log.info("HTTP POST RESPONSE: {}", body);
+            }
+            
             EntityUtils.consumeQuietly(entity);
         } catch (IOException e) {
             httpPost.abort();
@@ -153,14 +173,14 @@ public class SimpleHttpClient {
         HttpGet httpGet = null;
         String body = null;
 
+        if (log.isInfoEnabled()) {
+            log.info("HTTP GET URL: {}", url);
+        }
+        
         try {
             httpGet = new HttpGet(url);
 
-            if (headers != null && !headers.isEmpty()) {
-                for (Map.Entry<String, String> header : headers.entrySet()) {
-                    httpGet.addHeader(header.getKey(), header.getValue());
-                }
-            }
+            addHeaders(httpGet, headers);
 
             CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
 
@@ -169,12 +189,29 @@ public class SimpleHttpClient {
 
             body = EntityUtils.toString(entity);
 
+            if (log.isInfoEnabled()) {
+                log.info("HTTP GET RESPONSE: {}", body);
+            }
+            
             EntityUtils.consumeQuietly(entity);
         } catch (Exception e) {
             httpGet.abort();
             logger.error("get from remote " + url + "  error", e);
         }
         return body;
+    }
+
+    private void addHeaders(HttpRequestBase httpRequest, Map<String, String> headers) {
+        if (headers != null && !headers.isEmpty()) {
+            
+            if (log.isInfoEnabled()) {
+                log.info("HTTP HEADERS: {}", JSON.toJSONString(headers));
+            }
+            
+            for (Map.Entry<String, String> header : headers.entrySet()) {
+                httpRequest.addHeader(header.getKey(), header.getValue());
+            }
+        }
     }
 
     public String get(String url) {

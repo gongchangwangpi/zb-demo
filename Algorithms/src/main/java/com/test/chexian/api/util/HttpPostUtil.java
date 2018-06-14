@@ -17,8 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 public class HttpPostUtil {
     
 //    private static final String CAR_INS_SERVER = "http://localhost:8080/car_ins_api";
-//    private static final String SERVER_URL = "http://localhost:9999/api-gateway";
-    private static final String SERVER_URL = "http://test.jhjhome.com/api-gateway";
+    private static final String SERVER_URL = "http://localhost:9999/api-gateway";
+//    private static final String SERVER_URL = "http://test.jhjhome.com/api-gateway";
+//    private static final String SERVER_URL = "http://127.0.0.1:11222";
     
     public static void postEncode(String url, RestfulRequestDto requestDto) {
 
@@ -37,14 +38,10 @@ public class HttpPostUtil {
         SimpleHttpClient simpleHttpClient = new SimpleHttpClient();
         simpleHttpClient.init();
         url = SERVER_URL + url;
-        log.info("request url : {}", url);
 
         String param = JSON.toJSONString(requestDto);
-        log.info("request param : {}", param);
 
         String res = simpleHttpClient.post(url, param);
-
-        log.info("response result : {}", res);
 
         RestfulResultDto resultDto = JSON.parseObject(res, RestfulResultDto.class);
 
