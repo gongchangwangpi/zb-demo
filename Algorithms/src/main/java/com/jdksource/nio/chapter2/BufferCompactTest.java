@@ -1,4 +1,4 @@
-package com.jdksource.nio;
+package com.jdksource.nio.chapter2;
 
 import java.nio.CharBuffer;
 

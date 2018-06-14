@@ -1,4 +1,4 @@
-package com.jdksource.nio;
+package com.jdksource.nio.chapter2;
 
 import java.nio.ByteBuffer;
 
@@ -14,7 +14,23 @@ public class ByteBufferTest {
 //        wrapTest();
 
 //        someTest();
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        byteBuffer.putLong(1 << 20);
         
+        byteBuffer.flip();
+        
+//        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
+//        long l = byteBuffer.getLong();
+//        System.out.println(l);
+
+        int i = byteBuffer.getInt();
+        System.out.println(i);
+//        
+        i = byteBuffer.getInt();
+        System.out.println(i);
+
     }
 
     private static void someTest() {
