@@ -21,6 +21,7 @@ public class CharBufferSliceTest {
         CharBuffer charBuffer = CharBuffer.wrap(chars);
         
         charBuffer.position(1).limit(5);
+        log.info("charBuffer -->> position: {}, limit: {}, capacity: {}", charBuffer.position(), charBuffer.limit(), charBuffer.capacity());
 
         // 剪切buffer，和原buffer公用一个char[]，只是新的slice的capacity已固定，所以不能访问其他的数据
         CharBuffer slice = charBuffer.slice();
