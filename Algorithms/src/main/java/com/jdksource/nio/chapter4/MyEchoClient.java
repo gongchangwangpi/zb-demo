@@ -15,7 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MyEchoClient {
 
     private static String host = "127.0.0.1";
-    private static int port = 6789;
+//    private static int port = 6789;
+    private static int port = 1234;
     private static ByteBuffer buffer = ByteBuffer.allocate(1024);
 
     public static void main(String[] args) throws Exception {
@@ -53,16 +54,7 @@ public class MyEchoClient {
                 
                 socketChannel.close();
             }
-
-            if (selectionKey.isWritable()) {
-                log.info("write data");
-                SocketChannel channel = (SocketChannel) selectionKey.channel();
-                buffer.clear();
-                buffer.put("I am MyEchoClient".getBytes());
-                buffer.flip();
-                channel.write(buffer);
-                buffer.clear();
-            }
+            
         }
 
     }

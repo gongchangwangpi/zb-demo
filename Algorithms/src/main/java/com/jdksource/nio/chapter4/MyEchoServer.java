@@ -47,18 +47,15 @@ public class MyEchoServer {
             while (iterator.hasNext()) {
 
                 SelectionKey key = iterator.next();
-                
 
-                if (selectionKey.isAcceptable()) {
+                if (key.isAcceptable()) {
                     // 安全的从selectionKey上取
                     ServerSocketChannel server = (ServerSocketChannel) key.channel();
+                    
                     SocketChannel socketChannel = server.accept();
-
                     socketChannel.configureBlocking(false);
-
                     socketChannel.register(selector, SelectionKey.OP_READ);
-                    server.register(selector, SelectionKey.OP_ACCEPT);
-
+                    
                     log.info("accept socket: {}, and write data...", socketChannel);
 
                     buffer.clear();
@@ -67,7 +64,7 @@ public class MyEchoServer {
                     socketChannel.write(buffer);
                 }
 
-                if (selectionKey.isReadable()) {
+                if (key.isReadable()) {
                     SocketChannel socketChannel = (SocketChannel) key.channel();
 
                     int count;
@@ -83,6 +80,9 @@ public class MyEchoServer {
 //                        socketChannel.write(buffer);
                         }
                         buffer.clear();
+                    }
+                    if (count < 0) {
+                        socketChannel.close();
                     }
 
                 }

@@ -35,6 +35,7 @@ public class SelectSockets {
         serverChannel.configureBlocking(false);
         // Register the ServerSocketChannel with the Selector
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+        
         while (true) {
             // This may block for a long time. Upon returning, the
             // selected set contains keys of the ready channels.
