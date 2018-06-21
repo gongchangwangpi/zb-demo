@@ -33,12 +33,18 @@
 			<version>0.4.13</version>
 		</dependency>-->
 		
-		<dependency>
+		<!--<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.3.2</version>
-		</dependency>
+		</dependency>-->
 
+		<dependency>
+			<groupId>com.zb.demo</groupId>
+			<artifactId>commons-util</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
