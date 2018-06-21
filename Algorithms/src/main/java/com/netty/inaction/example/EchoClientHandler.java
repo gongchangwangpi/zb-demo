@@ -1,5 +1,7 @@
 package com.netty.inaction.example;
 
+import java.util.concurrent.TimeUnit;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
@@ -9,23 +11,19 @@ import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created by books on 2017/11/17.
  */
 public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     
     private Logger logger = LoggerFactory.getLogger(EchoClientHandler.class);
-
-    
     
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         logger.info("client send msg");
         TimeUnit.SECONDS.sleep(1);
         ctx.write(Unpooled.copiedBuffer("netty rock", CharsetUtil.UTF_8));
-        super.channelActive(ctx);
+//        super.channelActive(ctx);
     }
 
     @Override

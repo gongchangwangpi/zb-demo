@@ -1,5 +1,7 @@
 package com.netty.inaction.example;
 
+import java.net.InetSocketAddress;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -7,8 +9,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-
-import java.net.InetSocketAddress;
 
 /**
  * Created by books on 2017/11/17.
@@ -49,7 +49,7 @@ public class EchoClient {
 
     public static void main(String[] args) throws InterruptedException {
         
-        new EchoClient("localhost", 65535).start();
+        new EchoClient("localhost", 8080).start();
         
     }
     
