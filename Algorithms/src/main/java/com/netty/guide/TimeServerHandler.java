@@ -2,6 +2,7 @@ package com.netty.guide;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,19 +24,22 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        log.info("channelActive -->>  {}", ctx.toString());
+        
         final ByteBuf time = ctx.alloc().buffer(4); // (2)
         time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
 
         final ChannelFuture f = ctx.writeAndFlush(time); // (3)
-        /*f.addListener(new ChannelFutureListener() {
+        f.addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture future) {
                 assert f == future;
                 ctx.close();
             }
-        }); // (4)*/
+        }); // (4)
         // 连接只使用一次即关闭
-        f.addListener((future) -> ctx.close());
+//        f.addListener((future) -> ctx.close());
+//        f.addListener(ChannelFutureListener.CLOSE);
     }
 
     /**

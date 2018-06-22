@@ -8,10 +8,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author zhangbo
  */
+@Slf4j
 public class DiscardServer {
 
     private int port;
@@ -40,7 +42,9 @@ public class DiscardServer {
 
             // Bind and start to accept incoming connections.
             ChannelFuture f = b.bind(port).sync(); // (7)
-
+            
+            log.info("server running on port: {}", port);
+            
             // Wait until the server socket is closed.
             // In this example, this does not happen, but you can do that to gracefully
             // shut down your server.
