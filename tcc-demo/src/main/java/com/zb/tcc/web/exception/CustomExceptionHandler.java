@@ -3,6 +3,7 @@ package com.zb.tcc.web.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -25,7 +26,13 @@ public class CustomExceptionHandler {
             
             log.error("参数绑定失败: {}", errorMessage);
 
-        } else {
+        } 
+        else if (e instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException ex = (MethodArgumentNotValidException) e;
+            errorMessage = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+            log.error("参数绑定失败: {}", errorMessage);
+        }
+        else {
 
             log.error("出错啦", e);
         }
