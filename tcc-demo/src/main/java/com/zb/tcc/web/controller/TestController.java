@@ -1,12 +1,14 @@
 package com.zb.tcc.web.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import com.zb.demo.util.json.JacksonJsonMapper;
 import com.zb.tcc.domain.user.Department;
 import com.zb.tcc.domain.user.User;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author zhangbo
  */
 @Slf4j
+@Validated
 @RestController
 public class TestController {
     
@@ -23,6 +26,13 @@ public class TestController {
         log.info("type: {}", type);
         
         return System.currentTimeMillis();
+    }
+    
+    @RequestMapping(value = "/primary")
+    public Object primary(@Min(value = 10, message = "最小10") int v) {
+        log.info("primary --->>> : {}", v);
+        
+        return "primary";
     }
     
     @RequestMapping(value = "/user")
