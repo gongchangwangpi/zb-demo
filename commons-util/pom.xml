@@ -87,6 +87,6 @@
     </dependencies>
 
     <build>
-        <finalName>zb-demo</finalName>
+        <finalName>commons-util</finalName>
     </build>
 </project>

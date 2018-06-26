@@ -45,7 +45,7 @@
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
 	
-	<filter>
+	<!--<filter>
 		<filter-name>requestParamFilter</filter-name>
 		<filter-class>com.spring.filter.ParameterRequestFilter</filter-class>
 	</filter>
@@ -53,7 +53,7 @@
 	<filter-mapping>
 		<filter-name>requestParamFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping>-->
 	
 	<!-- SERVLET 定义 -->
 	
