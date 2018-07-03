@@ -64,4 +64,12 @@ public class RestfulResultDto implements Serializable {
 	public static RestfulResultDto success(Object body) {
 		return new RestfulResultDto("200", "OK", body);
 	}
+	
+	public static RestfulResultDto success() {
+		return new RestfulResultDto("200", "OK");
+	}
+
+	public static RestfulResultDto fail(String code, String message) {
+		return new RestfulResultDto(code, message);
+	}
 }

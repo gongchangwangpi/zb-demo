@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义扩展AJAX请求</title>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../js/jqExtend.js"></script>
+</head>
+<body>
+    <button type="button" onclick="customAjaxSubmit200()">customAjaxSubmit200</button>
+    <button type="button" onclick="customAjaxSubmit401()">customAjaxSubmit401</button>
+    <button type="button" onclick="customAjaxSubmit500()">customAjaxSubmit500</button>
+    
+    <script>
+        function customAjaxSubmit200() {
+            $.customGet("/jqExtend/get200", {}, function (body) {
+                alert(body);
+            });
+        }
+        function customAjaxSubmit401() {
+            $.customGet("/jqExtend/get401", {}, function (body) {
+                alert(body);
+            });
+        }
+        function customAjaxSubmit500() {
+            $.customGet("/jqExtend/get500", {}, function (body) {
+                alert(body);
+            });
+        }
+    </script>
+</body>
+</html>
