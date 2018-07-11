@@ -14,12 +14,13 @@ public class Main {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{"classpath:applicationContext-app.xml"}, true);
 
         RegisterService registerService = applicationContext.getBean(RegisterService.class);
-        
         registerService.register("zhangsan");
         
 //        Register1Service register1Service = applicationContext.getBean(Register1Service.class);
-        
 //        register1Service.register("李四");
+        
+//        Register2Service register2Service = applicationContext.getBean(Register2Service.class);
+//        register2Service.register("王五");
 
     }
     

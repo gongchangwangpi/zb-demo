@@ -21,8 +21,10 @@ public class RegisterService implements ApplicationEventPublisherAware {
     
     public void register(String username) {
         System.out.println(Thread.currentThread().getName() + " 用户: " + username + " 注册成功");
+
+        applicationEventPublisher.publishEvent(new RegisterEventObject(username));
         // 发布事件
-        applicationEventPublisher.publishEvent(new RegisterEvent(username));
+//        applicationEventPublisher.publishEvent(new RegisterEvent(username));
 
         System.out.println("注册事件发布完毕");
     }

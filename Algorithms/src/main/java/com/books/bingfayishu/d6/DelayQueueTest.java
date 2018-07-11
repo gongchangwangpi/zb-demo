@@ -43,7 +43,6 @@ public class DelayQueueTest {
         public Element(String content) {
             this.content = content;
             this.create = System.nanoTime();
-            System.out.println(create);
         }
 
         public String getContent() {
