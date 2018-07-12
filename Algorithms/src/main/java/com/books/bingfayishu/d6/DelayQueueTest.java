@@ -18,13 +18,13 @@ public class DelayQueueTest {
     public static void main(String[] args) {
 
         DelayQueue<Element> delayQueue = new DelayQueue<>();
-
-        delayQueue.offer(new Element("234", 4L * 1000 * 1000 * 1000));
-        delayQueue.offer(new Element("345", 6L * 1000 * 1000 * 1000));
-        delayQueue.offer(new Element("123"));
-        delayQueue.offer(new Element("1234"));
-        
         long start = System.currentTimeMillis();
+
+        delayQueue.offer(new Element("4", 4L * 1000 * 1000 * 1000));
+        delayQueue.offer(new Element("3", 6L * 1000 * 1000 * 1000));
+        delayQueue.offer(new Element("2"));
+        delayQueue.offer(new Element("21"));
+        
 
         while (!delayQueue.isEmpty()) {
             Element element = delayQueue.poll();
@@ -83,10 +83,13 @@ public class DelayQueueTest {
          */
         @Override
         public int compareTo(Delayed o) {
-//            if (o instanceof Element) {
-//                return this.content.compareTo(((Element) o).content);
-//            }
-//            return 0;
+            /*if (o instanceof Element) {
+                return this.content.compareTo(((Element) o).content);
+            }
+            return 0;*/
+            if (o == null) {
+                return -1;
+            }
             if (this == o) {
                 return 0;
             }
