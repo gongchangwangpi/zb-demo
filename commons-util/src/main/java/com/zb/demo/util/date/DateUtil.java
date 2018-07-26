@@ -13,13 +13,21 @@ import org.apache.commons.lang3.Validate;
  * 
  * Created by books on 2017/10/27.
  */
-public class DateUtil {
+public final class DateUtil {
 
+    private DateUtil() {
+    }
+    
     public static final String DATE_PATTERN = "yyyy-MM-dd";
 
     public static final String DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     
-    private static ThreadLocal<Map<String, SimpleDateFormat>> local = new ThreadLocal(){
+    public static final long ONE_SECOND = 1000;
+    public static final long ONE_MINUTE = ONE_SECOND * 60;
+    public static final long ONE_HOUR = ONE_MINUTE * 60;
+    public static final long ONE_DAY = ONE_HOUR * 24;
+    
+    private static ThreadLocal<Map<String, SimpleDateFormat>> local = new ThreadLocal<Map<String, SimpleDateFormat>>(){
         @Override
         protected synchronized Map<String, SimpleDateFormat> initialValue() {
             Map<String, SimpleDateFormat> formatMap = new HashMap<>();
@@ -29,8 +37,6 @@ public class DateUtil {
         }
     };
 
-    private DateUtil() {
-    }
     
     private void destory() {
         local.remove();
