@@ -23,6 +23,7 @@ public class LinkedHashMapLruTest {
     public static void main(String[] args) {
 
         Map<String, Object> map = new LinkedHashMap<String, Object>(4, 0.75f, true) {
+            private static final long serialVersionUID = 448387314854452606L;
             @Override
             protected boolean removeEldestEntry(Map.Entry eldest) {
                 log.info(JSON.toJSONString(eldest));
