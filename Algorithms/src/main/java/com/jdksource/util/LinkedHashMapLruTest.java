@@ -26,7 +26,6 @@ public class LinkedHashMapLruTest {
             private static final long serialVersionUID = 448387314854452606L;
             @Override
             protected boolean removeEldestEntry(Map.Entry eldest) {
-                log.info(JSON.toJSONString(eldest));
                 return size() > 4;
             }
         };
