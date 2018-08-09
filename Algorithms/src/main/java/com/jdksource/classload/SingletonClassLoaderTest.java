@@ -4,6 +4,7 @@ package com.jdksource.classload;
  * 初始化某个类型的数组，会加载该类型的class，但不会执行clinit，不会初始化该类
  * 
  * -verbose:class
+ * -XX:+TraceClassLoading
  * 
  * @author zhangbo
  */
