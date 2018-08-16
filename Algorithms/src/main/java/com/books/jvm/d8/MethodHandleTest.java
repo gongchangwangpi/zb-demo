@@ -7,6 +7,9 @@ import static java.lang.invoke.MethodHandles.lookup;
 
 /**
  * java.lang.invoke包
+ * jdk1.7新增指令
+ * 
+ * invokedynamic
  *
  * Created by Administrator on 2017/5/8 0008.
  */
@@ -27,6 +30,7 @@ public class MethodHandleTest {
 
     static class ClassA {
         public void println(String s) {
+            System.out.println("ClassA : " + this);
             System.out.println("ClassA : " + s);
         }
     }
