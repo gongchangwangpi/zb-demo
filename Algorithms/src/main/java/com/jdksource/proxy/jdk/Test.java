@@ -17,7 +17,9 @@ public class Test {
 
         Class[] proxyInterface = {IHelloService.class, IHelloService2.class};
 
-        LogInvocationHandler logInvocationHandler = new LogInvocationHandler(new HelloService());
+        HelloService helloService = new HelloService();
+
+        LogInvocationHandler logInvocationHandler = new LogInvocationHandler(helloService);
 
         ClassLoader classLoader = Test.class.getClassLoader();
 
@@ -26,6 +28,8 @@ public class Test {
         String res = ((IHelloService) proxyInstance).hello("zhangsan");
         String res2 = ((IHelloService2) proxyInstance).hello2("zhangsan");
         
+        log.info("helloService: {}", helloService);
+        log.info("proxyInstance: {}", proxyInstance);
         log.info("result: {}", res);
         log.info("result2: {}", res2);
 

@@ -27,7 +27,7 @@ public class LogInvocationHandler implements InvocationHandler {
         // 此处选择在方法执行完后
         // 可以自由选择拦截哪些方法
         if ("hello".equals(method.getName())) {
-            log.info("invoke method:{}, args:{}", method.getName(), args);
+            log.info("invoke method:{}, args:{}, proxy: {}, target: {}", method.getName(), args, proxy, target);
         }
         
         return res;
