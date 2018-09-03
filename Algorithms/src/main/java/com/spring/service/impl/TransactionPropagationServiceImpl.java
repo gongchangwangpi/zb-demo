@@ -30,7 +30,7 @@ public class TransactionPropagationServiceImpl implements TransactionPropagation
 
         // 直接调用
 //        this.requires_new();
-        // 使用代理对象调用，需要配置expose-proxy=true
+        // 使用代理对象调用，需要配置expose-proxy=true,暴露代理对象才能用，否则在获取代理对象时要报错
         // e.g.<aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
         TransactionPropagationService service = (TransactionPropagationService) AopContext.currentProxy();
         service.requires_new();
