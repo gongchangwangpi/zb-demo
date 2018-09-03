@@ -40,7 +40,7 @@
 		WHERE id = #{id,jdbcType=BIGINT}
 	</delete>
 	
-	<insert id="insert" parameterType="com.spring.domain.User" keyProperty="userId" useGeneratedKeys="true">
+	<insert id="insert" parameterType="com.spring.domain.User" keyProperty="id" useGeneratedKeys="true">
 		INSERT INTO user
 		(
 			agentName, age

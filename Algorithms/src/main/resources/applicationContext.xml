@@ -58,7 +58,7 @@
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 
     <!-- 定义ASPECT J -->
-    <aop:aspectj-autoproxy proxy-target-class="true" />
+    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
 
     <bean id="simpleHttpClient" class="com.util.SimpleHttpClient" init-method="init" destroy-method="destroy"/>
 
