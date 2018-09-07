@@ -15,15 +15,21 @@ public class ReentrantLockTest {
 
     public static void get1() {
         lock.lock();
-        System.out.println("get1");
-        get2();
-        lock.unlock();
+        try {
+            System.out.println("get1");
+            get2();
+        } finally {
+            lock.unlock();
+        }
     }
 
     public static void get2() {
         lock.lock();
-        System.out.println(":get2");
-        lock.unlock();
+        try {
+            System.out.println(":get2");
+        } finally {
+            lock.unlock();
+        }
     }
 
     public static void main(String[] args) {
