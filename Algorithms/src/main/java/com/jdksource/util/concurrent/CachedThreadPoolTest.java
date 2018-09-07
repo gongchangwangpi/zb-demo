@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
  * 和{@link Integer#MAX_VALUE}作为线程池的最大线程数，此时队列中不会堆积任务。新提交一个任务，
  * 都会找空闲线程或者新建线程来执行任务
  * 
+ * 一般情况下，可自己新建线程池对象，自行调整corePoolSize,MaxPoolSize,workQueue等。
+ * 
  * @author zhangbo
  */
 public class CachedThreadPoolTest {
