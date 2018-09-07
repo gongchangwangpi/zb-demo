@@ -1,12 +1,12 @@
 package com.books.jdbc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 原生 JDBC
@@ -21,14 +21,14 @@ public class JdbcUtil {
     private static final String DEFAULT_USERNAME = "root";
     private static final String DEFAULT_PASSWORD = "root";
     
-    static {
+    /*static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             logger.error("加载驱动失败", e);
             throw new RuntimeException("加载驱动失败");
         }
-    }
+    }*/
 
     public static Connection getConnection() {
         return getConnection(DEFAULT_URL, DEFAULT_USERNAME, DEFAULT_PASSWORD);
