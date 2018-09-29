@@ -1,11 +1,11 @@
 package com.netty.qwzn.chapter2.bio;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 
 /**
  * 基于传统BIO的时间服务器
@@ -25,7 +25,7 @@ public class TimeServer {
             
             while (true) {
                 Socket socket = serverSocket.accept();
-                log.info("ServerSocket accept connection");
+//                log.info("ServerSocket accept connection");
                 new Thread(new TimeServerHandler(socket)).start();
             }
             
