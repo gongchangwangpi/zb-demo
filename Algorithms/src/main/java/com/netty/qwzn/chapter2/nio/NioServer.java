@@ -62,7 +62,8 @@ public class NioServer {
         @Override
         public void run() {
             try {
-
+                log.info("server handler run...");
+                
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
                 Iterator<SelectionKey> iterator = selectionKeys.iterator();
 
