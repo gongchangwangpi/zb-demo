@@ -48,22 +48,19 @@ public class TimeClient {
                 
                 // 请求报文
                 printStream = new PrintStream(socket.getOutputStream(), true);
-                String request = "query time order: " + no;
+                String request = "query time order " + no;
                 printStream.print(request);
                 printStream.flush();
-//                log.info("client request");
-//                IOUtils.closeQuietly(printStream);
 
                 // 获取响应
-//                inputStream = socket.getInputStream();
-//                String response = IOUtils.toString(inputStream, "UTF-8");
-                String response = "response";
-                log.info("request: {}, response: {}", request, response);
+                inputStream = socket.getInputStream();
+                String response = IOUtils.toString(inputStream, "UTF-8");
+                log.info("bio client request: {}, response: {}", request, response);
 
             } catch (IOException e) {
                 log.error("出错啦", e);
             } finally {
-                IOUtils.closeQuietly(printStream);
+                
                 IOUtils.closeQuietly(inputStream);
                 IOUtils.closeQuietly(socket);
             }

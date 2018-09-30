@@ -57,7 +57,7 @@ public class NioClient {
                         log.info("write request");
                     } else {
                         log.error("connect fail");
-                        System.exit(1);
+//                        System.exit(1);
                     }
                 }
                 
