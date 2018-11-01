@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RequestBody Test</title>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../js/form.js"></script>
+</head>
+<body>
+
+    <form id="postForm" action="../requestBody/body?age=17" method="post">
+        <input name="username">
+        <input type="submit" value="submit"/>
+        <input type="button" value="ajax submit" onclick="ajaxSubmit()"/>
+    </form>
+
+    <script>
+        function ajaxSubmit() {
+//            $("#postForm").ajaxSubmit(function (result) {
+//                console.log(result);
+//            });
+//            $.post("../requestBody/body?age=17", {"username": "zhangsan"}, function (result) {
+//                console.log(result);
+//            });
+            $.ajax({
+                url:"../requestBody/body",
+                type:"POST",
+                data:'{"userName":"admin","age","16"}',
+                "content-type":"application/json;charset=utf-8",
+                success: function(data){
+                    alert("request success ! " + data);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

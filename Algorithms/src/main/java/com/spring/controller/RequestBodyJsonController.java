@@ -22,8 +22,8 @@ public class RequestBodyJsonController {
 
     private Logger logger = LoggerFactory.getLogger(RequestBodyJsonController.class);
     
-    @RequestMapping(value = "/requestBody/body", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public User body(@RequestBody User user, HttpServletRequest request) {
+    @RequestMapping(value = "/requestBody/body")
+    public User body(@RequestBody User user) {
         logger.info("body ------> " + JSON.toJSONString(user));
         return user;
     }

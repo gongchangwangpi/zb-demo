@@ -55,7 +55,7 @@ public class PojoServer {
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             User request = (User) msg;
 
-            User response = new User(count.getAndIncrement(), "netty server");
+            User response = new User(count.getAndIncrement(), "netty server：权威指南");
             ctx.write(response);
 
             log.info("server read: {}, and write response: {}", request, response);
