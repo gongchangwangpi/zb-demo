@@ -1,0 +1,8 @@
+// 命令行中运行 protoc --java_out=./ Person.proto 生成Java客户端代码
+syntax = "proto3";
+package com.netty.qwzn.chapter8;
+
+message Person {
+    int32 id = 1;
+    string name = 2;
+}
