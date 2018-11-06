@@ -28,8 +28,6 @@ public class HttpFileServer {
 
     public static void main(String[] args) throws InterruptedException {
 
-        String url = "";
-
         EventLoopGroup boss = new NioEventLoopGroup(1);
         EventLoopGroup worker = new NioEventLoopGroup();
         try {
@@ -43,7 +41,7 @@ public class HttpFileServer {
                                     .addLast("http-aggregator", new HttpObjectAggregator(65536))
                                     .addLast("http-encoder", new HttpResponseEncoder())
                                     .addLast("http-chunked", new ChunkedWriteHandler())
-                                    .addLast("http-file-server", new HttpFileServerHandler(url));
+                                    .addLast("http-file-server", new HttpFileServerHandler());
                         }
                     });
 
@@ -57,10 +55,6 @@ public class HttpFileServer {
     
     @Slf4j
     static class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
-        private String url;
-        HttpFileServerHandler(String url) {
-            this.url = url;
-        }
 
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception {
