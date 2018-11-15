@@ -1,4 +1,4 @@
-package com.netty.im;
+package com.netty.im.test;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -6,7 +6,7 @@ import io.netty.buffer.Unpooled;
 /**
  * @author zhangbo
  */
-public class ByteBufCopyTest {
+public class ByteBufSliceTest {
 
     public static void main(String[] args) {
 
@@ -16,20 +16,20 @@ public class ByteBufCopyTest {
         buffer.writeBytes("hello".getBytes());
         print("writeBytes", buffer);
 
-        // copy,新建一个对象,新建了一个和原buffer一模一样的buffer,里面的数据一样,
-        // 但writeIndex/readIndex/capacity等都不一样
-        // 但底层的内存数组不一样,也是全新分配的
-        ByteBuf copy = buffer.copy();
-        print("copy original", buffer);
-        print("copy new", copy);
+        // slice,将原buffer中可读的数组新建了一个对象,底层和原buffer共用一个内存数组,新对象不可write,但可set
+        ByteBuf slice = buffer.slice();
+        print("slice original", buffer);
+        print("slice new", slice);
+//        slice.writeByte(12); // IndexOutOfBoundsException
         
-        // 此处的改变仅会影响到自己
-        copy.writeByte(80);
-        buffer.writeByte(79);
-        buffer.writeByte(79);
-        copy.setByte(1, 85);
-        System.out.println(new String(copy.array()));
+        // 这两个改变会影响新的slice和原来的buffer
+        slice.setByte(1, 85);
+        buffer.setByte(2, 85);
+        System.out.println(new String(slice.array()));
         System.out.println(new String(buffer.array()));
+        
+        
+
         
     }
     
