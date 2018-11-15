@@ -14,6 +14,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -84,6 +85,8 @@ public class NettyTimeServer {
             byteBuf.readBytes(bytes);
             log.info("channelRead... {}", new String(bytes));
 
+            TimeUnit.SECONDS.sleep(8);
+            
             String response = "hello netty " + count.getAndIncrement();
             ctx.write(Unpooled.copiedBuffer(response.getBytes()));
         }

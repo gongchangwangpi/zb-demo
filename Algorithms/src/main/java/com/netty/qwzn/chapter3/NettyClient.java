@@ -14,6 +14,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -70,6 +71,7 @@ public class NettyClient {
             super.channelActive(ctx);
             log.info("channelActive...");
 
+            TimeUnit.SECONDS.sleep(10);
             String response = "hello netty, this is client " + count.getAndIncrement();
             ctx.write(Unpooled.copiedBuffer(response.getBytes()));
             ctx.flush();
