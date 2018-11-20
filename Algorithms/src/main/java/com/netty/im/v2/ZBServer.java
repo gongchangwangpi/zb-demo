@@ -1,10 +1,9 @@
 package com.netty.im.v2;
 
+import com.netty.im.codec.CodecHandler;
 import com.netty.im.codec.PacketCodec;
-import com.netty.im.protocol.ZBProtocol;
-import com.netty.im.v2.handler.DecodeHandler;
-import com.netty.im.v2.handler.EncodeHandler;
-import com.netty.im.v2.handler.ServerHandler;
+import com.netty.im.v2.handler.ChatServerHandler;
+import com.netty.im.v2.handler.LoginServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -32,11 +31,13 @@ public class ZBServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline()
-                                .addLast(new ZBProtocol())
-//                                .addLast(new CodecHandler(new PacketCodec()))
-                                .addLast(new DecodeHandler(new PacketCodec()))
-                                .addLast(new EncodeHandler(new PacketCodec()))
-                                .addLast(new ServerHandler());
+//                                .addLast(new ZBProtocol())
+                                .addLast(new CodecHandler(new PacketCodec()))
+//                                .addLast(new DecodeHandler(new PacketCodec()))
+//                                .addLast(new EncodeHandler(new PacketCodec()))
+//                                .addLast(new ServerHandler());
+                                .addLast(new LoginServerHandler())
+                                .addLast(new ChatServerHandler());
                     }
                 });
 

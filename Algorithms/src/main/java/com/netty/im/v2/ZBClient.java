@@ -2,8 +2,8 @@ package com.netty.im.v2;
 
 import com.netty.im.codec.CodecHandler;
 import com.netty.im.codec.PacketCodec;
-import com.netty.im.protocol.ZBProtocol;
-import com.netty.im.v2.handler.ClientHandler;
+import com.netty.im.v2.handler.ChatClientHandler;
+import com.netty.im.v2.handler.LoginClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -29,9 +29,10 @@ public class ZBClient {
                 .handler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new ZBProtocol());
+//                        ch.pipeline().addLast(new ZBProtocol());
                         ch.pipeline().addLast(new CodecHandler(new PacketCodec()));
-                        ch.pipeline().addLast(new ClientHandler());
+                        ch.pipeline().addLast(new LoginClientHandler());
+                        ch.pipeline().addLast(new ChatClientHandler());
                     }
                 });
 

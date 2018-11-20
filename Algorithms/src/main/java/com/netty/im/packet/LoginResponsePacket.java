@@ -1,4 +1,4 @@
-package com.netty.im.request;
+package com.netty.im.packet;
 
 import com.netty.im.protocol.Command;
 import com.netty.im.protocol.Packet;
@@ -12,17 +12,17 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class LoginRequestPacket extends Packet {
+public class LoginResponsePacket extends Packet {
     
     private String uid;
     
     private String username;
     
-    private String password;
+    private String message;
 
     @Override
     public int command() {
-        return Command.LOGIN;
+        return Command.LOGIN_RESPONSE;
     }
     
 }

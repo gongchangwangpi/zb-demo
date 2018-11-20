@@ -2,7 +2,7 @@ package com.netty.im.codec;
 
 import com.netty.im.protocol.Command;
 import com.netty.im.protocol.Packet;
-import com.netty.im.request.LoginRequestPacket;
+import com.netty.im.packet.LoginRequestPacket;
 import com.netty.im.serializer.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
