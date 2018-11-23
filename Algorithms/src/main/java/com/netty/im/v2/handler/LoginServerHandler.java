@@ -33,6 +33,6 @@ public class LoginServerHandler extends SimpleChannelInboundHandler<LoginRequest
         loginResponsePacket.setUsername(msg.getUsername());
         loginResponsePacket.setMessage("登陆成功");
         
-        channel.write(loginResponsePacket);
+        channel.writeAndFlush(loginResponsePacket);
     }
 }

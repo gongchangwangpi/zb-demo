@@ -1,6 +1,5 @@
 package com.netty.im.codec;
 
-import com.alibaba.fastjson.JSON;
 import com.netty.im.protocol.Packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -23,7 +22,7 @@ public class CodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Packet msg, List<Object> out) throws Exception {
-        log.info(" -- encode: {}", JSON.toJSONString(msg));
+//        log.info(" -- encode: {}", JSON.toJSONString(msg));
         ByteBuf byteBuf = packetCodec.encode(ctx.alloc(), msg);
         out.add(byteBuf);
     }
@@ -32,6 +31,6 @@ public class CodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
         Packet decode = packetCodec.decode(msg);
         out.add(decode);
-        log.info(" -- decode: {}", JSON.toJSONString(decode));
+//        log.info(" -- decode: {}", JSON.toJSONString(decode));
     }
 }

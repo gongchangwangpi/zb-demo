@@ -1,15 +1,17 @@
 package com.netty.im.codec;
 
+import com.alibaba.fastjson.JSON;
 import com.netty.im.protocol.Command;
 import com.netty.im.protocol.Packet;
-import com.netty.im.packet.LoginRequestPacket;
 import com.netty.im.serializer.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author zhangbo
  */
+@Slf4j
 public class PacketCodec {
     
     public ByteBuf encode(ByteBufAllocator alloc, Packet packet) throws Exception {
@@ -24,7 +26,7 @@ public class PacketCodec {
         buffer.writeInt(bytes.length);
         // 真正的数据包
         buffer.writeBytes(bytes);
-        
+        log.info("----->>> encode : magicNum = {}, version = {}, command = {}, length = {}, Object = {}", packet.magicNum(), packet.version(), packet.command(), bytes.length, JSON.toJSONString(packet));
         return buffer;
     }
 
@@ -39,26 +41,14 @@ public class PacketCodec {
 
         byte[] bytes = new byte[length];
         byteBuf.readBytes(bytes);
-        
-        return Serializer.DEFAULT.deserialize(bytes, type);
+
+        T o = Serializer.DEFAULT.deserialize(bytes, type);
+        log.info("----->>> decode : magicNum = {}, version = {}, command = {}, length = {}, Object = {}", magicNum, version, command, length, JSON.toJSONString(o));
+        return o;
     }
 
     private Class<? extends Packet> getRequestType(byte command) {
         return Command.getRequestType(command);
     }
 
-    public static void main(String[] args) throws Exception {
-
-        LoginRequestPacket packet = new LoginRequestPacket();
-        packet.setUid("u123");
-        packet.setUsername("name");
-        packet.setPassword("12345");
-
-        PacketCodec codec = new PacketCodec();
-        ByteBuf byteBuf = codec.encode(ByteBufAllocator.DEFAULT, packet);
-
-        LoginRequestPacket decode = codec.decode(byteBuf);
-        System.out.println(decode);
-        
-    }
 }

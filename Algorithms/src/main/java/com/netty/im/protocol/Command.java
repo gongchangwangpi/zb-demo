@@ -2,6 +2,7 @@ package com.netty.im.protocol;
 
 import com.netty.im.packet.ChatPacket;
 import com.netty.im.packet.LoginRequestPacket;
+import com.netty.im.packet.LoginResponsePacket;
 
 /**
  * @author zhangbo
@@ -35,6 +36,8 @@ public abstract class Command {
         switch (command) {
             case LOGIN_REQUEST: 
                 return LoginRequestPacket.class;
+            case LOGIN_RESPONSE: 
+                return LoginResponsePacket.class;
             case CHAT_REQUEST: 
                 return ChatPacket.class;
             default:

@@ -1,6 +1,5 @@
 package com.netty.im.v2.handler;
 
-import com.alibaba.fastjson.JSON;
 import com.netty.im.packet.ChatPacket;
 import com.netty.im.util.ChannelHolder;
 import io.netty.channel.Channel;
@@ -17,7 +16,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<ChatPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ChatPacket msg) throws Exception {
         
-        log.info("chat ----- {}", JSON.toJSONString(msg));
+//        log.info("chat ----- {}", JSON.toJSONString(msg));
         
         String toUid = msg.getToUid();
         Channel channel = ChannelHolder.CHANNEL_HOLDER.get(toUid);

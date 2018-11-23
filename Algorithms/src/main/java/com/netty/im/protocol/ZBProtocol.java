@@ -1,5 +1,6 @@
 package com.netty.im.protocol;
 
+import com.netty.im.codec.PacketCodec;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -34,9 +35,11 @@ public class ZBProtocol extends LengthFieldBasedFrameDecoder {
             ctx.channel().close();
             return null;
         }
-        log.info(" -- decode: {}");
-//        LoginRequestPacket decode = new PacketCodec().decode(in);
+//        log.info(" -- decode: {}");
+        Packet decode = new PacketCodec().decode(in);
+        
+        return decode;
 //        return super.decode(ctx, in);
-        return in;
+//        return in;
     }
 }

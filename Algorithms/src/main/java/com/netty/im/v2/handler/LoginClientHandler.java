@@ -1,9 +1,12 @@
 package com.netty.im.v2.handler;
 
 import com.netty.im.packet.LoginResponsePacket;
+import com.util.DateUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Date;
 
 /**
  * @author zhangbo
@@ -14,6 +17,6 @@ public class LoginClientHandler extends SimpleChannelInboundHandler<LoginRespons
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket msg) throws Exception {
 
-        System.err.println(msg.getMessage());
+        System.err.println(DateUtil.defaultFormatDateTime(new Date()) + "\t系统消息：\n" + msg.getMessage());
     }
 }
