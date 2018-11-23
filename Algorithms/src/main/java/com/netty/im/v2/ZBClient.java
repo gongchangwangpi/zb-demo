@@ -10,6 +10,9 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 聊天客户端启动类
@@ -31,6 +34,8 @@ public class ZBClient {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new ZBProtocol());
+                        // 空闲连接检测
+                        ch.pipeline().addLast(new IdleStateHandler(180, 360, 360, TimeUnit.SECONDS));
                         ch.pipeline().addLast(new CodecHandler(new PacketCodec()));
                         ch.pipeline().addLast(new LoginClientHandler());
                         ch.pipeline().addLast(new ChatClientHandler());

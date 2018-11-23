@@ -26,11 +26,10 @@ public abstract class Command {
      */
     public static final int CHAT_REQUEST = 5;
     
-
     /**
      * 群聊
      */
-    public static final int GROUP_REQUEST = 7;
+    public static final int GROUP_REQUEST = 6;
 
     public static Class<? extends Packet> getRequestType(byte command) {
         switch (command) {
@@ -39,6 +38,8 @@ public abstract class Command {
             case LOGIN_RESPONSE: 
                 return LoginResponsePacket.class;
             case CHAT_REQUEST: 
+                return ChatPacket.class;
+            case GROUP_REQUEST: 
                 return ChatPacket.class;
             default:
                 return Packet.class;

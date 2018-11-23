@@ -35,11 +35,7 @@ public class ZBProtocol extends LengthFieldBasedFrameDecoder {
             ctx.channel().close();
             return null;
         }
-//        log.info(" -- decode: {}");
         Packet decode = new PacketCodec().decode(in);
-        
         return decode;
-//        return super.decode(ctx, in);
-//        return in;
     }
 }

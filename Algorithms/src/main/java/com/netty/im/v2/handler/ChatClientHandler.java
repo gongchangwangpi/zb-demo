@@ -22,7 +22,6 @@ public class ChatClientHandler extends SimpleChannelInboundHandler<ChatPacket> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ChatPacket msg) throws Exception {
-//        log.info("chat ----- {}", JSON.toJSONString(msg));
         System.err.println(DateUtil.defaultFormatDateTime(msg.getSendTime()) + "\t" + msg.getFromUid() + ":" + msg.getFromUsername() + "\t发来消息:\n" + msg.getMessage());
     }
 }
