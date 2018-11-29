@@ -20,7 +20,7 @@ public class HashMapTest {
         map.put("2", "2");
         
         while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+            System.out.println(iterator.next()); // ConcurrentModificationException
         }
         
     }
