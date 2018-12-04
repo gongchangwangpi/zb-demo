@@ -2,8 +2,10 @@ package com.jdksource.java8;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -47,6 +49,12 @@ public class DishesStreamTest {
                 .collect(toList());
 
         green.forEach(System.out::println);
+
+
+        Map<String, List<Dishes>> map = dishesList.stream()
+                .collect(groupingBy(Dishes::getColor));
+
+        map.forEach((key, value) -> System.out.println(key + ": " + value));
         
     }
     

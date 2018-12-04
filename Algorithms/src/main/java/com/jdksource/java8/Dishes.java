@@ -31,4 +31,10 @@ public class Dishes {
      */
     private double price;
 
+    @Override
+    public String toString() {
+        return "Dishes{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
