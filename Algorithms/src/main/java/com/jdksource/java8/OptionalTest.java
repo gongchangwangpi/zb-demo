@@ -14,7 +14,7 @@ public class OptionalTest {
 
     public static void main(String[] args) {
 
-        Optional<Person> person = Optional.ofNullable(new Person(new Car(new Insurance("平安"))));
+        Optional<Person> person = Optional.of(new Person(new Car(new Insurance("平安"))));
 
         Optional<String> name = person.map(Person::getCar).map(Car::getInsurance).map(Insurance::getName);
 
