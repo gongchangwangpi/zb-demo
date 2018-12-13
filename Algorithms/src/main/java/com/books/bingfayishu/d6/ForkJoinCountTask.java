@@ -1,11 +1,11 @@
 package com.books.bingfayishu.d6;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveTask;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Fork/Join 
@@ -69,7 +69,9 @@ public class ForkJoinCountTask extends RecursiveTask<Integer> {
             
             // 执行子任务
             leftTask.fork();
-            rightTask.fork();
+            // 最好是一个子任务调用fork，一个直接调用compute，这样 子任务可以重用一个线程，提供效率
+//            rightTask.fork();
+            rightTask.compute();
             
             // 等待子任务执行完，获取执行结果
             Integer leftResult = leftTask.join();
