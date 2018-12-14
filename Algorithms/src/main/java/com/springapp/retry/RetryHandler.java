@@ -43,7 +43,7 @@ public class RetryHandler extends AbstractAutoProxyCreator {
             Retry retry = method.getAnnotation(Retry.class);
 
             if (retry != null) {
-                // 
+                // begin retry
                 int retryCount = 1;
                 boolean isRetry;
                 
@@ -60,6 +60,10 @@ public class RetryHandler extends AbstractAutoProxyCreator {
                         TimeUnit.MILLISECONDS.sleep(delay);
                     }
                 } while (isRetry && retryCount++ < count);
+                
+            } else {
+                
+                result = invocation.proceed();
             }
             
             log.warn("retry after ----------------------->>>>>");
