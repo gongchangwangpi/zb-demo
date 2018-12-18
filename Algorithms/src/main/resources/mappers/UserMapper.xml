@@ -4,7 +4,7 @@
 
 	<resultMap id="BaseResultMap" type="com.spring.domain.User">
 		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="agentName" property="username" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
 		<result column="age" property="age" jdbcType="INTEGER" />
 	</resultMap>
 
@@ -13,8 +13,8 @@
 			<if test="id != null">
 				AND id != #{id}
 			</if>
-			<if test="agentName != null and agentName != ''">
-				AND agentName = #{username}
+			<if test="username != null and username != ''">
+				AND username = #{username}
 			</if>
 		</where>
 	</sql>
@@ -43,17 +43,17 @@
 	<insert id="insert" parameterType="com.spring.domain.User" keyProperty="id" useGeneratedKeys="true">
 		INSERT INTO user
 		(
-			agentName, age
+			username, age
 		)
 		VALUES (#{username,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER})
 	</insert>
 
 	<insert id="batchInsert" parameterType="list">
 		<!--<foreach collection="list" item="user" >
-			INSERT INTO user (agentName)
-			VALUES (#{user.agentName,jdbcType=VARCHAR});
+			INSERT INTO user (username)
+			VALUES (#{user.username,jdbcType=VARCHAR});
 		</foreach>-->
-		INSERT INTO user (agentName)
+		INSERT INTO user (username)
 		VALUES
 		<foreach collection="list" item="user" separator=",">
 			(#{user.username,jdbcType=VARCHAR})
@@ -63,8 +63,8 @@
 	<update id="update" parameterType="com.spring.domain.User">
 		UPDATE user
 		<set>
-			<if test="agentName != null and agentName != ''">
-				agentName = #{username,jdbcType=VARCHAR},
+			<if test="username != null and username != ''">
+				username = #{username,jdbcType=VARCHAR},
 			</if>
 			<if test="age != null">
 				age = #{age,jdbcType=INTEGER},
