@@ -1,5 +1,6 @@
 package com.spring.domain;
 
+import com.spring.domain.enums.SexEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,8 @@ public class User {
     private String username;
 
     private Integer age;
+    
+    private SexEnum sex;
 
     public User() {
     }

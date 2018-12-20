@@ -1,27 +1,20 @@
 package com.spring.domain.query;
 
+import com.spring.domain.enums.SexEnum;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by books on 2017/4/19.
  */
+@Getter
+@Setter
 public class UserQuery {
 
     private Long id;
 
     private String username;
+    
+    private SexEnum sex;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 }

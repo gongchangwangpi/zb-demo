@@ -63,7 +63,7 @@
     <bean id="simpleHttpClient" class="com.util.SimpleHttpClient" init-method="init" destroy-method="destroy"/>
 
     
-    <bean class="com.springapp.retry.RetryHandler" />
+    <!--<bean class="com.springapp.retry.RetryHandler" />-->
     
     
     <!-- spring session start -->

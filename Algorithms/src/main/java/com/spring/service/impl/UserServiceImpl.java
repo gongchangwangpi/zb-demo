@@ -40,12 +40,12 @@ public class UserServiceImpl implements UserService {
     public Long save(User user) {
         System.out.println("save ----- start");
         userMapper.insert(user);
-        try {
+        /*try {
             // 模拟耗时,方便后面的查询线程查询到未提交的数据
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         System.out.println("save ----- end");
         return user.getId();
     }
@@ -133,6 +133,12 @@ public class UserServiceImpl implements UserService {
         userMapper.update(user);
         user.setId(3L);
         update2(user);
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public int updateUser(User user) {
+        return userMapper.update(user);
     }
 
     @Override

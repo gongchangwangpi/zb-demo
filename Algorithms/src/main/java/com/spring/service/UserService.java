@@ -30,4 +30,5 @@ public interface UserService {
 
     void update1(User user);
     void update2(User user);
+    int updateUser(User user);
 }
