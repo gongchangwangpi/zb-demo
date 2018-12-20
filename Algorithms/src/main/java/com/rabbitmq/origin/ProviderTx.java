@@ -6,6 +6,8 @@ import com.rabbitmq.client.MessageProperties;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 事务消息
+ * 
  * @author zhangbo
  */
 @Slf4j
