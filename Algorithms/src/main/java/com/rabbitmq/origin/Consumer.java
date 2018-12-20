@@ -42,7 +42,7 @@ public class Consumer {
             }
         };
 
-        channel.basicConsume(queueName, consumer);
+        channel.basicConsume(queueName, false, "consumer3", consumer);
 //        
         // 异步消费，不能立即关闭
 //        channel.close();
