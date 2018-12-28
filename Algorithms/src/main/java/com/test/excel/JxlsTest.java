@@ -1,5 +1,12 @@
 package com.test.excel;
 
+import net.sf.jxls.transformer.XLSTransformer;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -8,13 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.jxls.transformer.XLSTransformer;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
  * Jxls 单元格合并
@@ -90,10 +90,6 @@ public class JxlsTest {
             }
 
             workbook.write(os);
-
-//            IOUtils.copy(is, os);
-
-//            transformer.transformXLS(sourceFilePath, beanMap, destFilePath);
             
         } finally {
             IOUtils.closeQuietly(os);
