@@ -1,11 +1,11 @@
 package com.test;
 
+import com.util.FTPUtil;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.UUID;
-
-import com.util.FTPUtil;
 
 /**
  * @author books
@@ -21,10 +21,10 @@ public class FTPUtilTest {
         long start = System.currentTimeMillis();
 
         FTPUtil ftpUtil = new FTPUtil();
-        ftpUtil.setIp("172.18.8.22");
+        ftpUtil.setIp("172.18.8.143");
         ftpUtil.setPort(21);
         ftpUtil.setUserName("jhjHomeImage");
-        ftpUtil.setPassword("jhjHomeImage");
+        ftpUtil.setPassword("20181218jhj");
         ftpUtil.setUploadUrl("/");
 
         boolean succeed = ftpUtil.uploadFile(fileName, inputStream, middleDir);

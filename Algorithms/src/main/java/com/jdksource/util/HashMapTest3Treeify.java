@@ -6,20 +6,19 @@ import java.util.Map;
 /**
  * @author zhangbo
  */
-public class HashMapTest2 {
+public class HashMapTest3Treeify {
 
     public static void main(String[] args) {
         
-        Map<String, User> map = new HashMap<>();
+        Map<User, String> userMap = new HashMap<>();
 
-        for (int i = 0; i < 5; i++) {
-            final int id = i;
-            User user = map.computeIfAbsent("123", s -> new User(id));
-            System.out.println(user);
-            System.out.println(map);
+        for (int i = 0; i < 5000000; i++) {
+            userMap.put(new User(i), String.valueOf(i));
         }
         
     }
+
+    
  
     static class User {
         private Integer id;
@@ -30,7 +29,7 @@ public class HashMapTest2 {
 
         public User(Integer id) {
             this.id = id;
-            System.out.println("---- user " + id);
+//            System.out.println("---- user " + id);
         }
     }
 }

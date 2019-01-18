@@ -1,9 +1,9 @@
 package com.test;
 
+import com.auth0.jwt.JWTSigner;
+
 import java.util.Map;
 import java.util.TreeMap;
-
-import com.auth0.jwt.JWTSigner;
 
 /**
  * Created by books on 2017/8/24.
@@ -18,12 +18,13 @@ public class JWTTest {
         String secret_prod = "4a825d0d219744f0aab6875952e3662e";
 
         Map<String, Object> map = new TreeMap<>();
-        map.put("mobile", "17717677396"); // 18780297073
-//        map.put("source", "dpt_app");
-        map.put("source", "phoneSale");
+        map.put("mobile", "15680413834"); // 18780297073 15680413834
+        map.put("source", "app");
+//        map.put("source", "phoneSale");
+//        map.put("source", "SELF");
         
-//        String sign = new JWTSigner(secret_test).sign(map);
-        String sign = new JWTSigner(secret_prod).sign(map);
+        String sign = new JWTSigner(secret_test).sign(map);
+//        String sign = new JWTSigner(secret_prod).sign(map);
         
         System.out.println(sign);
 

@@ -1,14 +1,11 @@
 package com;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
-
-import javax.imageio.ImageIO;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author books
@@ -52,36 +49,6 @@ public class Test2 {
 
         System.out.println(s2 - s1);
         
-    }
-    
-    static class User {
-        private String name;
-        private int age;
-
-        @JsonProperty(value = "agentName")
-        public String getName() {
-            return name;
-        }
-        @JsonProperty(value = "nickname")
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        public void setAge(int age) {
-            this.age = age;
-        }
-
-        public User() {
-        }
-
-        public User(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
     }
     
 }
