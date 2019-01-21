@@ -15,7 +15,7 @@ public class JoinTest {
 
     private static Object obj = new Object();
 
-    private static Thread thread = new Thread(new Run());;
+    private static Thread thread = new Thread(new Run());
 
     public static void main(String[] args) throws InterruptedException {
 

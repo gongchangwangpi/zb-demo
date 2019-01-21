@@ -18,8 +18,8 @@ public class ThreadJoin {
             thread.start();
             // 重新赋值previous
             previous = thread;
-            
-            SleepUtils.second(1);
+
+//            SleepUtils.second(1);
 
         }
 
@@ -37,6 +37,8 @@ public class ThreadJoin {
         public void run() {
             try {
                 previous.join();
+
+                SleepUtils.second(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
