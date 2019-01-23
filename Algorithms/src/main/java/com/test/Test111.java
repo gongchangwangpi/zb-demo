@@ -21,21 +21,30 @@ public class Test111 {
 
     public static void main(String[] args) throws IOException {
 
-
+        int topCount = 100;
+        
         List<Data> list = readData();
 
-        List<Data> top50Last3Year = top50(list, new ComparatorLast3YearRate());
-        List<Data> top50Last2Year = top50(list, new ComparatorLast2YearRate());
-        List<Data> top50LastYear = top50(list, new ComparatorLastYearRate());
+        List<Data> topLast3Year = top(list, topCount, new ComparatorLast3YearRate());
+        List<Data> topLast2Year = top(list, topCount, new ComparatorLast2YearRate());
+        List<Data> topLastYear = top(list, topCount, new ComparatorLastYearRate());
 
-        
-        
+        List<Data> result = new ArrayList<>();
+        for (int i = 0; i < topCount; i++) {
+            Data data = topLast3Year.get(i);
+            if (topLast2Year.contains(data) && topLastYear.contains(data)) {
+                result.add(data);
+            }
+        }
+
+        System.out.println(JSON.toJSONString(result));
+        System.out.println(result);
     }
 
-    private static List<Data> top50(List<Data> list, Comparator<Data> comparator) {
+    private static List<Data> top(List<Data> list, int topCount, Comparator<Data> comparator) {
         list.sort(comparator);
-        List<Data> top50 = new ArrayList<>(50);
-        for (int i = 0; i < 50; i++) {
+        List<Data> top50 = new ArrayList<>(topCount);
+        for (int i = 0; i < topCount; i++) {
             top50.add(list.get(i));
         }
         return top50;
@@ -108,6 +117,14 @@ public class Test111 {
         private String setupRate;
         private String setupDate;
         private String serviceCharge;
+
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "code='" + code + '\'' +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
     }
     
     static class ComparatorLast3YearRate implements Comparator<Data> {
