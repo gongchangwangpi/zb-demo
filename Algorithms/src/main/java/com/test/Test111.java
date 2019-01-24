@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.util.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * @author zhangbo
  */
+@Slf4j
 public class Test111 {
 
     public static void main(String[] args) throws IOException {
@@ -25,20 +27,35 @@ public class Test111 {
         
         List<Data> list = readData();
 
+        List<Data> result = bothTopIn3Year(list, topCount);
+
+        System.out.println(JSON.toJSONString(result));
+        System.out.println(result);
+    }
+
+    private static List<Data> bothTopIn3Year(List<Data> list, int topCount) {
         List<Data> topLast3Year = top(list, topCount, new ComparatorLast3YearRate());
         List<Data> topLast2Year = top(list, topCount, new ComparatorLast2YearRate());
         List<Data> topLastYear = top(list, topCount, new ComparatorLastYearRate());
 
+        return bothTop(topLast3Year, topLast2Year, topLastYear);
+    }
+
+    /**
+     * 分别出现在最近3年，2年，1年的最高收益中
+     * @param topLast3Year
+     * @param topLast2Year
+     * @param topLastYear
+     * @return
+     */
+    private static List<Data> bothTop(List<Data> topLast3Year, List<Data> topLast2Year, List<Data> topLastYear) {
         List<Data> result = new ArrayList<>();
-        for (int i = 0; i < topCount; i++) {
-            Data data = topLast3Year.get(i);
+        for (Data data : topLast3Year) {
             if (topLast2Year.contains(data) && topLastYear.contains(data)) {
                 result.add(data);
             }
         }
-
-        System.out.println(JSON.toJSONString(result));
-        System.out.println(result);
+        return result;
     }
 
     private static List<Data> top(List<Data> list, int topCount, Comparator<Data> comparator) {
@@ -59,6 +76,7 @@ public class Test111 {
         String s1 = IOUtils.toString(fis, "UTF-8");
 
         List<String> datas = JSON.parseArray(s1, String.class);
+        log.info("当前共有{}支", datas.size());
 
         List<Data> list = new ArrayList<>();
 
@@ -93,6 +111,7 @@ public class Test111 {
                 list.add(data);
             }
         }
+        log.info("其中成立满2年的有{}支", list.size());
         return list;
     }
 
