@@ -1,41 +1,42 @@
 package com.util;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Lists;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.base.Joiner;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 /**
- * HTTP client 工具类
+ * SIMPLE HTTP CLIENT 工具类
+ *
+ * @author EDISON
  *
  */
+@Getter
+@Setter
 @Slf4j
 public class SimpleHttpClient {
-
-    private static final Logger logger = LoggerFactory.getLogger(SimpleHttpClient.class);
 
     private static final String DEFAULT_CHARSET = "UTF-8";
 
@@ -43,13 +44,52 @@ public class SimpleHttpClient {
 
     private int poolSize = 30;
 
+    private LogLevel logLevel = LogLevel.INFO;
+
     private CloseableHttpClient closeableHttpClient;
+
+    /**
+     * 自定义日志级别枚举
+     */
+    enum LogLevel {
+        NONE {
+            @Override
+            void log(String header, Object msg) {
+                // 不打印日志
+            }
+        },
+        DEBUG {
+            @Override
+            void log(String header, Object msg) {
+                log.debug("【HTTP】{} = {}", header, msg);
+            }
+        },
+        INFO {
+            @Override
+            void log(String header, Object msg) {
+                log.info("【HTTP】{} = {}", header, msg);
+            }
+        },
+        WARN {
+            @Override
+            void log(String header, Object msg) {
+                log.warn("【HTTP】{} = {}", header, msg);
+            }
+        },
+        ERROR {
+            @Override
+            void log(String header, Object msg) {
+                log.error("【HTTP】{} = {}", header, msg);
+            }
+        };
+
+        abstract void log(String header, Object msg);
+    }
 
     /**
      * 初始化CloseableHttpClient
      */
     public void init() {
-        // --SET TIMEOUT--//
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(timeout * 1000)
                 .setConnectTimeout(timeout * 1000)
@@ -57,50 +97,47 @@ public class SimpleHttpClient {
                 .setStaleConnectionCheckEnabled(true)
                 .build();
 
-        // --SET POOLSIZE, CREATE HTTP CLIENT--//
         closeableHttpClient = HttpClientBuilder.create().setMaxConnTotal(poolSize).setMaxConnPerRoute(poolSize)
                 .setDefaultRequestConfig(requestConfig).build();
-//        logger.info(" init closeableHttpClient: " + closeableHttpClient);
     }
 
     /**
      * POST请求
      *
      * @param url          URL地址
-     * @param stringParam 请求参数,通常是基于JSON格式的字符串
+     * @param requestParam 请求参数,通常是基于JSON格式的字符串
      * @param charset      编码
      * @return response
+     * @throws HttpRemoteException
      */
-    public String post(String url, String stringParam, String charset, Map<String, String> headers) {
+    public String postBySingleString(String url, String requestParam, String charset) {
+
+        customLog("url", url);
+
         CloseableHttpClient httpClient = closeableHttpClient;
         HttpPost httpPost = new HttpPost(url);
         String body = null;
-
-        if (log.isInfoEnabled()) {
-            log.info("HTTP POST URL: {}", url);
-            log.info("HTTP POST PARAMS: {}", stringParam);
-        }
-
-        addHeaders(httpPost, headers);
-        
+        httpPost.addHeader("Content-Type", "application/json");
+        httpPost.addHeader("Accept", "application/json");
         try {
-            if (!StringUtils.isEmpty(stringParam)) {
-                httpPost.setEntity(new StringEntity(stringParam, charset));
+            if (!StringUtils.isEmpty(requestParam)) {
+                httpPost.setEntity(new StringEntity(requestParam, charset));
+
+                customLog("params", requestParam);
             }
 
             CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity entity = httpResponse.getEntity();
 
             body = EntityUtils.toString(entity);
-            
-            if (log.isInfoEnabled()) {
-                log.info("HTTP POST RESPONSE: {}", body);
-            }
-            
+
+            customLog("response", body);
+
             EntityUtils.consumeQuietly(entity);
         } catch (IOException e) {
             httpPost.abort();
-            logger.error("post from remote " + url + "  error", e);
+            customLog("error", e);
+            throw new HttpRemoteException(e);
         }
         return body;
     }
@@ -112,19 +149,21 @@ public class SimpleHttpClient {
      * @param paramMap 请求参数映射
      * @param charset  编码
      * @return response
+     * @throws HttpRemoteException
      */
-    public String post(String url, Map<String, String> paramMap, String charset) {
+    public String postByKeyValuePair(String url, Map<String, String> paramMap, String charset) {
+
+        customLog("url", url);
+
         CloseableHttpClient httpClient = closeableHttpClient;
         HttpPost httpPost = new HttpPost(url);
         String body = null;
 
-        if (log.isInfoEnabled()) {
-            log.info("HTTP POST URL: {}", url);
-            log.info("HTTP POST PARAMS: {}", JSON.toJSONString(paramMap));
-        }
-        
         try {
             if (paramMap != null && !paramMap.isEmpty()) {
+
+                customLog("params", paramMap);
+
                 List<NameValuePair> params = parseFromParamMap(paramMap);
                 if (!params.isEmpty()) {
                     httpPost.setEntity(new UrlEncodedFormEntity(params, charset));
@@ -135,52 +174,131 @@ public class SimpleHttpClient {
             HttpEntity entity = httpResponse.getEntity();
 
             body = EntityUtils.toString(entity);
-            
-            if (log.isInfoEnabled()) {
-                log.info("HTTP POST RESPONSE: {}", body);
-            }
-            
+
+            customLog("response", body);
+
             EntityUtils.consumeQuietly(entity);
         } catch (IOException e) {
             httpPost.abort();
-            logger.error("post from remote " + url + "  error", e);
+            customLog("error", e);
+            throw new HttpRemoteException(e);
         }
         return body;
     }
 
-    public String post(String url) {
-        return post(url, null, DEFAULT_CHARSET);
+    public String post(String url, byte[] params, String charset) {
+
+        customLog("url", url);
+
+        CloseableHttpClient httpClient = closeableHttpClient;
+        HttpPost httpPost = new HttpPost(url);
+        String response = null;
+
+        try {
+            if (params != null && params.length > 0) {
+//                customLog("params", params);
+                HttpEntity httpEntity = EntityBuilder.create().setBinary(params).setContentEncoding(charset).build();
+                httpPost.setEntity(httpEntity);
+            }
+
+            CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpResponseEntity = httpResponse.getEntity();
+
+            response = EntityUtils.toString(httpResponseEntity, charset);
+
+            customLog("response", response);
+
+            EntityUtils.consumeQuietly(httpResponseEntity);
+        } catch (IOException e) {
+            httpPost.abort();
+            customLog("error", e);
+            throw new HttpRemoteException(e);
+        }
+        return response;
+    }
+
+    public String post(String url, byte[] params) {
+        return post(url, params, DEFAULT_CHARSET);
+    }
+
+    public <T> T post(String url, byte[] params, Class<T> resultType) {
+        String response = post(url, params);
+        return parseResult(response, resultType);
+    }
+
+    public <T> T post(String url, byte[] params, TypeReference<T> resultType) {
+        String response = post(url, params);
+        return parseResult(response, resultType);
+    }
+
+    public String post(String url, String param) {
+        return postBySingleString(url, param, DEFAULT_CHARSET);
     }
 
     public String post(String url, Map<String, String> paramMap) {
-        return post(url, paramMap, DEFAULT_CHARSET);
+        return postByKeyValuePair(url, paramMap, DEFAULT_CHARSET);
     }
 
-    public String post(String url, String json) {
-        Map<String, String> headers = new HashMap<>(1);
-        headers.put("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-        return post(url, json, DEFAULT_CHARSET, headers);
-    }
-    
-    public String post(String url, String param, Map<String, String> headers) {
-        return post(url, param, DEFAULT_CHARSET, headers);
+    public String post(String url) {
+        return postByKeyValuePair(url, null, DEFAULT_CHARSET);
     }
 
-    //---------- http get ----------//
-    
-    public String get(String url, Map<String, String> headers, String charset) {
+    public <T> T post(String url, TypeReference<T> typeReference) {
+        return post(url, (Map<String, String>) null, typeReference);
+    }
+
+    public <T> T post(String url, Class<T> type) {
+        return post(url, (Map<String, String>) null, type);
+    }
+
+    public <T> T post(String url, Map<String, String> paramMap, Class<T> type) {
+        return postByKeyValuePair(url, paramMap, DEFAULT_CHARSET, type);
+    }
+
+    public <T> T post(String url, Map<String, String> paramMap, TypeReference<T> typeReference) {
+        return postByKeyValuePair(url, paramMap, DEFAULT_CHARSET, typeReference);
+    }
+
+    public <T> T postByKeyValuePair(String url, Map<String, String> paramMap, String charset, Class<T> type) {
+        String result = postByKeyValuePair(url, paramMap, charset);
+        return parseResult(result, type);
+    }
+
+    public <T> T postByKeyValuePair(String url, Map<String, String> paramMap, String charset, TypeReference<T> typeReference) {
+        String result = postByKeyValuePair(url, paramMap, charset);
+        return parseResult(result, typeReference);
+    }
+
+    // ----- GET ----- //
+
+    /**
+     *
+     * @param url
+     * @param headers
+     * @return
+     * @throws HttpRemoteException
+     */
+    public String getByHeaders(String url, Map<String, String> headers) {
+
+        customLog("url", url);
+
         CloseableHttpClient httpClient = closeableHttpClient;
         HttpGet httpGet = null;
         String body = null;
 
-        if (log.isInfoEnabled()) {
-            log.info("HTTP GET URL: {}", url);
-        }
-        
         try {
+            //创建HTTP GET请求
             httpGet = new HttpGet(url);
 
-            addHeaders(httpGet, headers);
+            //添加请求头,非必须
+            if (headers != null && !headers.isEmpty()) {
+
+                customLog("headers", headers);
+
+                for (Map.Entry<String, String> entry : headers.entrySet()) {
+                    httpGet.addHeader(entry.getKey(), entry.getValue());
+                }
+            }
 
             CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
 
@@ -189,41 +307,81 @@ public class SimpleHttpClient {
 
             body = EntityUtils.toString(entity);
 
-            if (log.isInfoEnabled()) {
-                log.info("HTTP GET RESPONSE: {}", body);
-            }
-            
+            customLog("response", body);
+
             EntityUtils.consumeQuietly(entity);
-        } catch (Exception e) {
+        } catch (IOException e) {
             httpGet.abort();
-            logger.error("get from remote " + url + "  error", e);
+            customLog("error", e);
+            throw new HttpRemoteException(e);
         }
+
         return body;
     }
 
-    private void addHeaders(HttpRequestBase httpRequest, Map<String, String> headers) {
-        if (headers != null && !headers.isEmpty()) {
-            
-            if (log.isInfoEnabled()) {
-                log.info("HTTP HEADERS: {}", JSON.toJSONString(headers));
-            }
-            
-            for (Map.Entry<String, String> header : headers.entrySet()) {
-                httpRequest.addHeader(header.getKey(), header.getValue());
-            }
-        }
+    public <T> T getByHeaders(String url, Map<String, String> headers, Class<T> resultType) {
+        String response = getByHeaders(url, headers);
+        return parseResult(response, resultType);
+    }
+
+    public <T> T getByHeaders(String url, Map<String, String> headers, TypeReference<T> resultType) {
+        String response = getByHeaders(url, headers);
+        return parseResult(response, resultType);
     }
 
     public String get(String url) {
-        return get(url, null, DEFAULT_CHARSET);
+        return getByHeaders(url, null);
     }
 
-    public String get(String url, Map<String, String> headers) {
-        return get(url, headers, DEFAULT_CHARSET);
+    public String get(String url, Map<String, String> params) {
+        url = appendQueryString(url, params);
+        return get(url);
+    }
+
+    public <T> T get(String url, Class<T> type) {
+        String result = get(url);
+        return parseResult(result, type);
+    }
+
+    public <T> T get(String url, Map<String, String> params, Class<T> type) {
+        url = appendQueryString(url, params);
+        return get(url, type);
+    }
+
+    public <T> T get(String url, TypeReference<T> typeReference) {
+        String result = get(url);
+        return parseResult(result, typeReference);
+    }
+
+    public <T> T get(String url, Map<String, String> params, TypeReference<T> typeReference) {
+        url = appendQueryString(url, params);
+        return get(url, typeReference);
+    }
+
+    private <T> T parseResult(String result, TypeReference<T> typeReference) {
+        if (StringUtils.isEmpty(result)) {
+            return null;
+        }
+        return JacksonJsonMapper.INSTANCE.fromJson(result, typeReference);
+    }
+
+    private <T> T parseResult(String result, Class<T> type) {
+        if (StringUtils.isEmpty(result)) {
+            return null;
+        }
+        return JacksonJsonMapper.INSTANCE.fromJson(result, type);
+    }
+
+    private String appendQueryString(String url, Map<String, String> params) {
+        if (params != null && !params.isEmpty()) {
+            String queryString = Joiner.on("&").withKeyValueSeparator("=").join(params);
+            url = url + "?" + queryString;
+        }
+        return url;
     }
 
     private List<NameValuePair> parseFromParamMap(Map<String, String> paramMap) {
-        List<NameValuePair> nameValuePairs = Lists.newArrayList();
+        List<NameValuePair> nameValuePairs = new ArrayList<>(paramMap.size());
         for (Map.Entry<String, String> entry : paramMap.entrySet()) {
 
             String paramName = entry.getKey();
@@ -242,26 +400,13 @@ public class SimpleHttpClient {
     private void destroy() {
         try {
             closeableHttpClient.close();
-            logger.info(" destroy closeableHttpClient: " + closeableHttpClient);
         } catch (IOException e) {
-            logger.error("httpclient close fail", e);
+            customLog("destroy httpClient error", e);
         }
     }
 
-    public int getTimeout() {
-        return timeout;
-    }
-
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
-    }
-
-    public int getPoolSize() {
-        return poolSize;
-    }
-
-    public void setPoolSize(int poolSize) {
-        this.poolSize = poolSize;
+    private void customLog(String header, Object msg) {
+        logLevel.log(header, msg);
     }
 
 }

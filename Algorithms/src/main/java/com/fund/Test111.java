@@ -1,4 +1,4 @@
-package com.test;
+package com.fund;
 
 import com.alibaba.fastjson.JSON;
 import com.util.DateUtil;
