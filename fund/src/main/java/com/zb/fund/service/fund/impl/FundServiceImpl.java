@@ -1,10 +1,9 @@
 package com.zb.fund.service.fund.impl;
 
-import com.zb.fund.domain.FundType;
-import com.zb.fund.mapper.FundTypeMapper;
-import com.zb.fund.service.fund.FundTypeService;
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Or;
+import com.github.pagehelper.PageInfo;
+import com.zb.fund.domain.Fund;
+import com.zb.fund.mapper.FundMapper;
+import com.zb.fund.service.fund.FundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,34 +14,40 @@ import java.util.List;
 /**
  * Created by Administrator on 2019/1/26 0026.
  */
-@Slf4j
-@Service(value = "fundTypeService")
-public class FundTypeServiceImpl implements FundTypeService {
+@Service(value = "fundService")
+public class FundServiceImpl implements FundService {
 
     @Autowired
-    private FundTypeMapper fundTypeMapper;
+    private FundMapper fundMapper;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, rollbackFor = Exception.class)
-    public void save(FundType fundType) {
-        fundTypeMapper.insert(fundType);
+    public long save(Fund fund) {
+        fundMapper.insert(fund);
+        return fund.getId();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, rollbackFor = Exception.class)
-    public void update(FundType fundType) {
-        fundTypeMapper.update(fundType);
+    public int update(Fund fund) {
+        return fundMapper.updateByPrimaryKey(fund);
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-    public FundType get(String fundTypeCode) {
-        return fundTypeMapper.selectByCode(fundTypeCode);
+    public Fund get(String fundCode) {
+        return null;
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-    public List<FundType> list() {
-        return fundTypeMapper.selectList();
+    public List<Fund> list() {
+        return null;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    public PageInfo<Fund> pageList() {
+        return null;
     }
 }
