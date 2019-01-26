@@ -1,7 +1,7 @@
 package com.zb.fund;
 
 import com.alibaba.fastjson.JSON;
-import com.zb.commons.date.DateOperator;
+import com.zb.commons.date.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -83,8 +83,8 @@ public class Test111 {
         for (String j : datas) {
             String[] detail = j.split(",");
             
-            Date setupDate = DateOperator.defaultParseDate(detail[16]);
-            Date last2Year = DateOperator.add(new Date(), Calendar.YEAR, -2);
+            Date setupDate = DateUtil.defaultParseDate(detail[16]);
+            Date last2Year = DateUtil.add(new Date(), Calendar.YEAR, -2);
             
             if (setupDate.before(last2Year)) {
 

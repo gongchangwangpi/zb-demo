@@ -2,16 +2,17 @@ package com.zb.fund.mapper;
 
 import com.zb.fund.domain.FundType;
 
+import java.util.List;
+
 public interface FundTypeMapper {
+
     int deleteByPrimaryKey(Long id);
 
     int insert(FundType record);
 
-    int insertSelective(FundType record);
+    int update(FundType record);
 
-    FundType selectByPrimaryKey(Long id);
+    FundType selectByCode(String fundTypeCode);
 
-    int updateByPrimaryKeySelective(FundType record);
-
-    int updateByPrimaryKey(FundType record);
+    List<FundType> selectList();
 }

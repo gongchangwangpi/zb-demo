@@ -1,128 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zb.fund.mapper.FundMapper" >
-  <resultMap id="BaseResultMap" type="com.zb.fund.domain.Fund" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="fund_name" property="fundName" jdbcType="VARCHAR" />
-    <result column="fund_code" property="fundCode" jdbcType="VARCHAR" />
-    <result column="initial" property="initial" jdbcType="VARCHAR" />
-    <result column="set_up_date" property="setUpDate" jdbcType="DATE" />
-    <result column="fund_type_code" property="fundTypeCode" jdbcType="VARCHAR" />
-    <result column="fund_type_name" property="fundTypeName" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.zb.fund.mapper.FundMapper">
+    <resultMap id="BaseResultMap" type="com.zb.fund.domain.Fund">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fund_name" property="fundName" jdbcType="VARCHAR"/>
+        <result column="fund_code" property="fundCode" jdbcType="VARCHAR"/>
+        <result column="initial" property="initial" jdbcType="VARCHAR"/>
+        <result column="set_up_date" property="setUpDate" jdbcType="DATE"/>
+        <result column="fund_type_code" property="fundTypeCode" jdbcType="VARCHAR"/>
+        <result column="fund_type_name" property="fundTypeName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
     id, fund_name, fund_code, initial, set_up_date, fund_type_code, fund_type_name, create_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_fund
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_fund
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_fund
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.zb.fund.domain.Fund" >
-    insert into t_fund (id, fund_name, fund_code, 
-      initial, set_up_date, fund_type_code, 
+
+    <insert id="insert" parameterType="com.zb.fund.domain.Fund" useGeneratedKeys="true" keyProperty="id">
+    insert into t_fund (fund_name, fund_code,
+      initial, set_up_date, fund_type_code,
       fund_type_name, create_time)
-    values (#{id,jdbcType=BIGINT}, #{fundName,jdbcType=VARCHAR}, #{fundCode,jdbcType=VARCHAR}, 
-      #{initial,jdbcType=VARCHAR}, #{setUpDate,jdbcType=DATE}, #{fundTypeCode,jdbcType=VARCHAR}, 
+    values (#{fundName,jdbcType=VARCHAR}, #{fundCode,jdbcType=VARCHAR},
+      #{initial,jdbcType=VARCHAR}, #{setUpDate,jdbcType=DATE}, #{fundTypeCode,jdbcType=VARCHAR},
       #{fundTypeName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.zb.fund.domain.Fund" >
-    insert into t_fund
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="fundName != null" >
-        fund_name,
-      </if>
-      <if test="fundCode != null" >
-        fund_code,
-      </if>
-      <if test="initial != null" >
-        initial,
-      </if>
-      <if test="setUpDate != null" >
-        set_up_date,
-      </if>
-      <if test="fundTypeCode != null" >
-        fund_type_code,
-      </if>
-      <if test="fundTypeName != null" >
-        fund_type_name,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="fundName != null" >
-        #{fundName,jdbcType=VARCHAR},
-      </if>
-      <if test="fundCode != null" >
-        #{fundCode,jdbcType=VARCHAR},
-      </if>
-      <if test="initial != null" >
-        #{initial,jdbcType=VARCHAR},
-      </if>
-      <if test="setUpDate != null" >
-        #{setUpDate,jdbcType=DATE},
-      </if>
-      <if test="fundTypeCode != null" >
-        #{fundTypeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="fundTypeName != null" >
-        #{fundTypeName,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zb.fund.domain.Fund" >
-    update t_fund
-    <set >
-      <if test="fundName != null" >
-        fund_name = #{fundName,jdbcType=VARCHAR},
-      </if>
-      <if test="fundCode != null" >
-        fund_code = #{fundCode,jdbcType=VARCHAR},
-      </if>
-      <if test="initial != null" >
-        initial = #{initial,jdbcType=VARCHAR},
-      </if>
-      <if test="setUpDate != null" >
-        set_up_date = #{setUpDate,jdbcType=DATE},
-      </if>
-      <if test="fundTypeCode != null" >
-        fund_type_code = #{fundTypeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="fundTypeName != null" >
-        fund_type_name = #{fundTypeName,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zb.fund.domain.Fund" >
-    update t_fund
-    set fund_name = #{fundName,jdbcType=VARCHAR},
-      fund_code = #{fundCode,jdbcType=VARCHAR},
-      initial = #{initial,jdbcType=VARCHAR},
-      set_up_date = #{setUpDate,jdbcType=DATE},
-      fund_type_code = #{fundTypeCode,jdbcType=VARCHAR},
-      fund_type_name = #{fundTypeName,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+
+    <update id="update" parameterType="com.zb.fund.domain.Fund">
+        update t_fund
+        <set>
+            <if test="fundName != null">
+                fund_name = #{fundName,jdbcType=VARCHAR},
+            </if>
+            <if test="fundCode != null">
+                fund_code = #{fundCode,jdbcType=VARCHAR},
+            </if>
+            <if test="initial != null">
+                initial = #{initial,jdbcType=VARCHAR},
+            </if>
+            <if test="setUpDate != null">
+                set_up_date = #{setUpDate,jdbcType=DATE},
+            </if>
+            <if test="fundTypeCode != null">
+                fund_type_code = #{fundTypeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fundTypeName != null">
+                fund_type_name = #{fundTypeName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

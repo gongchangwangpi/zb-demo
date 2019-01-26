@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zb.fund.mapper.FundTrendMapper" >
-  <resultMap id="BaseResultMap" type="com.zb.fund.domain.FundTrend" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="fund_code" property="fundCode" jdbcType="VARCHAR" />
-    <result column="fund_name" property="fundName" jdbcType="VARCHAR" />
-    <result column="statistics_date" property="statisticsDate" jdbcType="DATE" />
-    <result column="unit_net_worth" property="unitNetWorth" jdbcType="VARCHAR" />
-    <result column="total_net_worth" property="totalNetWorth" jdbcType="VARCHAR" />
-    <result column="daily_rate" property="dailyRate" jdbcType="VARCHAR" />
-    <result column="last_week_rate" property="lastWeekRate" jdbcType="VARCHAR" />
-    <result column="last_month_rate" property="lastMonthRate" jdbcType="VARCHAR" />
-    <result column="last_3_month_rate" property="last3MonthRate" jdbcType="VARCHAR" />
-    <result column="last_6_month_rate" property="last6MonthRate" jdbcType="VARCHAR" />
-    <result column="last_year_rate" property="lastYearRate" jdbcType="VARCHAR" />
-    <result column="last_2_year_rate" property="last2YearRate" jdbcType="VARCHAR" />
-    <result column="last_3_tear_rate" property="last3TearRate" jdbcType="VARCHAR" />
-    <result column="this_year_rate" property="thisYearRate" jdbcType="VARCHAR" />
-    <result column="since_inception_rate" property="sinceInceptionRate" jdbcType="VARCHAR" />
-    <result column="service_charge" property="serviceCharge" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="ext17" property="ext17" jdbcType="VARCHAR" />
-    <result column="ext18" property="ext18" jdbcType="VARCHAR" />
-    <result column="ext19" property="ext19" jdbcType="VARCHAR" />
-    <result column="ext21" property="ext21" jdbcType="VARCHAR" />
-    <result column="ext22" property="ext22" jdbcType="VARCHAR" />
-    <result column="ext23" property="ext23" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.zb.fund.mapper.FundTrendMapper">
+    <resultMap id="BaseResultMap" type="com.zb.fund.domain.FundTrend">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fund_code" property="fundCode" jdbcType="VARCHAR"/>
+        <result column="fund_name" property="fundName" jdbcType="VARCHAR"/>
+        <result column="statistics_date" property="statisticsDate" jdbcType="DATE"/>
+        <result column="unit_net_worth" property="unitNetWorth" jdbcType="VARCHAR"/>
+        <result column="total_net_worth" property="totalNetWorth" jdbcType="VARCHAR"/>
+        <result column="daily_rate" property="dailyRate" jdbcType="VARCHAR"/>
+        <result column="last_week_rate" property="lastWeekRate" jdbcType="VARCHAR"/>
+        <result column="last_month_rate" property="lastMonthRate" jdbcType="VARCHAR"/>
+        <result column="last_3_month_rate" property="last3MonthRate" jdbcType="VARCHAR"/>
+        <result column="last_6_month_rate" property="last6MonthRate" jdbcType="VARCHAR"/>
+        <result column="last_year_rate" property="lastYearRate" jdbcType="VARCHAR"/>
+        <result column="last_2_year_rate" property="last2YearRate" jdbcType="VARCHAR"/>
+        <result column="last_3_tear_rate" property="last3TearRate" jdbcType="VARCHAR"/>
+        <result column="this_year_rate" property="thisYearRate" jdbcType="VARCHAR"/>
+        <result column="since_inception_rate" property="sinceInceptionRate" jdbcType="VARCHAR"/>
+        <result column="service_charge" property="serviceCharge" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="ext17" property="ext17" jdbcType="VARCHAR"/>
+        <result column="ext18" property="ext18" jdbcType="VARCHAR"/>
+        <result column="ext19" property="ext19" jdbcType="VARCHAR"/>
+        <result column="ext21" property="ext21" jdbcType="VARCHAR"/>
+        <result column="ext22" property="ext22" jdbcType="VARCHAR"/>
+        <result column="ext23" property="ext23" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
     id, fund_code, fund_name, statistics_date, unit_net_worth, total_net_worth, daily_rate, 
     last_week_rate, last_month_rate, last_3_month_rate, last_6_month_rate, last_year_rate, 
     last_2_year_rate, last_3_tear_rate, this_year_rate, since_inception_rate, service_charge, 
     create_time, ext17, ext18, ext19, ext21, ext22, ext23
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_fund_trend
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_fund_trend
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_fund_trend
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.zb.fund.domain.FundTrend" >
-    insert into t_fund_trend (id, fund_code, fund_name, 
+
+    <insert id="insert" parameterType="com.zb.fund.domain.FundTrend" useGeneratedKeys="true" keyProperty="id">
+    insert into t_fund_trend ( fund_code, fund_name,
       statistics_date, unit_net_worth, total_net_worth, 
       daily_rate, last_week_rate, last_month_rate, 
       last_3_month_rate, last_6_month_rate, last_year_rate, 
@@ -53,7 +57,7 @@
       ext17, ext18, ext19, 
       ext21, ext22, ext23
       )
-    values (#{id,jdbcType=BIGINT}, #{fundCode,jdbcType=VARCHAR}, #{fundName,jdbcType=VARCHAR}, 
+    values ( #{fundCode,jdbcType=VARCHAR}, #{fundName,jdbcType=VARCHAR},
       #{statisticsDate,jdbcType=DATE}, #{unitNetWorth,jdbcType=VARCHAR}, #{totalNetWorth,jdbcType=VARCHAR}, 
       #{dailyRate,jdbcType=VARCHAR}, #{lastWeekRate,jdbcType=VARCHAR}, #{lastMonthRate,jdbcType=VARCHAR}, 
       #{last3MonthRate,jdbcType=VARCHAR}, #{last6MonthRate,jdbcType=VARCHAR}, #{lastYearRate,jdbcType=VARCHAR}, 
@@ -63,257 +67,80 @@
       #{ext21,jdbcType=VARCHAR}, #{ext22,jdbcType=VARCHAR}, #{ext23,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zb.fund.domain.FundTrend" >
-    insert into t_fund_trend
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="fundCode != null" >
-        fund_code,
-      </if>
-      <if test="fundName != null" >
-        fund_name,
-      </if>
-      <if test="statisticsDate != null" >
-        statistics_date,
-      </if>
-      <if test="unitNetWorth != null" >
-        unit_net_worth,
-      </if>
-      <if test="totalNetWorth != null" >
-        total_net_worth,
-      </if>
-      <if test="dailyRate != null" >
-        daily_rate,
-      </if>
-      <if test="lastWeekRate != null" >
-        last_week_rate,
-      </if>
-      <if test="lastMonthRate != null" >
-        last_month_rate,
-      </if>
-      <if test="last3MonthRate != null" >
-        last_3_month_rate,
-      </if>
-      <if test="last6MonthRate != null" >
-        last_6_month_rate,
-      </if>
-      <if test="lastYearRate != null" >
-        last_year_rate,
-      </if>
-      <if test="last2YearRate != null" >
-        last_2_year_rate,
-      </if>
-      <if test="last3TearRate != null" >
-        last_3_tear_rate,
-      </if>
-      <if test="thisYearRate != null" >
-        this_year_rate,
-      </if>
-      <if test="sinceInceptionRate != null" >
-        since_inception_rate,
-      </if>
-      <if test="serviceCharge != null" >
-        service_charge,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="ext17 != null" >
-        ext17,
-      </if>
-      <if test="ext18 != null" >
-        ext18,
-      </if>
-      <if test="ext19 != null" >
-        ext19,
-      </if>
-      <if test="ext21 != null" >
-        ext21,
-      </if>
-      <if test="ext22 != null" >
-        ext22,
-      </if>
-      <if test="ext23 != null" >
-        ext23,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="fundCode != null" >
-        #{fundCode,jdbcType=VARCHAR},
-      </if>
-      <if test="fundName != null" >
-        #{fundName,jdbcType=VARCHAR},
-      </if>
-      <if test="statisticsDate != null" >
-        #{statisticsDate,jdbcType=DATE},
-      </if>
-      <if test="unitNetWorth != null" >
-        #{unitNetWorth,jdbcType=VARCHAR},
-      </if>
-      <if test="totalNetWorth != null" >
-        #{totalNetWorth,jdbcType=VARCHAR},
-      </if>
-      <if test="dailyRate != null" >
-        #{dailyRate,jdbcType=VARCHAR},
-      </if>
-      <if test="lastWeekRate != null" >
-        #{lastWeekRate,jdbcType=VARCHAR},
-      </if>
-      <if test="lastMonthRate != null" >
-        #{lastMonthRate,jdbcType=VARCHAR},
-      </if>
-      <if test="last3MonthRate != null" >
-        #{last3MonthRate,jdbcType=VARCHAR},
-      </if>
-      <if test="last6MonthRate != null" >
-        #{last6MonthRate,jdbcType=VARCHAR},
-      </if>
-      <if test="lastYearRate != null" >
-        #{lastYearRate,jdbcType=VARCHAR},
-      </if>
-      <if test="last2YearRate != null" >
-        #{last2YearRate,jdbcType=VARCHAR},
-      </if>
-      <if test="last3TearRate != null" >
-        #{last3TearRate,jdbcType=VARCHAR},
-      </if>
-      <if test="thisYearRate != null" >
-        #{thisYearRate,jdbcType=VARCHAR},
-      </if>
-      <if test="sinceInceptionRate != null" >
-        #{sinceInceptionRate,jdbcType=VARCHAR},
-      </if>
-      <if test="serviceCharge != null" >
-        #{serviceCharge,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="ext17 != null" >
-        #{ext17,jdbcType=VARCHAR},
-      </if>
-      <if test="ext18 != null" >
-        #{ext18,jdbcType=VARCHAR},
-      </if>
-      <if test="ext19 != null" >
-        #{ext19,jdbcType=VARCHAR},
-      </if>
-      <if test="ext21 != null" >
-        #{ext21,jdbcType=VARCHAR},
-      </if>
-      <if test="ext22 != null" >
-        #{ext22,jdbcType=VARCHAR},
-      </if>
-      <if test="ext23 != null" >
-        #{ext23,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zb.fund.domain.FundTrend" >
-    update t_fund_trend
-    <set >
-      <if test="fundCode != null" >
-        fund_code = #{fundCode,jdbcType=VARCHAR},
-      </if>
-      <if test="fundName != null" >
-        fund_name = #{fundName,jdbcType=VARCHAR},
-      </if>
-      <if test="statisticsDate != null" >
-        statistics_date = #{statisticsDate,jdbcType=DATE},
-      </if>
-      <if test="unitNetWorth != null" >
-        unit_net_worth = #{unitNetWorth,jdbcType=VARCHAR},
-      </if>
-      <if test="totalNetWorth != null" >
-        total_net_worth = #{totalNetWorth,jdbcType=VARCHAR},
-      </if>
-      <if test="dailyRate != null" >
-        daily_rate = #{dailyRate,jdbcType=VARCHAR},
-      </if>
-      <if test="lastWeekRate != null" >
-        last_week_rate = #{lastWeekRate,jdbcType=VARCHAR},
-      </if>
-      <if test="lastMonthRate != null" >
-        last_month_rate = #{lastMonthRate,jdbcType=VARCHAR},
-      </if>
-      <if test="last3MonthRate != null" >
-        last_3_month_rate = #{last3MonthRate,jdbcType=VARCHAR},
-      </if>
-      <if test="last6MonthRate != null" >
-        last_6_month_rate = #{last6MonthRate,jdbcType=VARCHAR},
-      </if>
-      <if test="lastYearRate != null" >
-        last_year_rate = #{lastYearRate,jdbcType=VARCHAR},
-      </if>
-      <if test="last2YearRate != null" >
-        last_2_year_rate = #{last2YearRate,jdbcType=VARCHAR},
-      </if>
-      <if test="last3TearRate != null" >
-        last_3_tear_rate = #{last3TearRate,jdbcType=VARCHAR},
-      </if>
-      <if test="thisYearRate != null" >
-        this_year_rate = #{thisYearRate,jdbcType=VARCHAR},
-      </if>
-      <if test="sinceInceptionRate != null" >
-        since_inception_rate = #{sinceInceptionRate,jdbcType=VARCHAR},
-      </if>
-      <if test="serviceCharge != null" >
-        service_charge = #{serviceCharge,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="ext17 != null" >
-        ext17 = #{ext17,jdbcType=VARCHAR},
-      </if>
-      <if test="ext18 != null" >
-        ext18 = #{ext18,jdbcType=VARCHAR},
-      </if>
-      <if test="ext19 != null" >
-        ext19 = #{ext19,jdbcType=VARCHAR},
-      </if>
-      <if test="ext21 != null" >
-        ext21 = #{ext21,jdbcType=VARCHAR},
-      </if>
-      <if test="ext22 != null" >
-        ext22 = #{ext22,jdbcType=VARCHAR},
-      </if>
-      <if test="ext23 != null" >
-        ext23 = #{ext23,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zb.fund.domain.FundTrend" >
-    update t_fund_trend
-    set fund_code = #{fundCode,jdbcType=VARCHAR},
-      fund_name = #{fundName,jdbcType=VARCHAR},
-      statistics_date = #{statisticsDate,jdbcType=DATE},
-      unit_net_worth = #{unitNetWorth,jdbcType=VARCHAR},
-      total_net_worth = #{totalNetWorth,jdbcType=VARCHAR},
-      daily_rate = #{dailyRate,jdbcType=VARCHAR},
-      last_week_rate = #{lastWeekRate,jdbcType=VARCHAR},
-      last_month_rate = #{lastMonthRate,jdbcType=VARCHAR},
-      last_3_month_rate = #{last3MonthRate,jdbcType=VARCHAR},
-      last_6_month_rate = #{last6MonthRate,jdbcType=VARCHAR},
-      last_year_rate = #{lastYearRate,jdbcType=VARCHAR},
-      last_2_year_rate = #{last2YearRate,jdbcType=VARCHAR},
-      last_3_tear_rate = #{last3TearRate,jdbcType=VARCHAR},
-      this_year_rate = #{thisYearRate,jdbcType=VARCHAR},
-      since_inception_rate = #{sinceInceptionRate,jdbcType=VARCHAR},
-      service_charge = #{serviceCharge,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      ext17 = #{ext17,jdbcType=VARCHAR},
-      ext18 = #{ext18,jdbcType=VARCHAR},
-      ext19 = #{ext19,jdbcType=VARCHAR},
-      ext21 = #{ext21,jdbcType=VARCHAR},
-      ext22 = #{ext22,jdbcType=VARCHAR},
-      ext23 = #{ext23,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+
+    <update id="update" parameterType="com.zb.fund.domain.FundTrend">
+        update t_fund_trend
+        <set>
+            <if test="fundCode != null">
+                fund_code = #{fundCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fundName != null">
+                fund_name = #{fundName,jdbcType=VARCHAR},
+            </if>
+            <if test="statisticsDate != null">
+                statistics_date = #{statisticsDate,jdbcType=DATE},
+            </if>
+            <if test="unitNetWorth != null">
+                unit_net_worth = #{unitNetWorth,jdbcType=VARCHAR},
+            </if>
+            <if test="totalNetWorth != null">
+                total_net_worth = #{totalNetWorth,jdbcType=VARCHAR},
+            </if>
+            <if test="dailyRate != null">
+                daily_rate = #{dailyRate,jdbcType=VARCHAR},
+            </if>
+            <if test="lastWeekRate != null">
+                last_week_rate = #{lastWeekRate,jdbcType=VARCHAR},
+            </if>
+            <if test="lastMonthRate != null">
+                last_month_rate = #{lastMonthRate,jdbcType=VARCHAR},
+            </if>
+            <if test="last3MonthRate != null">
+                last_3_month_rate = #{last3MonthRate,jdbcType=VARCHAR},
+            </if>
+            <if test="last6MonthRate != null">
+                last_6_month_rate = #{last6MonthRate,jdbcType=VARCHAR},
+            </if>
+            <if test="lastYearRate != null">
+                last_year_rate = #{lastYearRate,jdbcType=VARCHAR},
+            </if>
+            <if test="last2YearRate != null">
+                last_2_year_rate = #{last2YearRate,jdbcType=VARCHAR},
+            </if>
+            <if test="last3TearRate != null">
+                last_3_tear_rate = #{last3TearRate,jdbcType=VARCHAR},
+            </if>
+            <if test="thisYearRate != null">
+                this_year_rate = #{thisYearRate,jdbcType=VARCHAR},
+            </if>
+            <if test="sinceInceptionRate != null">
+                since_inception_rate = #{sinceInceptionRate,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCharge != null">
+                service_charge = #{serviceCharge,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext17 != null">
+                ext17 = #{ext17,jdbcType=VARCHAR},
+            </if>
+            <if test="ext18 != null">
+                ext18 = #{ext18,jdbcType=VARCHAR},
+            </if>
+            <if test="ext19 != null">
+                ext19 = #{ext19,jdbcType=VARCHAR},
+            </if>
+            <if test="ext21 != null">
+                ext21 = #{ext21,jdbcType=VARCHAR},
+            </if>
+            <if test="ext22 != null">
+                ext22 = #{ext22,jdbcType=VARCHAR},
+            </if>
+            <if test="ext23 != null">
+                ext23 = #{ext23,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>
