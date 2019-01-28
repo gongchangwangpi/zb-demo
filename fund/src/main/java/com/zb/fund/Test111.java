@@ -79,7 +79,7 @@ public class Test111 {
         log.info("当前共有{}支", datas.size());
 
         List<Data> list = new ArrayList<>();
-
+// var rankData = {};
         for (String j : datas) {
             String[] detail = j.split(",");
             
