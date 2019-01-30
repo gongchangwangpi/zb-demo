@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2019-01-28 16:11:50
+Date: 2019-01-30 16:15:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,11 +29,7 @@ CREATE TABLE `t_fund` (
   `fund_type_name` varchar(16) NOT NULL COMMENT '基金类型名称',
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基金表';
-
--- ----------------------------
--- Records of t_fund
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=4349 DEFAULT CHARSET=utf8 COMMENT='基金表';
 
 -- ----------------------------
 -- Table structure for t_fund_trend
@@ -53,24 +49,20 @@ CREATE TABLE `t_fund_trend` (
   `last_6_month_rate` varchar(16) DEFAULT NULL,
   `last_year_rate` varchar(16) DEFAULT NULL,
   `last_2_year_rate` varchar(16) DEFAULT NULL,
-  `last_3_tear_rate` varchar(16) DEFAULT NULL,
+  `last_3_year_rate` varchar(16) DEFAULT NULL,
   `this_year_rate` varchar(16) DEFAULT NULL,
   `since_inception_rate` varchar(16) DEFAULT NULL,
   `service_charge` varchar(16) DEFAULT NULL,
+  `ext17` varchar(32) DEFAULT NULL,
+  `ext18` varchar(32) DEFAULT NULL,
+  `ext19` varchar(32) DEFAULT NULL,
+  `ext21` varchar(32) DEFAULT NULL,
+  `ext22` varchar(32) DEFAULT NULL,
+  `ext23` varchar(32) DEFAULT NULL,
   `create_time` datetime NOT NULL,
-  `ext17` varchar(16) DEFAULT NULL,
-  `ext18` varchar(16) DEFAULT NULL,
-  `ext19` varchar(16) DEFAULT NULL,
-  `ext21` varchar(16) DEFAULT NULL,
-  `ext22` varchar(16) DEFAULT NULL,
-  `ext23` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uix_code_date` (`statistics_date`,`fund_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基金收益趋势';
-
--- ----------------------------
--- Records of t_fund_trend
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=4349 DEFAULT CHARSET=utf8 COMMENT='基金收益趋势';
 
 -- ----------------------------
 -- Table structure for t_fund_type
@@ -82,16 +74,3 @@ CREATE TABLE `t_fund_type` (
   `type_name` varchar(32) NOT NULL COMMENT '类型名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='基金类型';
-
--- ----------------------------
--- Records of t_fund_type
--- ----------------------------
-INSERT INTO `t_fund_type` VALUES ('1', 'all', '全部');
-INSERT INTO `t_fund_type` VALUES ('2', 'gp', '股票型');
-INSERT INTO `t_fund_type` VALUES ('3', 'hh', '混合型');
-INSERT INTO `t_fund_type` VALUES ('4', 'zq', '债券型');
-INSERT INTO `t_fund_type` VALUES ('5', 'zs', '指数型');
-INSERT INTO `t_fund_type` VALUES ('6', 'bb', '保本型');
-INSERT INTO `t_fund_type` VALUES ('7', 'qdii', 'QDII');
-INSERT INTO `t_fund_type` VALUES ('8', 'lof', 'LOF');
-INSERT INTO `t_fund_type` VALUES ('9', 'fof', 'FOF');
