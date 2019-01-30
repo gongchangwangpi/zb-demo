@@ -1,7 +1,9 @@
 package com.zb.fund.service.remote.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.zb.commons.date.DateUtil;
 import com.zb.commons.http.SimpleHttpClient;
+import com.zb.commons.json.JacksonJsonMapper;
 import com.zb.fund.dto.ResponseDto;
 import com.zb.fund.service.remote.EastMoneyService;
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2019/1/26 0026.
@@ -33,6 +36,15 @@ public class EastMoneyServiceImpl implements EastMoneyService {
 
         String queryUrl = String.format(url, fundTypeCode, statisticsDateStr, statisticsDateStr);
 
-        return httpClient.get(queryUrl, ResponseDto.class);
+        String response = httpClient.get(queryUrl);
+
+        response = response.substring(response.indexOf("["));
+        response = response.substring(0, response.indexOf("]") + 1);
+
+        ResponseDto responseDto = new ResponseDto();
+        List<String> datas = JSON.parseArray(response, String.class);
+        responseDto.setDatas(datas);
+        
+        return responseDto;
     }
 }

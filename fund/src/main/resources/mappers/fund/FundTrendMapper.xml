@@ -15,7 +15,7 @@
         <result column="last_6_month_rate" property="last6MonthRate" jdbcType="VARCHAR"/>
         <result column="last_year_rate" property="lastYearRate" jdbcType="VARCHAR"/>
         <result column="last_2_year_rate" property="last2YearRate" jdbcType="VARCHAR"/>
-        <result column="last_3_tear_rate" property="last3TearRate" jdbcType="VARCHAR"/>
+        <result column="last_3_year_rate" property="last3YearRate" jdbcType="VARCHAR"/>
         <result column="this_year_rate" property="thisYearRate" jdbcType="VARCHAR"/>
         <result column="since_inception_rate" property="sinceInceptionRate" jdbcType="VARCHAR"/>
         <result column="service_charge" property="serviceCharge" jdbcType="VARCHAR"/>
@@ -31,7 +31,7 @@
     <sql id="Base_Column_List">
     id, fund_code, fund_name, statistics_date, unit_net_worth, total_net_worth, daily_rate, 
     last_week_rate, last_month_rate, last_3_month_rate, last_6_month_rate, last_year_rate, 
-    last_2_year_rate, last_3_tear_rate, this_year_rate, since_inception_rate, service_charge, 
+    last_2_year_rate, last_3_year_rate, this_year_rate, since_inception_rate, service_charge, 
     create_time, ext17, ext18, ext19, ext21, ext22, ext23
   </sql>
 
@@ -52,7 +52,7 @@
       statistics_date, unit_net_worth, total_net_worth, 
       daily_rate, last_week_rate, last_month_rate, 
       last_3_month_rate, last_6_month_rate, last_year_rate, 
-      last_2_year_rate, last_3_tear_rate, this_year_rate, 
+      last_2_year_rate, last_3_year_rate, this_year_rate, 
       since_inception_rate, service_charge, create_time, 
       ext17, ext18, ext19, 
       ext21, ext22, ext23
@@ -61,12 +61,40 @@
       #{statisticsDate,jdbcType=DATE}, #{unitNetWorth,jdbcType=VARCHAR}, #{totalNetWorth,jdbcType=VARCHAR}, 
       #{dailyRate,jdbcType=VARCHAR}, #{lastWeekRate,jdbcType=VARCHAR}, #{lastMonthRate,jdbcType=VARCHAR}, 
       #{last3MonthRate,jdbcType=VARCHAR}, #{last6MonthRate,jdbcType=VARCHAR}, #{lastYearRate,jdbcType=VARCHAR}, 
-      #{last2YearRate,jdbcType=VARCHAR}, #{last3TearRate,jdbcType=VARCHAR}, #{thisYearRate,jdbcType=VARCHAR}, 
+      #{last2YearRate,jdbcType=VARCHAR}, #{last3YearRate,jdbcType=VARCHAR}, #{thisYearRate,jdbcType=VARCHAR}, 
       #{sinceInceptionRate,jdbcType=VARCHAR}, #{serviceCharge,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{ext17,jdbcType=VARCHAR}, #{ext18,jdbcType=VARCHAR}, #{ext19,jdbcType=VARCHAR}, 
       #{ext21,jdbcType=VARCHAR}, #{ext22,jdbcType=VARCHAR}, #{ext23,jdbcType=VARCHAR}
       )
   </insert>
+    
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id">
+        insert into t_fund_trend ( fund_code, fund_name,
+          statistics_date, unit_net_worth, total_net_worth, 
+          daily_rate, last_week_rate, last_month_rate, 
+          last_3_month_rate, last_6_month_rate, last_year_rate, 
+          last_2_year_rate, last_3_year_rate, this_year_rate, 
+          since_inception_rate, service_charge, create_time, 
+          ext17, ext18, ext19, 
+          ext21, ext22, ext23
+          )
+        values 
+        <foreach collection="list" item="trend" separator=",">
+            (#{trend.fundCode,jdbcType=VARCHAR}, #{trend.fundName,jdbcType=VARCHAR},
+            #{trend.statisticsDate,jdbcType=DATE}, #{trend.unitNetWorth,jdbcType=VARCHAR}, 
+            #{trend.totalNetWorth,jdbcType=VARCHAR}, #{trend.dailyRate,jdbcType=VARCHAR}, 
+            #{trend.lastWeekRate,jdbcType=VARCHAR}, #{trend.lastMonthRate,jdbcType=VARCHAR},
+            #{trend.last3MonthRate,jdbcType=VARCHAR}, #{trend.last6MonthRate,jdbcType=VARCHAR}, 
+            #{trend.lastYearRate,jdbcType=VARCHAR}, #{trend.last2YearRate,jdbcType=VARCHAR}, 
+            #{trend.last3YearRate,jdbcType=VARCHAR}, #{trend.thisYearRate,jdbcType=VARCHAR},
+            #{trend.sinceInceptionRate,jdbcType=VARCHAR}, #{trend.serviceCharge,jdbcType=VARCHAR}, 
+            #{trend.createTime,jdbcType=TIMESTAMP}, #{trend.ext17,jdbcType=VARCHAR}, 
+            #{trend.ext18,jdbcType=VARCHAR}, #{trend.ext19,jdbcType=VARCHAR},
+            #{trend.ext21,jdbcType=VARCHAR}, #{trend.ext22,jdbcType=VARCHAR}, 
+            #{trend.ext23,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
 
     <update id="update" parameterType="com.zb.fund.domain.FundTrend">
         update t_fund_trend
@@ -107,8 +135,8 @@
             <if test="last2YearRate != null">
                 last_2_year_rate = #{last2YearRate,jdbcType=VARCHAR},
             </if>
-            <if test="last3TearRate != null">
-                last_3_tear_rate = #{last3TearRate,jdbcType=VARCHAR},
+            <if test="last3YearRate != null">
+                last_3_year_rate = #{last3YearRate,jdbcType=VARCHAR},
             </if>
             <if test="thisYearRate != null">
                 this_year_rate = #{thisYearRate,jdbcType=VARCHAR},

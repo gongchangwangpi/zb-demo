@@ -22,6 +22,11 @@
         from t_fund
         where id = #{id,jdbcType=BIGINT}
     </select>
+    
+    <select id="selectFundCodeList" resultType="java.lang.String">
+        select fund_code
+        from t_fund
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_fund
@@ -36,6 +41,19 @@
       #{initial,jdbcType=VARCHAR}, #{setUpDate,jdbcType=DATE}, #{fundTypeCode,jdbcType=VARCHAR},
       #{fundTypeName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
+    
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id">
+        insert into t_fund (fund_name, fund_code,
+          initial, set_up_date, fund_type_code,
+          fund_type_name, create_time)
+        values 
+        <foreach collection="list" item="fund" separator=",">
+            (#{fund.fundName,jdbcType=VARCHAR}, #{fund.fundCode,jdbcType=VARCHAR},
+            #{fund.initial,jdbcType=VARCHAR}, #{fund.setUpDate,jdbcType=DATE}, 
+            #{fund.fundTypeCode,jdbcType=VARCHAR}, #{fund.fundTypeName,jdbcType=VARCHAR}, 
+            #{fund.createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
 
     <update id="update" parameterType="com.zb.fund.domain.Fund">
         update t_fund

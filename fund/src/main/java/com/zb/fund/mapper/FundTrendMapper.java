@@ -2,16 +2,17 @@ package com.zb.fund.mapper;
 
 import com.zb.fund.domain.FundTrend;
 
+import java.util.List;
+
 public interface FundTrendMapper {
+    
     int deleteByPrimaryKey(Long id);
 
     int insert(FundTrend record);
 
-    int insertSelective(FundTrend record);
-
     FundTrend selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(FundTrend record);
+    int update(FundTrend record);
 
-    int updateByPrimaryKey(FundTrend record);
+    int batchInsert(List<FundTrend> trendList);
 }

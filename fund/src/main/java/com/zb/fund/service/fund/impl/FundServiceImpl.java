@@ -30,7 +30,7 @@ public class FundServiceImpl implements FundService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, rollbackFor = Exception.class)
     public int update(Fund fund) {
-        return fundMapper.updateByPrimaryKey(fund);
+        return fundMapper.update(fund);
     }
 
     @Override
