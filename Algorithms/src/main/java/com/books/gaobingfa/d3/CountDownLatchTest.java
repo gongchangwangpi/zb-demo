@@ -1,7 +1,9 @@
 package com.books.gaobingfa.d3;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -16,21 +18,23 @@ import java.util.concurrent.TimeUnit;
  * CountDownLatch 只能使用一次，不能循环使用
  * Created by Administrator on 2017/8/30 0030.
  */
+@Slf4j
 public class CountDownLatchTest {
 
     public static void main(String[] args) throws InterruptedException {
         CountDownLatch doneSignal = new CountDownLatch(3);
-        Executor e = Executors.newFixedThreadPool(5);
+        ExecutorService e = Executors.newFixedThreadPool(5);
 
         for (int i = 0; i < 5; i++) {
             // create and start threads
             e.execute(new WorkerRunnable(doneSignal, i));
         }
 
-        System.out.println("main...await start");
+        log.info("main...await ");
         doneSignal.await();
-        System.out.println("main...await end");
+        log.info("main...await run");
         
+        e.shutdown();
     }
 
     static class WorkerRunnable implements Runnable {
@@ -45,15 +49,16 @@ public class CountDownLatchTest {
 
                 // 3个线程countDown
                 if (i < 2) {
+                    log.info("await " + i);
                     doneSignal.await();
-                    System.out.println("await " + i);
+                    log.info("await run" + i);
                 } else if (i == 4) {
-                    System.out.println("sleep..." + i);
+                    log.info("sleep..." + i);
                     TimeUnit.SECONDS.sleep(10);
-                    System.out.println("countDown " + i);
+                    log.info("countDown " + i);
                     doneSignal.countDown();
                 } else {
-                    System.out.println("countDown " + i);
+                    log.info("countDown " + i);
                     doneSignal.countDown();
                 }
 
