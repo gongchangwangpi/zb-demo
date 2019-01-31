@@ -3,7 +3,7 @@ package com.zb.fund.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhangbo
@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 public class ResponseDto {
     
-    private List<String> datas;
+    private Map<Integer, String> datas;
     
     private Integer allRecords;
     private Integer pageIndex;

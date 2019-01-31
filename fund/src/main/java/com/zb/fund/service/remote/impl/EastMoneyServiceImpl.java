@@ -55,8 +55,8 @@ public class EastMoneyServiceImpl implements EastMoneyService {
             
             engine.eval(response);
             Object rankData = engine.get("rankData");
-            
-            return JSON.parseObject(JSON.toJSONString(rankData), ResponseDto.class);
+            String json = JSON.toJSONString(rankData);
+            return JSON.parseObject(json, ResponseDto.class);
             
         } catch (ScriptException e) {
             log.error("解析js失败", e);

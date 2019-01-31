@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -96,9 +97,9 @@ public class FundTrendServiceImpl implements FundTrendService {
             return list;
         }
 
-        List<String> datas = responseDto.getDatas();
-        for (String data : datas) {
-            String[] detail = data.split(",");
+        Map<Integer, String> datas = responseDto.getDatas();
+        for (Map.Entry<Integer, String> data : datas.entrySet()) {
+            String[] detail = data.getValue().split(",");
             
             FundTrendDto fundTrend = new FundTrendDto();
             fundTrend.setFundCode(getExt(detail, 0));
