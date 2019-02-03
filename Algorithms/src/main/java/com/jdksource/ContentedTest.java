@@ -21,7 +21,7 @@ public class ContentedTest {
     @Contended("b")
     private long value2;
     
-    @Contended("c")
+    @Contended("b")
     private long value3;
     
     public static void main(String[] args) throws NoSuchFieldException {
