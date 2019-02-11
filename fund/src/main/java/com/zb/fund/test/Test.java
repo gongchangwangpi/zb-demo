@@ -1,4 +1,4 @@
-package com.zb.fund;
+package com.zb.fund.test;
 
 import lombok.extern.slf4j.Slf4j;
 

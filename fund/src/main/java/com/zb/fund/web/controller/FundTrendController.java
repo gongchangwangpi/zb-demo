@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -52,6 +53,13 @@ public class FundTrendController {
         PageInfo<FundTrend> pageInfo = fundTrendService.pageList(query);
         model.addAttribute("pageInfo", pageInfo);
         return "/fund/trend/list";
+    }
+    
+    @GetMapping(value = "/list/data")
+    @ResponseBody
+    public List<FundTrend> listData(FundTrendQuery query) {
+        PageInfo<FundTrend> pageInfo = fundTrendService.pageList(query);
+        return pageInfo.getList();
     }
     
     @GetMapping(value = "/chart")

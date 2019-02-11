@@ -12,9 +12,11 @@ import com.zb.fund.mapper.FundMapper;
 import com.zb.fund.mapper.FundTrendMapper;
 import com.zb.fund.service.fund.FundTrendService;
 import com.zb.fund.service.remote.EastMoneyService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,7 @@ import java.util.Set;
 /**
  * @author zhangbo
  */
+@Slf4j
 @Service(value = "fundTrendService")
 public class FundTrendServiceImpl implements FundTrendService {
     
@@ -68,7 +71,7 @@ public class FundTrendServiceImpl implements FundTrendService {
     }
 
     private void saveFundTrends(List<FundTrendDto> dtoList, Date statDate) {
-        List<FundTrend> trendList = new ArrayList<>(dtoList.size());
+//        List<FundTrend> trendList = new ArrayList<>(dtoList.size());
         Date statisticsDate = null;
         for (FundTrendDto dto : dtoList) {
             FundTrend trend = new FundTrend();
@@ -79,9 +82,15 @@ public class FundTrendServiceImpl implements FundTrendService {
                 statisticsDate = trend.getStatisticsDate();
             }
             trend.setCreateTime(new Date());
-            trendList.add(trend);
+//            trendList.add(trend);
+
+            try {
+                fundTrendMapper.insert(trend);
+            } catch (DuplicateKeyException e) {
+                log.error("【唯一性】保存失败", e);
+            }
         }
-        fundTrendMapper.batchInsert(trendList);
+//        fundTrendMapper.batchInsert(trendList);
     }
 
     /**
@@ -123,30 +132,30 @@ public class FundTrendServiceImpl implements FundTrendService {
             String[] detail = data.getValue().split(",");
             
             FundTrendDto fundTrend = new FundTrendDto();
-            fundTrend.setFundCode(getExt(detail, 0));
-            fundTrend.setFundName(getExt(detail, 1));
-            fundTrend.setInitial(getExt(detail, 2));
-            fundTrend.setStatisticsDate(parseDate(getExt(detail, 3)));
-            fundTrend.setUnitNetWorth(getExt(detail, 4));
-            fundTrend.setTotalNetWorth(getExt(detail, 5));
-            fundTrend.setDailyRate(getExt(detail, 6));
-            fundTrend.setLastWeekRate(getExt(detail, 7));
-            fundTrend.setLastMonthRate(getExt(detail, 8));
-            fundTrend.setLast3MonthRate(getExt(detail, 9));
-            fundTrend.setLast6MonthRate(getExt(detail, 10));
-            fundTrend.setLastYearRate(getExt(detail, 11));
-            fundTrend.setLast2YearRate(getExt(detail, 12));
-            fundTrend.setLast3YearRate(getExt(detail, 13));
-            fundTrend.setThisYearRate(getExt(detail, 14));
-            fundTrend.setSinceInceptionRate(getExt(detail, 15));
-            fundTrend.setSetUpDate(parseDate(getExt(detail, 16)));
-            fundTrend.setExt17(getExt(detail, 17));
-            fundTrend.setExt18(getExt(detail, 18));
-            fundTrend.setExt19(getExt(detail, 19));
-            fundTrend.setServiceCharge(getExt(detail, 20));
-            fundTrend.setExt21(getExt(detail, 21));
-            fundTrend.setExt22(getExt(detail, 22));
-            fundTrend.setExt23(getExt(detail, 23));
+            fundTrend.setFundCode(getData(detail, 0));
+            fundTrend.setFundName(getData(detail, 1));
+            fundTrend.setInitial(getData(detail, 2));
+            fundTrend.setStatisticsDate(parseDate(getData(detail, 3)));
+            fundTrend.setUnitNetWorth(getData(detail, 4));
+            fundTrend.setTotalNetWorth(getData(detail, 5));
+            fundTrend.setDailyRate(getData(detail, 6));
+            fundTrend.setLastWeekRate(getData(detail, 7));
+            fundTrend.setLastMonthRate(getData(detail, 8));
+            fundTrend.setLast3MonthRate(getData(detail, 9));
+            fundTrend.setLast6MonthRate(getData(detail, 10));
+            fundTrend.setLastYearRate(getData(detail, 11));
+            fundTrend.setLast2YearRate(getData(detail, 12));
+            fundTrend.setLast3YearRate(getData(detail, 13));
+            fundTrend.setThisYearRate(getData(detail, 14));
+            fundTrend.setSinceInceptionRate(getData(detail, 15));
+            fundTrend.setSetUpDate(parseDate(getData(detail, 16)));
+            fundTrend.setExt17(getData(detail, 17));
+            fundTrend.setExt18(getData(detail, 18));
+            fundTrend.setExt19(getData(detail, 19));
+            fundTrend.setServiceCharge(getData(detail, 20));
+            fundTrend.setExt21(getData(detail, 21));
+            fundTrend.setExt22(getData(detail, 22));
+            fundTrend.setExt23(getData(detail, 23));
 
             list.add(fundTrend);
         }
@@ -161,7 +170,7 @@ public class FundTrendServiceImpl implements FundTrendService {
         return DateUtil.defaultParseDate(dateStr);
     }
 
-    private String getExt(String[] detail, int index) {
+    private String getData(String[] detail, int index) {
         return detail.length > index ? detail[index] : "";
     }
 }

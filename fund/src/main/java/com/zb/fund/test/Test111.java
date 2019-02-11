@@ -1,4 +1,4 @@
-package com.zb.fund;
+package com.zb.fund.test;
 
 import com.alibaba.fastjson.JSON;
 import com.zb.commons.date.DateUtil;

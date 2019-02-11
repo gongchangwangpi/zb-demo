@@ -50,7 +50,7 @@ public class FundTrendQuery extends PageQuery {
         if (combSort == null || combSort.length == 0) {
             return getSortColumn() + getSortType();
         } else {
-            return Joiner.on(",").join(combSort);
+            return Joiner.on(",").join(combSort).replaceAll("-", " ");
         }
     }
     
