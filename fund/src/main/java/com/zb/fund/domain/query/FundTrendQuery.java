@@ -1,5 +1,7 @@
 package com.zb.fund.domain.query;
 
+import com.google.common.base.Joiner;
+import com.zb.fund.query.PageQuery;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +14,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class FundTrendQuery {
+public class FundTrendQuery extends PageQuery {
     
     /**
      * 主键
@@ -38,5 +40,18 @@ public class FundTrendQuery {
      * 
      */
     private Date createTime;
+
+    /**
+     * 组合排序
+     */
+    private String[]  combSort;
+    
+    public String orderBy() {
+        if (combSort == null || combSort.length == 0) {
+            return getSortColumn() + getSortType();
+        } else {
+            return Joiner.on(",").join(combSort);
+        }
+    }
     
 }

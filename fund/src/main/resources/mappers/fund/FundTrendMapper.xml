@@ -34,12 +34,40 @@
     last_2_year_rate, last_3_year_rate, this_year_rate, since_inception_rate, service_charge, 
     create_time, ext17, ext18, ext19, ext21, ext22, ext23
   </sql>
+    
+    <sql id="Common_Query">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="fundCode != null and fundCode != ''">
+                AND fund_code = #{fundCode}
+            </if>
+            <if test="fundName != null and fundName != ''">
+                AND fund_name like concat('%', #{fundName}, '%')
+            </if>
+            <if test="statisticsDate != null">
+                AND statistics_date = #{statisticsDate}
+            </if>
+        </where>
+    </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
         from t_fund_trend
         where id = #{id,jdbcType=BIGINT}
+    </select>
+    
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.zb.fund.domain.query.FundTrendQuery">
+        SELECT <include refid="Base_Column_List"/>
+        FROM t_fund_trend
+        <include refid="Common_Query"/>
+    </select>
+    
+    <select id="selectLatestStatisticsDate" resultType="java.util.Date">
+        SELECT MAX(statistics_date)
+        FROM t_fund_trend
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -1,9 +1,12 @@
 package com.zb.fund.web.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zb.commons.date.DateUtil;
 import com.zb.commons.dto.RestfulResultDto;
+import com.zb.fund.domain.FundTrend;
 import com.zb.fund.domain.query.FundTrendQuery;
 import com.zb.fund.service.fund.FundTrendService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import java.util.concurrent.Executors;
 /**
  * @author zhangbo
  */
+@Slf4j
 @Validated
 @RequestMapping(value = "/fund/trend")
 @Controller
@@ -45,8 +49,14 @@ public class FundTrendController {
     @GetMapping(value = "/list")
     public String list(FundTrendQuery query, Model model) {
         model.addAttribute("query", query);
-        
+        PageInfo<FundTrend> pageInfo = fundTrendService.pageList(query);
+        model.addAttribute("pageInfo", pageInfo);
         return "/fund/trend/list";
+    }
+    
+    @GetMapping(value = "/chart")
+    public String chart() {
+        return "fund/trend/chart";
     }
     
     class FetchJob implements Runnable {
@@ -62,7 +72,13 @@ public class FundTrendController {
         public void run() {
             Date statDate = startDate;
             while (statDate.compareTo(endDate) <= 0) {
-                FundTrendController.this.fundTrendService.saveFromEastMoney(statDate);
+                if (!DateUtil.isWeekend(statDate)) {
+                    try {
+                        fundTrendService.saveFromEastMoney(statDate);
+                    } catch (Exception e) {
+                        log.error("保存失败", e);
+                    }
+                }
                 statDate = DateUtil.add(statDate, Calendar.DAY_OF_YEAR, 1);
             }
         }

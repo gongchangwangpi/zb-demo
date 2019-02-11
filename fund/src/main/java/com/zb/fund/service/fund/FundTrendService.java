@@ -1,5 +1,9 @@
 package com.zb.fund.service.fund;
 
+import com.github.pagehelper.PageInfo;
+import com.zb.fund.domain.FundTrend;
+import com.zb.fund.domain.query.FundTrendQuery;
+
 import java.util.Date;
 
 /**
@@ -12,5 +16,6 @@ public interface FundTrendService {
      * @param statDate
      */
     void saveFromEastMoney(Date statDate);
-    
+
+    PageInfo<FundTrend> pageList(FundTrendQuery query);
 }

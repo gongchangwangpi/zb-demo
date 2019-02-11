@@ -1,8 +1,11 @@
 package com.zb.fund.service.fund.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zb.commons.date.DateUtil;
 import com.zb.fund.domain.Fund;
 import com.zb.fund.domain.FundTrend;
+import com.zb.fund.domain.query.FundTrendQuery;
 import com.zb.fund.dto.FundTrendDto;
 import com.zb.fund.dto.ResponseDto;
 import com.zb.fund.mapper.FundMapper;
@@ -13,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +41,7 @@ public class FundTrendServiceImpl implements FundTrendService {
     private EastMoneyService eastMoneyService;
     
     @Override
+    @Transactional
     public void saveFromEastMoney(Date statDate) {
         // 远程拉取数据
         ResponseDto responseDto = eastMoneyService.get(null, statDate);
@@ -51,12 +56,28 @@ public class FundTrendServiceImpl implements FundTrendService {
         saveFundTrends(dtoList, statDate);
     }
 
+    @Override
+    public PageInfo<FundTrend> pageList(FundTrendQuery query) {
+        if (query.getStatisticsDate() == null) {
+            // 默认查询最新的一期
+            query.setStatisticsDate(fundTrendMapper.selectLatestStatisticsDate());
+        }
+        PageHelper.startPage(query.getPageNum(), query.getPageSize(), query.orderBy());
+        List<FundTrend> list = fundTrendMapper.selectList(query);
+        return new PageInfo<>(list);
+    }
+
     private void saveFundTrends(List<FundTrendDto> dtoList, Date statDate) {
         List<FundTrend> trendList = new ArrayList<>(dtoList.size());
+        Date statisticsDate = null;
         for (FundTrendDto dto : dtoList) {
             FundTrend trend = new FundTrend();
             BeanUtils.copyProperties(dto, trend);
-            trend.setStatisticsDate(statDate);
+            if (trend.getStatisticsDate() == null) {
+                trend.setStatisticsDate(statisticsDate != null ? statisticsDate : statDate);
+            } else if (statisticsDate == null) {
+                statisticsDate = trend.getStatisticsDate();
+            }
             trend.setCreateTime(new Date());
             trendList.add(trend);
         }
