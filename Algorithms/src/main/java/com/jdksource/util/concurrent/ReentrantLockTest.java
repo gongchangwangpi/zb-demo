@@ -13,7 +13,7 @@ public class ReentrantLockTest {
 
         ReentrantLock lock = new ReentrantLock();
 
-        for (long i = 0; i < 2200000000L; i++) {
+        for (long i = 0; i < 2_300_000_000L; i++) {
 
             lock.lock();
             try {
