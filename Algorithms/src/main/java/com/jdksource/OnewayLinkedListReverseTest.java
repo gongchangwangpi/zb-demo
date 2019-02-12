@@ -24,12 +24,12 @@ public class OnewayLinkedListReverseTest {
         System.out.println(list);
     }
     
-    static class OnewayLinkedList<T> {
+    static class OnewayLinkedList<E> {
         
-        Node<T> head;
-        Node<T> tail;
+        Node<E> head;
+        Node<E> tail;
         
-        void add(T value) {
+        void add(E value) {
             if (head == null) {
                 head = tail = new Node<>(value, null);
             } else {
@@ -38,7 +38,7 @@ public class OnewayLinkedListReverseTest {
                     n = n.next;
                 }
                 n.next = new Node<>(value, null);*/
-                Node<T> node = new Node<>(value, null);
+                Node<E> node = new Node<>(value, null);
                 tail.next = node;
                 tail = node;
             }
@@ -48,7 +48,7 @@ public class OnewayLinkedListReverseTest {
             if (head == null || head.next == null) {
                 return;
             }
-            Node<T> p1, p2, p3;
+            Node<E> p1, p2, p3;
             p1 = head;
             p2 = head.next;
             while (p2 != null) {
@@ -79,9 +79,9 @@ public class OnewayLinkedListReverseTest {
 
         @NoArgsConstructor
         @AllArgsConstructor
-        static class Node<T> {
-            T value;
-            Node<T> next;
+        static class Node<E> {
+            E value;
+            Node<E> next;
         }
     }
 }
