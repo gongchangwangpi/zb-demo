@@ -1,11 +1,10 @@
 package com.test;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 3个线程，按顺序执行
@@ -15,44 +14,39 @@ import java.util.concurrent.locks.ReentrantLock;
 @Slf4j
 public class ThreadRunInOrder2 {
     
-    private static final ReentrantLock lock = new ReentrantLock(true);
 
     public static void main(String[] args) throws InterruptedException {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
-
+        CountDownLatch owner, first;
+        first = owner = new CountDownLatch(1);
         for (int i = 0; i < 5; i++) {
-            lock.lock();
-            try {
-                executorService.execute(new RunJob(i));
-                TimeUnit.SECONDS.sleep(1);
-            } finally {
-                lock.unlock();
-            }
-
+            CountDownLatch next = new CountDownLatch(1);
+            Thread job = new RunJob(owner, next);
+            job.start();
+            owner = next;
         }
         
-        executorService.shutdown();
+        log.info("main sleep 3s");
+        TimeUnit.SECONDS.sleep(3);
+
+        log.info("main countDown");
+        first.countDown();
     }
 
-    @Slf4j
-    static class RunJob implements Runnable {
-        private int flag;
-
-        public RunJob(int flag) {
-            this.flag = flag;
-        }
+    @AllArgsConstructor
+    static class RunJob extends Thread {
+        CountDownLatch owner;
+        CountDownLatch next;
 
         @Override
         public void run() {
-            lock.lock();
             try {
-                log.info("... run == {}", flag);
+                owner.await();
+                log.info(" === run");
                 TimeUnit.SECONDS.sleep(1);
+                next.countDown();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } finally {
-                lock.unlock();
             }
         }
     }

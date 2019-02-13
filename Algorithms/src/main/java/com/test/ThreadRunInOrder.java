@@ -19,12 +19,12 @@ public class ThreadRunInOrder {
         MyThread t2 = new MyThread(t1, "t2");
         MyThread t3 = new MyThread(t2, "t3");
 
-        t3.start();
-        t2.start();
         t1.start();
+        t2.start();
+        t3.start();
         
         log.info("------main ");
-        SleepUtils.second(3);
+        SleepUtils.second(1);
         log.info("------main ");
     }
     
