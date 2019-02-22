@@ -22,6 +22,9 @@ public class OnewayLinkedListReverseTest {
         
         list.reverse();
         System.out.println(list);
+        
+        list.add("6");
+        System.out.println(list);
     }
     
     static class OnewayLinkedList<E> {
@@ -50,6 +53,7 @@ public class OnewayLinkedListReverseTest {
             }
             Node<E> prev, middle, next;
             prev = head;
+            tail = head;
             middle = head.next;
             while (middle != null) {
                 next = middle.next;
