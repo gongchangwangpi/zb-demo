@@ -48,19 +48,19 @@ public class OnewayLinkedListReverseTest {
             if (head == null || head.next == null) {
                 return;
             }
-            Node<E> p1, p2, p3;
-            p1 = head;
-            p2 = head.next;
-            while (p2 != null) {
-                p3 = p2.next;
+            Node<E> prev, middle, next;
+            prev = head;
+            middle = head.next;
+            while (middle != null) {
+                next = middle.next;
                 // 将指针倒转
-                p2.next = p1;
+                middle.next = prev;
                 // 将临时变量依次向后移动
-                p1 = p2;
-                p2 = p3;
+                prev = middle;
+                middle = next;
             }
             head.next = null;
-            head = p1;
+            head = prev;
         }
 
         @Override
