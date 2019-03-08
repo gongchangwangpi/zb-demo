@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author zhangbo
  */
-public class CustomBeanKeyMapTest {
+public class CustomBeanKeyMapTest1 {
 
     public static void main(String[] args) throws Exception {
 
@@ -33,9 +33,10 @@ public class CustomBeanKeyMapTest {
         System.out.println("hashCode = " + user1.hashCode());
         // 1
         System.out.println(map.get(user1));
-
+        
         User userKey = new User(1L, "user1");
-        // null
+        System.out.println("hashCode = " + userKey.hashCode());
+        // 1
         System.out.println(map.get(userKey));
     }
 
@@ -46,6 +47,24 @@ public class CustomBeanKeyMapTest {
     static class User {
         private Long id;
         private String name;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            User user = (User) o;
+
+            if (!id.equals(user.id)) return false;
+            return name.equals(user.name);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = id.hashCode();
+            result = 31 * result + name.hashCode();
+            return result;
+        }
     }
     
 }
