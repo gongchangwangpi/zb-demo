@@ -1,5 +1,6 @@
 package com.zb.fund.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,7 @@ public class FundTrend {
     /**
      * 统计日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date statisticsDate;
 
     /**
@@ -101,6 +103,7 @@ public class FundTrend {
     /**
      * 
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
