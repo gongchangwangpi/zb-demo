@@ -43,15 +43,16 @@ public class IpConverter {
     }
 
     private static long parseIpv4Number(String s) {
+        long num;
         try {
-            long num = Long.parseLong(s);
-            if (num < 0 || num > MASK) {
-                throw new IllegalArgumentException("ipv4 不正确");
-            }
-            return num;
+            num = Long.parseLong(s);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("ipv4 不正确");
         }
+        if (num < 0 || num > MASK) {
+            throw new IllegalArgumentException("ipv4 不正确");
+        }
+        return num;
     }
 
 }
