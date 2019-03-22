@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 原生 JDBC
@@ -42,6 +45,35 @@ public class JdbcUtil {
             throw new RuntimeException("获取链接失败");
         }
     }
+    
+    public static <T> List<T> parseResultSet(ResultSet resultSet, Class<T> type, Map<String, String> columnKeyMap) {
+        List<T> list = new ArrayList<T>();
+        if (resultSet == null) {
+            return list;
+        }
+        try {
+            while (resultSet.next()) {
+                T instance = type.newInstance();
+
+                for (Map.Entry<String, String> entry : columnKeyMap.entrySet()) {
+                    type.getField(entry.getKey()).set(instance, resultSet.getObject(entry.getValue()));
+                }
+
+                list.add(instance);
+            }
+        } catch (SQLException e) {
+            logger.error("解析结果集失败", e);
+            throw new RuntimeException("解析结果集失败");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     
     public static void printResultSet(ResultSet resultSet) {
         if (resultSet == null) {
