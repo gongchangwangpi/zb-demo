@@ -60,7 +60,10 @@ public class CasVolatileTest {
     }
     
     private void casAdd() {
-        while (!unsafe.compareAndSwapInt(this, valueOffset, volatileValue, volatileValue + 1));
+        int v = volatileValue;
+        while (!unsafe.compareAndSwapInt(this, valueOffset, v, v + 2)) {
+            v = volatileValue;
+        }
     }
     
     private void add() {
