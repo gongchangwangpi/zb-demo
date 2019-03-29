@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RSA ENCRYPT</title>
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../js/encrypt/jsencrypt.min.js" ></script>
+</head>
+<body>
+    加密字符：<input id="text" type="text"><br/>
+    私钥：<input id="privateKey" type="text"><br/>
+    公钥：<input id="publicKey" type="text"><br/>
+    加密后：<input id="encodeText" type="text"><br/>
+    解密后：<input id="decodeText" type="text"><br/>
+    <input id="encrypt" type="button" value="RSA加密" onclick="encrypt()">
+</body>
+<script>
+    function encrypt() {
+        var text = $("#text").val();
+        var privateKey = $("#privateKey").val();
+        var publicKey = $("#publicKey").val();
+        
+        var crypt = new JSEncrypt();
+        crypt.setKey(privateKey);
+//        crypt.setPrivateKey(privateKey);
+//        crypt.setPublicKey(publicKey);
+
+        var enc = crypt.encrypt(text);
+        var dec = crypt.decrypt(enc);
+        $("#encodeText").val(enc);
+        $("#decodeText").val(dec);
+    }
+</script>
+</html>

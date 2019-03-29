@@ -27,12 +27,12 @@ public class OnewayLinkedListReverseTest {
         System.out.println(list);
     }
     
-    static class OnewayLinkedList<E> {
+    public static class OnewayLinkedList<E> {
         
         Node<E> head;
         Node<E> tail;
         
-        void add(E value) {
+        public void add(E value) {
             if (head == null) {
                 head = tail = new Node<>(value, null);
             } else {
@@ -47,7 +47,7 @@ public class OnewayLinkedListReverseTest {
             }
         }
         
-        void reverse() {
+        public void reverse() {
             if (head == null || head.next == null) {
                 return;
             }

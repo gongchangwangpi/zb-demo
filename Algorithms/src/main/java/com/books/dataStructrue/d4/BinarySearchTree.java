@@ -36,7 +36,11 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
         }
         return t;
     }
-    
+
+    public Node<T> getRoot() {
+        return root;
+    }
+
     public void clear() {
         root = null;
     }
@@ -100,6 +104,44 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
         return "BinarySearchTree{" +
                 "root=" + root +
                 '}';
+    }
+
+    /**
+     * 前序遍历打印
+     */
+    public static <T> void printPreOrder(Node<T> root) {
+        if (root == null) {
+            return;
+        }
+        System.out.print(root.element + ", ");
+        printPreOrder(root.left);
+        printPreOrder(root.right);
+        System.out.println();
+    }
+
+    /**
+     * 中序遍历打印
+     */
+    public static <T> void printInOrder(Node<T> root) {
+        if (root == null) {
+            return;
+        }
+        printInOrder(root.left);
+        System.out.print(root.element + ", ");
+        printInOrder(root.right);
+        System.out.println();
+    }
+
+    /**
+     * 后序遍历打印
+     */
+    public static <T> void printPostOrder(Node<T> root) {
+        if (root == null) {
+            return;
+        }
+        printPostOrder(root.left);
+        printPostOrder(root.right);
+        System.out.print(root.element + ", ");
     }
 
     /**

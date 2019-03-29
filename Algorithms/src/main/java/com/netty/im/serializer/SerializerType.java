@@ -6,5 +6,6 @@ package com.netty.im.serializer;
 public interface SerializerType {
     
     byte JSON = 1;
+    byte HESSIAN = 2;
     
 }
