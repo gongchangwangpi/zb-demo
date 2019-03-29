@@ -1,11 +1,14 @@
 package com.zookeeper;
 
-import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.zookeeper.*;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooKeeper;
+
+import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhangbo
@@ -43,6 +46,12 @@ public class ConnectionWatcher implements Watcher {
         if (watchedEvent.getState() == Event.KeeperState.SyncConnected) {
             countDownLatch.countDown();
             log.info("watch .......");
+        }
+        try {
+            log.info("----- 模拟耗时5秒");
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
     
