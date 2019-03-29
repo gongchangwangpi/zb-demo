@@ -72,6 +72,7 @@ public class FundTrendServiceImpl implements FundTrendService {
 
     private void saveFundTrends(List<FundTrendDto> dtoList, Date statDate) {
 //        List<FundTrend> trendList = new ArrayList<>(dtoList.size());
+        int success = 0;
         Date statisticsDate = null;
         for (FundTrendDto dto : dtoList) {
             FundTrend trend = new FundTrend();
@@ -86,11 +87,14 @@ public class FundTrendServiceImpl implements FundTrendService {
 
             try {
                 fundTrendMapper.insert(trend);
+                success++;
             } catch (DuplicateKeyException e) {
                 log.error("【唯一性】保存失败", e);
             }
         }
 //        fundTrendMapper.batchInsert(trendList);
+        int size = dtoList.size();
+        log.info("【自动同步数据】共获取到{}条数据，保存成功{}条，失败{}条", size, success, size - success);
     }
 
     /**
