@@ -1,8 +1,6 @@
 package com.zb.fund.activemq;
 
-import com.zb.fund.utils.MessageQueue;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
@@ -16,7 +14,7 @@ import javax.jms.TextMessage;
 public class TestListener {
     
     
-    @JmsListener(destination = MessageQueue.TEST_LIS)
+//    @JmsListener(destination = MessageQueue.TEST_LIS)
     public void handle(TextMessage message) throws JMSException {
         String text = message.getText();
         long time = System.currentTimeMillis();

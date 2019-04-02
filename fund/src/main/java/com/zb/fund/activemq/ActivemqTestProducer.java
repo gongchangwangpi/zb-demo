@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
@@ -15,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author zhangbo
  */
-@Component
+//@Component
 public class ActivemqTestProducer {
     
     @Autowired

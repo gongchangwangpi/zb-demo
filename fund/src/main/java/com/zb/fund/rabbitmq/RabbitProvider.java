@@ -6,7 +6,6 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author zhangbo
  */
 @Slf4j
-@Component
+//@Component
 public class RabbitProvider {
     
     @Autowired
