@@ -15,16 +15,16 @@ public class JWTTest {
         long start = System.currentTimeMillis();
 
         String secret_test = "platform_secret";
-        String secret_prod = "4a825d0d219744f0aab6875952e3662e";
+        String secret_prod = "";
 
         Map<String, Object> map = new TreeMap<>();
-        map.put("mobile", "15680413834"); // 18780297073 15680413834
+        map.put("mobile", "13208107657"); // 18780297073 15680413834
         map.put("source", "app");
 //        map.put("source", "phoneSale");
 //        map.put("source", "SELF");
         
-        String sign = new JWTSigner(secret_test).sign(map);
-//        String sign = new JWTSigner(secret_prod).sign(map);
+//        String sign = new JWTSigner(secret_test).sign(map);
+        String sign = new JWTSigner(secret_prod).sign(map);
         
         System.out.println(sign);
 

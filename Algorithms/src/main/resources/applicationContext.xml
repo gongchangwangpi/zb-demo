@@ -16,7 +16,7 @@
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- Connection Info -->
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/maven-web?useUnicode=true&amp;amp;characterEncoding=UTF-8" />
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/maven-web?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai" />
         <property name="username" value="root" />
         <property name="password" value="root" />
         <!-- 配置初始化大小、最小空闲连接数、最大空闲连接数 -->

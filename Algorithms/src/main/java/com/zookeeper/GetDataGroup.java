@@ -3,25 +3,16 @@ package com.zookeeper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.KeeperException;
 
-import java.util.List;
-
 /**
  * @author zhangbo
  */
 @Slf4j
-public class ListGroup extends ConnectionWatcher {
+public class GetDataGroup extends ConnectionWatcher {
     
     public void list(String groupName) throws KeeperException, InterruptedException {
         String path = "/" + groupName;
-        List<String> children = zk.getChildren(path, false);
-        if (children == null || children.isEmpty()) {
-            log.info("No members in group: {}", groupName);      
-            return;
-        }
-
-        for (String member : children) {
-            log.info("memberName: {}", member);
-        }
+        byte[] data = zk.getData(path, false, null);
+        log.info("dubbo node {} data: {}", path, new String(data));
     }
 
 
@@ -39,11 +30,11 @@ public class ListGroup extends ConnectionWatcher {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        ListGroup listGroup = new ListGroup();
+        GetDataGroup listGroup = new GetDataGroup();
 //        listGroup.connect(args[0]);
 //        listGroup.list(args[1]);
         listGroup.connect("172.18.8.34");
-        listGroup.list("dubbo/com.jhjhome.biz.brokerage.api.EnterpriseAccountFacade/consumers");
+        listGroup.list("dubbo/com.jhjhome.biz.brokerage.api.EnterpriseAccountFacade/providers");
         listGroup.close();
     }
 }

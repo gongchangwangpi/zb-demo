@@ -3,7 +3,9 @@ package com.spring.controller;
 import com.spring.domain.User;
 import com.spring.domain.query.UserQuery;
 import com.spring.service.UserService;
+import com.test.chexian.api.dto.RestfulResultDto;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,4 +54,9 @@ public class UserController {
         return users;
     }
 
+    @GetMapping(value = "/get")
+    @ResponseBody
+    public RestfulResultDto get() {
+        return RestfulResultDto.success(userService.selectById(1L));
+    }
 }

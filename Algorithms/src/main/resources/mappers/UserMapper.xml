@@ -23,11 +23,11 @@
 		</where>
 	</sql>
 
-	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	<!--<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		SELECT *
 		FROM user
 		WHERE id = #{id,jdbcType=BIGINT}
-	</select>
+	</select>-->
 	
 	<select id="selectListByQuery" parameterType="com.spring.domain.query.UserQuery" resultMap="BaseResultMap">
 		SELECT *
