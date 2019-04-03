@@ -23,11 +23,11 @@
 		</where>
 	</sql>
 
-	<!--<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		SELECT *
 		FROM user
 		WHERE id = #{id,jdbcType=BIGINT}
-	</select>-->
+	</select>
 	
 	<select id="selectListByQuery" parameterType="com.spring.domain.query.UserQuery" resultMap="BaseResultMap">
 		SELECT *
@@ -80,5 +80,11 @@
 		<if test="id != null">
 			WHERE id = #{id,jdbcType=BIGINT}
 		</if>
+	</update>
+	
+	<update id="decreAge">
+		UPDATE user
+		SET age = age - 1
+		WHERE id = #{id,jdbcType=BIGINT} AND age > 0
 	</update>
 </mapper>

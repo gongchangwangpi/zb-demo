@@ -14,6 +14,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by books on 2017/4/19.
@@ -25,6 +29,32 @@ public class UserServiceTest1 extends AbstractTransactionalJUnit4SpringContextTe
     @Resource
     private UserService userService;
 
+    @Test
+    public void decreAge() throws InterruptedException {
+        int thread = 100;
+        
+        ExecutorService executorService = Executors.newFixedThreadPool(thread);
+        AtomicInteger count = new AtomicInteger(0);
+        CountDownLatch countDownLatch = new CountDownLatch(thread);
+        
+        for (int i = 0; i < thread; i++) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    boolean succeed = userService.decreAge(50L);
+                    if (succeed) {
+                        count.getAndIncrement();
+                    }
+                    countDownLatch.countDown();
+                }
+            });
+        }
+        
+        executorService.shutdown();
+        countDownLatch.await();
+        System.out.println("-------->>>>>>> succeed count = " + count.get());
+    }
+    
     @Test
     @Rollback(false)
     public void save() {

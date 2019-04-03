@@ -142,6 +142,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public boolean decreAge(Long id) {
+        return userMapper.decreAge(id) > 0;
+    }
+
+    @Override
     @Transactional(propagation = Propagation.NESTED)
     public void update2(User user) {
         userMapper.update(user);

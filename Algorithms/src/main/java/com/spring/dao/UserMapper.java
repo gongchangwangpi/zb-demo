@@ -23,4 +23,6 @@ public interface UserMapper {
     int update(User user);
 
     int delete(Long id);
+    
+    int decreAge(Long id);
 }
