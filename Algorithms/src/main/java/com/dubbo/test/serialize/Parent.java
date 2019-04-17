@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @author zhangbo
  */
@@ -12,7 +14,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Parent {
+public class Parent implements Serializable {
+
+    private static final long serialVersionUID = -5992792086252830238L;
     
     private Long id;
     
