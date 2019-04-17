@@ -1,2 +1,2 @@
-com.dubbo.test.spi.jdk.JdkSayHiImpl1
-com.dubbo.test.spi.jdk.JdkSayHiImpl2
+com.dubbo.test.spi.SayHiImpl1
+com.dubbo.test.spi.SayHiImpl2
