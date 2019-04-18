@@ -1,8 +1,14 @@
 package com.activemq.original.p2p;
 
-import javax.jms.*;
-
+import com.activemq.original.Constants;
 import org.apache.activemq.ActiveMQConnectionFactory;
+
+import javax.jms.Connection;
+import javax.jms.JMSException;
+import javax.jms.MessageConsumer;
+import javax.jms.Queue;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 
 /**
  * 点对点模式下，针对同一个队列的多个消费者，消息几乎是平均的分发的每个消费者
@@ -13,16 +19,9 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  */
 public class AppConsumer {
 
-    // 集群abc三台服务器，bc为master/salve，ab,ac为同步，a仅作为消费者，不对外提供服务
-    // bc中为master的节点对外提供服务，当master节点挂掉之后，剩下的salve节点充当master节点，对外提供服务
-    // 集群配置，消费者配置集群中的全部节点
-    private static final String URL = "failover:(tcp://192.168.0.103:61616,tcp://192.168.0.103:61617,tcp://192.168.0.103:61618)?randomize=true";
-//    private static final String URL = "tcp://127.0.0.1:61616";
-    private static final String QUEUE_NAME = "queue-test";
-
     public static void main(String[] args) throws Exception {
         // 1.创建ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(Constants.URL);
 
         Connection connection = connectionFactory.createConnection();
 
@@ -30,7 +29,7 @@ public class AppConsumer {
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        Queue queue = session.createQueue(QUEUE_NAME);
+        Queue queue = session.createQueue(Constants.QUEUE_NAME);
 
         MessageConsumer consumer = session.createConsumer(queue);
 
