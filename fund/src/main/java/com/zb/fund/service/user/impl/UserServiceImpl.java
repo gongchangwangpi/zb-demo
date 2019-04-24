@@ -16,7 +16,12 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     private UserMapper userMapper;
-    
+
+    @Override
+    public int batchInsert(List<User> users) {
+        return userMapper.batchInsert(users);
+    }
+
     @Override
     public int batchUpdate(List<User> users) {
         return userMapper.batchUpdate(users);

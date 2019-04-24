@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
@@ -14,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author zhangbo
  */
-//@Component
+@Component
 public class ActivemqTestProducer {
     
     @Autowired
@@ -25,7 +26,7 @@ public class ActivemqTestProducer {
     
     private AtomicInteger count = new AtomicInteger();
     
-    @Scheduled(initialDelay = 2000, fixedRate = 1000 * 10)
+    @Scheduled(initialDelay = 2000, fixedRate = 1000 * 100 * 100)
     public void produce() throws JMSException {
         TextMessage textMessage = new ActiveMQTextMessage();
         textMessage.setText(String.valueOf(count.getAndIncrement()));

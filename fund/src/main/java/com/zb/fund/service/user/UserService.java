@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface UserService {
     
+    int batchInsert(List<User> users);
+    
     int batchUpdate(List<User> users);
     
 }

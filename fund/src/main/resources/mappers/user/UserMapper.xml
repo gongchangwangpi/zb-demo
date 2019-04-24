@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zb.fund.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.zb.fund.domain.User">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+    id, username, age, sex, email, create_time
+  </sql>
+    
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from test_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from test_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    
+    <insert id="insert" parameterType="com.zb.fund.domain.User">
+    insert into test_user (username, age, 
+      sex, email, create_time
+      )
+    values (#{username,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{sex,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    
+    <insert id="batchInsert">
+        insert into test_user 
+          (username, age, sex, email, create_time)
+        values 
+        <foreach collection="list" item="user" separator=",">
+            (#{user.username,jdbcType=VARCHAR}, #{user.age,jdbcType=INTEGER},
+            #{user.sex,jdbcType=VARCHAR}, #{user.email,jdbcType=VARCHAR}, #{user.createTime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+    
+    <insert id="insertSelective" parameterType="com.zb.fund.domain.User">
+        insert into test_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.fund.domain.User">
+        update test_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+    <update id="updateByPrimaryKey" parameterType="com.zb.fund.domain.User">
+    update test_user
+    set username = #{username,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    
+    <update id="batchUpdate">
+        <foreach collection="list" separator=";" item="user">
+            update test_user
+            <set>
+                <if test="user.username != null">
+                    username = #{user.username,jdbcType=VARCHAR},
+                </if>
+                <if test="user.age != null">
+                    age = #{user.age,jdbcType=INTEGER},
+                </if>
+                <if test="user.sex != null">
+                    sex = #{user.sex,jdbcType=VARCHAR},
+                </if>
+                <if test="user.email != null">
+                    email = #{user.email,jdbcType=VARCHAR},
+                </if>
+            </set>
+            where id = #{user.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+</mapper>

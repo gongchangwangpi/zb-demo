@@ -31,7 +31,7 @@
 		</rollingPolicy>
 	</appender>
 	
-	<logger name="com.zb.fund.mapper" level="DEBUG"/>
+	<!--<logger name="com.zb.fund.mapper" level="DEBUG"/>-->
 	
 	<root level="INFO">
 		<appender-ref ref="consoleLogger" />
