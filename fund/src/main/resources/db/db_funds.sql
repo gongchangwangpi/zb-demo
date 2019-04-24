@@ -10,10 +10,26 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2019-01-30 16:15:11
+Date: 2019-04-24 09:57:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for test_user
+-- ----------------------------
+DROP TABLE IF EXISTS `test_user`;
+CREATE TABLE `test_user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '代理主键',
+  `username` varchar(32) DEFAULT NULL COMMENT '用户名',
+  `email` varchar(64) DEFAULT NULL COMMENT '电子邮箱',
+  `age` int(11) DEFAULT NULL COMMENT '年龄',
+  `sex` varchar(6) DEFAULT NULL COMMENT '性别[MALE FEMALE]',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uix_username` (`username`) USING BTREE,
+  KEY `idx_email` (`email`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=100004 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_fund
@@ -29,7 +45,7 @@ CREATE TABLE `t_fund` (
   `fund_type_name` varchar(16) NOT NULL COMMENT '基金类型名称',
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4349 DEFAULT CHARSET=utf8 COMMENT='基金表';
+) ENGINE=InnoDB AUTO_INCREMENT=4950 DEFAULT CHARSET=utf8 COMMENT='基金表';
 
 -- ----------------------------
 -- Table structure for t_fund_trend
@@ -62,7 +78,7 @@ CREATE TABLE `t_fund_trend` (
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uix_code_date` (`statistics_date`,`fund_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4349 DEFAULT CHARSET=utf8 COMMENT='基金收益趋势';
+) ENGINE=InnoDB AUTO_INCREMENT=125129 DEFAULT CHARSET=utf8 COMMENT='基金收益趋势';
 
 -- ----------------------------
 -- Table structure for t_fund_type
