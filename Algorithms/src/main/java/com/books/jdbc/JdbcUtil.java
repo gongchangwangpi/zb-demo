@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class JdbcUtil {
     
     private static Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
 
-    private static final String DEFAULT_URL = "jdbc:mysql://127.0.0.1:3306/maven-web";
+    private static final String DEFAULT_URL = "jdbc:mysql://127.0.0.1:3306/maven-web?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai";
     private static final String DEFAULT_USERNAME = "root";
     private static final String DEFAULT_PASSWORD = "root";
     
@@ -94,8 +95,20 @@ public class JdbcUtil {
         }
     }
     
-    public static void close() {
-        
+    public static void close(Connection connection, Statement statement, ResultSet resultSet) {
+        close(connection);
+        close(statement);
+        close(resultSet);
     }
-    
+
+    public static void close(AutoCloseable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+    }
+
 }
