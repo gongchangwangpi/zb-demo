@@ -27,7 +27,7 @@ public class LinkedListDetectCycleTest {
         singleNode2.next = singleNode3;
         singleNode3.next = singleNode4;
         singleNode4.next = singleNode5;
-//        singleNode5.next = singleNode3;
+        singleNode5.next = singleNode5;
 
         System.out.println(hasLoop1(singleNode1));
         System.out.println(hasLoop2(singleNode1));

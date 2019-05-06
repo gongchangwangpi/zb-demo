@@ -1,17 +1,21 @@
 package com.util;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * POI 处理Excel工具类
@@ -36,15 +40,15 @@ public class PoiUtil {
 
         String cellValue = null;
         switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_NUMERIC:
-                cell.setCellType(1);
+            case NUMERIC:
+                cell.setCellType(CellType.STRING);
                 cellValue = cell.getStringCellValue();
                 break;
-            case Cell.CELL_TYPE_STRING:
+            case STRING:
                 cellValue = cell.getStringCellValue();
                 break;
-            case Cell.CELL_TYPE_FORMULA:
-                cell.setCellType(1);
+            case FORMULA:
+                cell.setCellType(CellType.STRING);
                 cellValue = cell.getStringCellValue();
                 break;
             default:
@@ -72,12 +76,12 @@ public class PoiUtil {
         Date cellValue = null;
         // 判断当前Cell的Type
         switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_NUMERIC:
+            case NUMERIC:
                 if (DateUtil.isCellDateFormatted(cell)) {
                     cellValue = cell.getDateCellValue();
                 }
                 break;
-            case Cell.CELL_TYPE_STRING:
+            case STRING:
                 String stringCellValue = cell.getStringCellValue();
                 cellValue = com.util.DateUtil.parse(stringCellValue, pattern);
                 break;

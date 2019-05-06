@@ -9,8 +9,8 @@ public class CompoundInterest {
 
     public static void main(String[] args) {
 
-        System.out.println(month(1000, 0.01, 360));
-        System.out.println(year(12000, 0.12, 30));
+        System.out.println(month(1500, 0.01, 360));
+        System.out.println(year(18000, 0.12, 30));
         
     }
     
