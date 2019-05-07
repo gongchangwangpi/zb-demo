@@ -17,10 +17,12 @@ import java.util.concurrent.TimeUnit;
  * -XX:+PrintHeapAtGC -Xloggc:/home/excel/gc.log 
  * -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/excel/test.dump
  * 
+ * -Xms512M -Xmx512M -XX:+PrintGCCause -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -Xloggc:/home/excel/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/excel/test.dump
+ * 
  * @author zhangbo
  */
 @Slf4j
-public class Test {
+public class ExcelReadTest {
     
     public static final String POI = "poi";
     public static final String EASY_EXCEL = "easyexcel";
@@ -93,6 +95,7 @@ public class Test {
                 System.out.println("===== GC end =====");
 
             } else {
+                System.out.println("===== sleep");
                 while (SLEEP.equalsIgnoreCase(command)) {
                     TimeUnit.SECONDS.sleep(1);
                 }
