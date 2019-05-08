@@ -37,7 +37,7 @@ public class MasterSelector {
 
             @Override
             public void handleDataDeleted(String dataPath) throws Exception {
-                // 阶段删除时，去注册Master节点
+                // 节点删除时，去注册Master节点
                 voteMaster();
             }
         };
@@ -85,7 +85,7 @@ public class MasterSelector {
     public void stop() {
         if (running) {
             running = false;
-            zkClient.delete(MASTER_PATH);
+            zkClient.close();
             scheduledExecutorService.shutdown();
             log.info("{} 停止服务", service.getName());
         }
