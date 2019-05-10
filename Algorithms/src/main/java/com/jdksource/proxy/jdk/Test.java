@@ -1,8 +1,9 @@
 package com.jdksource.proxy.jdk;
 
-import java.lang.reflect.Proxy;
-
 import lombok.extern.slf4j.Slf4j;
+import sun.misc.ProxyGenerator;
+
+import java.lang.reflect.Proxy;
 
 /**
  * @author zhangbo
@@ -14,6 +15,8 @@ public class Test {
         
         // 保存生成的代理类字节码文件
         System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+
+        byte[] $Proxy0s = ProxyGenerator.generateProxyClass("$Proxy0", new Class[]{HelloService.class});
 
         Class[] proxyInterface = {IHelloService.class, IHelloService2.class};
 
