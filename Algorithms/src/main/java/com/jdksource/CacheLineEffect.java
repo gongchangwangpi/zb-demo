@@ -22,6 +22,7 @@ public class CacheLineEffect {
         long sum = 0L;
         long marked = System.currentTimeMillis();
         for (int i = 0; i < 1024 * 1024; i += 1) {
+            // 每次加载相邻的数组
             for (int j = 0; j < 8; j++) {
                 sum += arr[i][j];
             }
@@ -31,6 +32,7 @@ public class CacheLineEffect {
         sum = 0;
         marked = System.currentTimeMillis();
         for (int i = 0; i < 8; i += 1) {
+            // 每次加载的数据不相邻，造成CPU缓存失效
             for (int j = 0; j < 1024 * 1024; j++) {
                 sum += arr[j][i];
             }
