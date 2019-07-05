@@ -1,5 +1,6 @@
 package com.activemq.original.topic;
 
+import com.activemq.original.Constants;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;
@@ -13,20 +14,17 @@ import javax.jms.Topic;
  */
 public class AppDurableProducer {
 
-    private static final String URL = "tcp://127.0.0.1:61616";
-    private static final String TOPIC_NAME = "topic-test";
-
     public static void main(String[] args) throws Exception {
         // 1.创建ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(Constants.URL);
 
         Connection connection = connectionFactory.createConnection();
-        connection.setClientID("test-order");
+        connection.setClientID("test-order0");
         connection.start();
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        Topic topic = session.createTopic(TOPIC_NAME);
+        Topic topic = session.createTopic(Constants.DURABLE_TOPIC_NAME);
 
         MessageProducer producer = session.createProducer(topic);
 

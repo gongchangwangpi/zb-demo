@@ -3,12 +3,7 @@ package com.activemq.original.topic;
 import com.activemq.original.Constants;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.jms.Topic;
-import javax.jms.TopicSubscriber;
+import javax.jms.*;
 
 /**
  * 持久主题，需要先运行一次Consumer，到消息队列服务器去注册持久主题
@@ -18,7 +13,7 @@ import javax.jms.TopicSubscriber;
  *
  * Created by Administrator on 2018/2/26 0026.
  */
-public class AppDurableConsumer {
+public class AppDurableConsumer2 {
 
     public static void main(String[] args) throws Exception {
         // 1.创建ConnectionFactory
@@ -26,7 +21,7 @@ public class AppDurableConsumer {
 
         Connection connection = connectionFactory.createConnection();
         // 持久topic
-        connection.setClientID("test-order1");
+        connection.setClientID("test-order2");
         
         connection.start();
 
@@ -36,7 +31,7 @@ public class AppDurableConsumer {
 
 //        MessageConsumer consumer = session.createConsumer(topic);
 
-        TopicSubscriber subscriber = session.createDurableSubscriber(topic, "test-order1");
+        TopicSubscriber subscriber = session.createDurableSubscriber(topic, "test-order2");
 
         subscriber.setMessageListener((message) -> {
                 TextMessage textMessage = (TextMessage) message;

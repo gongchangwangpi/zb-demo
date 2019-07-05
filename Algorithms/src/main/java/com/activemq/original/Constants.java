@@ -11,5 +11,7 @@ public class Constants {
 //    public static final String URL = "failover:(tcp://192.168.0.103:61617,tcp://192.168.0.103:61618)?randomize=true";
     public static final String URL = "tcp://127.0.0.1:61616";
     public static final String QUEUE_NAME = "queue-test";
-    
+    public static final String TOPIC_NAME = "topic-test";
+    public static final String DURABLE_TOPIC_NAME = "durable-topic-test";
+
 }

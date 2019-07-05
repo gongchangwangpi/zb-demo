@@ -17,13 +17,21 @@ public class Test implements Serializable {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println(100 >>> 1);
-        System.out.println(100 >> 1);
-        
-        
+//        Class<A> clz = A.class;
+
+        Class<?> clz = Class.forName("Test$A", true, Thread.currentThread().getContextClassLoader());
+
+        System.out.println(clz);
+
+
     }
 
-    
+    private static class A {
+        static {
+            System.out.println("static A");
+        }
+    }
+
 }
 
 

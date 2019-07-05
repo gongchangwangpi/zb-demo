@@ -32,7 +32,7 @@ public class BrokeragePolicy extends BaseRowModel implements Serializable {
     @ExcelColumnNum(value = 0)
     private String enterpriseName;
     /**
-     * 承保公司名称
+     * 承保公司名称defalt
      */
     @ExcelColumnNum(value = 1)
     private String insuranceCompanyName;

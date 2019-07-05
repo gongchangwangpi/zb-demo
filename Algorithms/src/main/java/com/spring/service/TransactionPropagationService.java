@@ -7,6 +7,8 @@ public interface TransactionPropagationService {
 
     void required();
 
+    void required2();
+
     void requires_new();
 
 }

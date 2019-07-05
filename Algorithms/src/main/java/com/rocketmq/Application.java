@@ -1,6 +1,7 @@
 package com.rocketmq;
 
 import com.rocketmq.config.AppConfig;
+import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.common.message.Message;
@@ -18,12 +19,15 @@ public class Application {
     
     private static Logger logger = LoggerFactory.getLogger(Application.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MQClientException {
 
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
         MyProducer producer = context.getBean(MyProducer.class);
-        
+
+//        producer.getDefaultMQProducer().createTopic("topic_key", "MyTopic1", 4);
+//        producer.getDefaultMQProducer().createTopic("topic_key", "MyTopic2", 4);
+
         for (int i = 0; i < 100; i++) {
             String msg = "hello rocketmq 你好 " + i;
             int j = ((i % 2) + 1);
@@ -32,7 +36,7 @@ public class Application {
             try {
                 sendResult = producer.getDefaultMQProducer().send(message);
             } catch (Exception e) {
-                logger.error(e.getMessage() + String.valueOf(sendResult));
+                logger.error(e.getMessage());
             }
             // 当消息发送失败时如何处理
             if (sendResult == null || sendResult.getSendStatus() != SendStatus.SEND_OK) {
@@ -40,6 +44,8 @@ public class Application {
                 System.out.println("---->>>>  发送失败");
             }
         }
+
+        logger.info("============ 消息发送成功 ============");
 
     }
     

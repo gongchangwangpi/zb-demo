@@ -32,7 +32,7 @@ public class MyProducer {
 
         defaultMQProducer.start();
 
-        logger.info("DefaultMQProudcer start success!");
+        logger.info("DefaultMQProducer start success!");
 
     }
 

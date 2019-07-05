@@ -68,13 +68,13 @@ public class MyConsumer2 {
                 logger.info(JSON.toJSONString(msgs));
                 
                 MessageExt msg = msgs.get(0);
-                if (msg.getTopic().equals("MyTopic2")) {
+//                if (msg.getTopic().equals("MyTopic2")) {
                     // TODO 执行Topic的消费逻辑
-                    if (msg.getTags() != null && msg.getTags().equals("MyTag2")) {
+//                    if (msg.getTags() != null && msg.getTags().equals("MyTag2")) {
                         // TODO 执行Tag的消费
                         logger.info(" ----->>>>> " + new String(msg.getBody()) + " " + count++);
-                    }
-                }
+//                    }
+//                }
                 // 如果没有return success ，consumer会重新消费该消息，直到return success
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }

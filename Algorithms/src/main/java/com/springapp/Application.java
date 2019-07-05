@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -30,6 +31,17 @@ public class Application {
 //        template.convertAndSend("redisChatTest", "Hello world from Redis!");
         
 //        System.in.read();
+    }
+
+    @Transactional
+    public void methodA() {
+        // insert 插入数据
+        methodB();
+        int i = 1 / 0; // 模拟抛异常
+    }
+    @Transactional
+    public void methodB() {
+        // insert 插入数据
     }
 
 }

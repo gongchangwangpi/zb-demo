@@ -59,13 +59,13 @@ public class MyConsumer1 {
             @Override
             public ConsumeOrderlyStatus consumeMessage(java.util.List<MessageExt> msgs, ConsumeOrderlyContext context) {
                 MessageExt msg = msgs.get(0);
-                if (msg.getTopic().equals("MyTopic1")) {
+//                if (msg.getTopic().equals("MyTopic1")) {
                     // TODO 执行Topic的消费逻辑
-                    if (msg.getTags() != null && msg.getTags().equals("MyTag1")) {
+//                    if (msg.getTags() != null && msg.getTags().equals("MyTag1")) {
                         // TODO 执行Tag的消费
                         logger.info(" ----->>>>> " + new String(msg.getBody()) + " " + count++);
-                    }
-                }
+//                    }
+//                }
                 // 如果没有return success ，consumer会重新消费该消息，直到return success
                 return ConsumeOrderlyStatus.SUCCESS;
             }
