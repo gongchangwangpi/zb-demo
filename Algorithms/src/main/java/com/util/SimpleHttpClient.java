@@ -51,7 +51,7 @@ public class SimpleHttpClient {
     /**
      * 自定义日志级别枚举
      */
-    enum LogLevel {
+    public enum LogLevel {
         NONE {
             @Override
             void log(String header, Object msg) {

@@ -2,6 +2,9 @@ package com.util;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * @author zhangbo
  */
@@ -19,6 +22,11 @@ public class IpConverter {
         
         System.out.println(convertIpv4("255.255.255.256"));
         System.out.println(convertIpv4(4294967296L));
+    }
+
+    public static String getLocalIp() throws UnknownHostException {
+        InetAddress ip = InetAddress.getLocalHost();
+        return ip.getHostAddress();
     }
     
     public static String convertIpv4(long ipv4) {
