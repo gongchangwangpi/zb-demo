@@ -37,8 +37,18 @@ public class RandomLoadBalance {
 
 //        randomArray();
         
-        randomSubtract();
-        
+//        randomSubtract();
+
+        clientList.remove(0);
+        System.out.println(clientList);
+        clientList.remove(0);
+        System.out.println(clientList);
+        clientList.remove(0);
+        System.out.println(clientList);
+        clientList.remove(0);
+        System.out.println(clientList);
+        clientList.remove(0);
+
     }
 
     private static void randomSubtract() {
