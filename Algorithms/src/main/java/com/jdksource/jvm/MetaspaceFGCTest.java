@@ -6,8 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * -Xmx1024M -Xms1024M -Xmn256M -XX:MetaspaceSize=50M -XX:MaxMetaspaceSize=100M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -XX:+UseConcMarkSweepGC
- *
+ * -Xmx1024M -Xms1024M -Xmn256M -XX:MetaspaceSize=50M -XX:MaxMetaspaceSize=100M -XX:+PrintGCDetails
+ * -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -XX:+UseConcMarkSweepGC
+ * <p>
  * 频繁生成类加载器加载少量类，会造成metaspace内存碎片，导致FGC
  *
  * @author zhangbo
@@ -35,99 +36,33 @@ class MyClassLoader extends ClassLoader {
 
             String filePath = "/Users/zhangbo/IdeaProjects/zb-demo/Algorithms/target/classes/" + name.replace('.', File.separatorChar) + ".class";
 
-//指定读取磁盘上的某个文件夹下的.class文件：
+            //指定读取磁盘上的某个文件夹下的.class文件：
 
             File file = new File(filePath);
 
             FileInputStream fis = new FileInputStream(file);
 
-            byte
-                    []
-                    bytes
-                    =
+            byte[] bytes = new byte[fis.available()];
+            fis.read(bytes);
 
-                    new
+            //调用defineClass方法，将字节数组转换成Class对象
 
-                            byte
-                            [
-                            fis
-                                    .
-                                            available
-                                                    ()];
-            fis
-                    .
-                            read
-                                    (
-                                            bytes
-                                    );
+            Class<?> clazz = this.defineClass(name, bytes, 0, bytes.length);
+            fis.close();
 
-//调用defineClass方法，将字节数组转换成Class对象
+            return clazz;
 
-            Class
-                    <?>
-                    clazz
-                    =
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
 
-                    this
-                            .
-                                    defineClass
-                                            (
-                                                    name
-                                                    ,
-                                                    bytes
-                                                    ,
-
-                                                    0
-                                                    ,
-                                                    bytes
-                                                            .
-                                                            length
-                                            );
-            fis
-                    .
-                            close
-                                    ();
-
-            return
-                    clazz
-                    ;
-
-        } catch
-
-        (
-                FileNotFoundException
-                        e
-        ) {
-            e
-                    .
-                            printStackTrace
-                                    ();
-
-        } catch
-
-        (
-                IOException
-                        e
-        ) {
-            e
-                    .
-                            printStackTrace
-                                    ();
+        } catch (IOException e) {
+            e.printStackTrace();
 
         } finally {
 
-
         }
 
-        return
-
-                super
-                        .
-                                findClass
-                                        (
-                                                name
-                                        );
-
+        return super.findClass(name);
     }
 
 }
