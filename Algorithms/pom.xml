@@ -21,10 +21,36 @@
 	</properties>
 
 	<dependencies>
+		<!-- https://github.com/sromku/polygon-contains-point -->
+		<dependency>
+			<groupId>com.remarkmedia.tools</groupId>
+			<artifactId>polygon</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>edu.colostate.cs</groupId>
+			<artifactId>geohashes-in-any-shape</artifactId>
+			<version>1.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.zb.demo</groupId>
 			<artifactId>commons-util</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ojdbc7</groupId>
+			<artifactId>ojdbc7</artifactId>
+			<version>12.1.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>
@@ -252,7 +278,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-catalina</artifactId>
-			<version>8.5.23</version>
+			<version>8.5.24</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -537,11 +563,11 @@
 			<version>4.0.1</version>
 		</dependency>
 		
-		<dependency>
+		<!--<dependency>
 			<groupId>org.apache.tomcat.maven</groupId>
 			<artifactId>tomcat7-maven-plugin</artifactId>
 			<version>2.2</version>
-		</dependency>
+		</dependency>-->
 		
 		<!-- 汉字转拼音 -->
 		<dependency>
