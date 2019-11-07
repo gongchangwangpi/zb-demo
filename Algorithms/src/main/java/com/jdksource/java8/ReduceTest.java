@@ -25,6 +25,11 @@ public class ReduceTest {
             return i * j;
         });
         System.out.println(optional.orElse(-1));
+
+        Optional<Integer> optional2 = Stream.of(1, 2, 3, null, 5).reduce((i, j) -> {
+            return i * j;
+        });
+        System.out.println(optional2.orElse(-1));
     }
 
 }
