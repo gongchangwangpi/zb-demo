@@ -1,32 +1,33 @@
 package com.guava.util;
 
 import com.google.common.util.concurrent.RateLimiter;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 限流
  * 
  * Created by books on 2017/12/21.
  */
+@Slf4j
 public class RateLimiterTest {
+
+    private static final RateLimiter rateLimiter = RateLimiter.create(0.1);
 
     public static void main(String[] args) throws InterruptedException {
 
-        RateLimiter rateLimiter = RateLimiter.create(5.0);
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
 
-        long start = System.currentTimeMillis();
         for (int i = 0; i < 20; i++) {
-            
-            rateLimiter.acquire(1);
-            System.out.println(i + "\t --- " + System.currentTimeMillis());
-            if (i == 5) {
-                TimeUnit.SECONDS.sleep(5);
-            }
-            
+            executorService.execute(() -> {
+                rateLimiter.acquire();
+                log.info(" run --->>> {}", System.currentTimeMillis());
+            });
         }
 
-        System.out.println(System.currentTimeMillis() - start);
+        executorService.shutdown();
         
     }
     
