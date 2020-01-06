@@ -6,6 +6,8 @@ import org.springframework.beans.factory.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import javax.annotation.PostConstruct;
+
 /**
  * bean生命周期
  * 
@@ -20,6 +22,11 @@ public class TestBean2 implements BeanNameAware, BeanFactoryAware, ApplicationCo
         log.info("2- -------- set property before");
         this.testBean = testBean;
         log.info("2- -------- set property after");
+    }
+
+    @PostConstruct
+    public void init() {
+        log.info(" ---------- PostConstruct  ----------");
     }
 
     public TestBean2() {
