@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Hello {
     
     public String hello(String name) {
-        log.info(name);
+        log.info("slf4j: {}", name);
         return "hello: " + name;
     }
     

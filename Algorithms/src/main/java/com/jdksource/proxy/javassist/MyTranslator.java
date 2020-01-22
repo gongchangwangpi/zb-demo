@@ -29,7 +29,8 @@ public class MyTranslator implements Translator {
             
             //获得指定方法名的方法
             CtMethod m = cc.getDeclaredMethod("hello");
-            
+
+            m.insertAt(12, "log.info(\"Javassisst: {}\", name);");
             //在方法执行前插入代码
             m.insertBefore("{ System.out.println(\"before 记录日志\"); }");
             m.insertAfter("{ System.out.println(\"after 记录日志\"); }");
