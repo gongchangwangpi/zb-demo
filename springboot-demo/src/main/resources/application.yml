@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: zb-springboot-demo
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/d_auth?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: root
+
+
+#mybatis-plus:
+#  configuration:
+#    use-generated-keys: true
+#  mapper-locations: mappers/*/*.xml
+#  type-enums-package: com.zb.springboot.demo.enums
+#  global-config:
+#    db-config:
+#      id-type: auto
+  mail:
+    protocol: smtp
+    host: smtp.163.com
+    username: cookie_zhangbo@163.com
+    password: zhangb0312
+
+
+sftp:
+  host: 192.168.122.94
+  port: 22
+  user: aibizhall2
+  sftpQueue: aibizhall2
+  directory: /queueAudio
+  applicationServerIp: http://192.168.122.94:8081/ftp
