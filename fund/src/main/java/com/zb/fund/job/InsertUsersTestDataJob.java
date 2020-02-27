@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 /**
  * @author zhangbo
  */
-@Component
+//@Component
 public class InsertUsersTestDataJob {
     
     @Autowired

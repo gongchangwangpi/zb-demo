@@ -12,5 +12,6 @@ public interface UserService {
     int batchInsert(List<User> users);
     
     int batchUpdate(List<User> users);
-    
+
+    User list();
 }

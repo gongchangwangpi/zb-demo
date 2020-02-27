@@ -10,15 +10,18 @@ public class StaticTest {
         staticFunction();
     }
 
-    static StaticTest st = new StaticTest();
-
-    static {
-        log.info("1");
-    }
 
     {
         log.info("2");
     }
+    static {
+        log.info("1");
+
+//        log.info("static 代码块 b = {}", b);
+    }
+
+    static StaticTest st = new StaticTest();
+
 
     StaticTest() {
         log.info("3");

@@ -10,9 +10,7 @@ public class Test {
 
     public static void main(String[] args) throws LifecycleException {
 
-        Tomcat tomcat = new Tomcat();
-        tomcat.setPort(10011);
-        tomcat.start();
+        System.out.println(System.getProperty("JAVA_HOME"));
 
     }
     

@@ -35,11 +35,11 @@ public class Test {
 //        List<String> rootChildren = zkClient.getChildren("/zookeeper");
 //        System.out.println(rootChildren);
 
-//        String path = zkClient.create("/zk1", "zk1_value", CreateMode.PERSISTENT);
-//        System.out.println(path);
+        String path = zkClient.create("/zk3", "zk1_value", CreateMode.PERSISTENT);
+        System.out.println(path);
 
         for (;;) {
-            Object data = zkClient.readData("/zk1");
+            Object data = zkClient.readData("/zk3");
             System.out.println(data);
             TimeUnit.SECONDS.sleep(2);
         }

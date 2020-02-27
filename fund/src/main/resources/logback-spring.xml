@@ -26,12 +26,12 @@
 			<charset>utf8</charset>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/home/hyb/logs/fund/info-rolling.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>logs/fund/info-rolling.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory> <!-- 只保留最近30天的日志文件 -->
 		</rollingPolicy>
 	</appender>
-	
-	<!--<logger name="com.zb.fund.mapper" level="DEBUG"/>-->
+
+	<logger name="com.zb.fund.mapper" level="DEBUG"/>
 	
 	<root level="INFO">
 		<appender-ref ref="consoleLogger" />
