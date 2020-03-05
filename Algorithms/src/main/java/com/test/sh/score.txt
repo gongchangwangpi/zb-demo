@@ -1,0 +1,4 @@
+Id	Name	Item	Score
+1	Zhang	YuWen	80
+2	LiSi	ShuXue	90
+3	Wang	English	88
