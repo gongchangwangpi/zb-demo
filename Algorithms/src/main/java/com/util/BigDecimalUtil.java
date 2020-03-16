@@ -86,6 +86,13 @@ public class BigDecimalUtil {
         return new BigDecimal(rateNum).divide(new BigDecimal(total), maxFraction + 2, BigDecimal.ROUND_DOWN);
     }
 
+    public static BigDecimal calc(BigDecimal total, BigDecimal rateNum, int maxFraction) {
+        if (total == null) {
+            return BigDecimal.ZERO;
+        }
+        return rateNum.divide(total, maxFraction + 2, BigDecimal.ROUND_DOWN);
+    }
+
     public static void main(String[] args) {
         System.out.println(calcRate(0, 1));
         System.out.println(calcRateFill0(0, 1));

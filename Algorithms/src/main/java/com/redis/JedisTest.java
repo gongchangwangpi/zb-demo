@@ -12,7 +12,7 @@ public class JedisTest {
 
     public static void main(String[] args) {
 
-        Jedis jedis = new Jedis("172.18.8.143", 6379);
+        Jedis jedis = new Jedis("127.0.0.1", 6379);
         String set = jedis.set("test", "test", "NX", "PX", 1000 * 60);
         System.out.println(set);
 

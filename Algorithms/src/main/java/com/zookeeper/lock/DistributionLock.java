@@ -65,7 +65,7 @@ public class DistributionLock implements Watcher {
             // 获取节点的数据和当前线程ID比较
             byte[] data = zk.getData(currentLock, false, null);
             if (!String.valueOf(Thread.currentThread().getId()).equals(new String(data))) {
-                throw new IllegalStateException();
+                throw new IllegalStateException("非法操作：当前锁不属于该节点");
             }
             
             zk.delete(currentLock, -1);

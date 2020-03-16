@@ -19,7 +19,7 @@ public class ProducerTest {
     public static void main(String[] args) {
 
         Properties props = new Properties();
-        props.setProperty("bootstrap.servers", "192.168.123.25:9093,192.168.123.25:9092,192.168.123.25:9091");
+        props.setProperty("bootstrap.servers", "192.168.123.49:9092");
         props.put("acks", "all");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -31,9 +31,10 @@ public class ProducerTest {
         props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, interceptors);
 
         Producer<String, String> producer = new KafkaProducer<>(props);
-        for (int i = 0; i < 10; i++) {
-            producer.send(new ProducerRecord<>("cluster-partition-3", Integer.toString(i), Integer.toString(i)));
-        }
+//        for (int i = 0; i < 10; i++) {
+//            producer.send(new ProducerRecord<>("cluster-partition-3", Integer.toString(i), Integer.toString(i)));
+//        }
+        producer.send(new ProducerRecord<>("cluster-partition-3", Integer.toString(0), Integer.toString(0)));
 
         producer.close();
 
