@@ -1,12 +1,18 @@
 package com.test.stock;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author zhangbo
  * @date 2020/3/16
  **/
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Stock {
 
     /**
