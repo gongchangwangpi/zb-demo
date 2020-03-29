@@ -9,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * BeanPostProcessor.beforeInit.. -> @PostConstruct ->
  * InitializingBean.afterPropertiesSet -> 自定义init-method ->
  * BeanPostProcessor.afterInit... -> 初始化完成，可以使用 ->
- * DisposableBean.destroy -> 自定义destroy-method
+ * @PreDestroy --> DisposableBean.destroy -> 自定义destroy-method
  *
  * @author zhangbo
  */
