@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 /**
  * bean生命周期
@@ -35,6 +36,11 @@ public class TestBean2 implements BeanNameAware, BeanFactoryAware, ApplicationCo
 
     public void initMethod() {
         log.info("2-6 --------- custom initMethod");
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        log.info("2 ----- PreDestroy");
     }
     
     public void destroyMethod() {
