@@ -10,7 +10,7 @@ public class SayHiImpl1 implements ISayHi {
     }
 
     public SayHiImpl1() {
-        System.out.println("【init】 ---- SayHiImpl1");
+        System.out.println("【constructor】 ---- SayHiImpl1");
     }
 
     @Override
