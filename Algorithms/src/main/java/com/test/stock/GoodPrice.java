@@ -93,9 +93,15 @@ public class GoodPrice {
 //        BigDecimal goodPriceByPeRatio = goodPriceByPeRatio(new BigDecimal(nowPrice), new BigDecimal(peRatio));
 //        System.out.println("TTM市盈率好价格 === " + goodPriceByPeRatio);
 
-        isGoodPrice(dividend, nationalDebt, nowPrice, peRatio);
-        isGoodPrice(dividend, nowPrice, peRatio);
+        Stock geli = Stock.builder().code("000651").name("格力电器").dividend(1.5).nowPrice(54.4).ttmPeRatio(12.03).nationalDebt(DEFAULT_NATIONAL_DEBT).build();
+        isGoodPrice(geli);
+        geli.setNationalDebt(nationalDebt);
+        isGoodPrice(geli);
 
+        Stock fuyao = Stock.builder().code("600660").name("福耀玻璃").dividend(0.75).nowPrice(21.07).ttmPeRatio(16.49).nationalDebt(DEFAULT_NATIONAL_DEBT).build();
+        isGoodPrice(fuyao);
+        fuyao.setNationalDebt(nationalDebt);
+        isGoodPrice(fuyao);
     }
 
 }

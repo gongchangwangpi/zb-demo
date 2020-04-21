@@ -1,8 +1,6 @@
 package com.zb.springboot.demo.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
 
 /**
  * @author zhangbo
@@ -11,9 +9,9 @@ import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
 @Configuration
 public class RedisHeaderSessionConfig {
 
-    @Bean
-    public HeaderHttpSessionIdResolver httpSessionIdResolver() {
-        return HeaderHttpSessionIdResolver.xAuthToken();
-    }
+//    @Bean
+//    public HeaderHttpSessionIdResolver httpSessionIdResolver() {
+//        return HeaderHttpSessionIdResolver.xAuthToken();
+//    }
 
 }

@@ -56,7 +56,7 @@
         )
     </insert>
 
-    <update id="update" >
+    <update id="updateById" >
         update ${table.name}
         <set>
             <#list table.fields as field>

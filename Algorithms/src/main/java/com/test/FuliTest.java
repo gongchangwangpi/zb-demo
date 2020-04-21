@@ -12,7 +12,7 @@ public class FuliTest {
         double month = month(1000, 0.01, 360);
         System.out.println(month);
 
-        double year = year(12000, 0.12, 30);
+        double year = year(1200, 0.12, 30);
         System.out.println(year);
     }
 

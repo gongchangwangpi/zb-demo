@@ -25,6 +25,10 @@ public class StringInternTest {
         String str2 = new StringBuilder("ja").append("va").toString();
         System.out.println(str2.intern() == str2); // false
         System.out.println(str2.intern() == "java");
+
+        String hello = "hello";
+        String hello1 = new String("hello").intern();
+        System.out.println(hello == hello1);
     }
     
 }

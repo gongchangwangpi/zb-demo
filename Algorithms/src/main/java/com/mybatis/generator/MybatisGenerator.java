@@ -1,4 +1,4 @@
-package com;
+package com.mybatis.generator;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -16,6 +16,18 @@ import java.util.Scanner;
 
 public class MybatisGenerator {
 
+    private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&useSSL=false&characterEncoding=utf8";
+    private static final String JDBC_USERNAME = "root";
+    private static final String JDBC_PASSWORD = "root";
+
+    private static final String TABLE_NAMES = "t_user,t_log";
+    private static final String TABLE_PREFIX = "t_";
+
+    private static final String[] SUPER_ENTITY_COLUMNS = {};
+    private static final String PACKAGE_NAME = "com.zb";
+
+    private static final String AUTHOR = "zhangbo";
+
     public static void main(String[] args) {
 
         // 代码生成器
@@ -25,7 +37,7 @@ public class MybatisGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir") + "/Algorithms";
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("zhangbo");
+        gc.setAuthor(AUTHOR);
         gc.setOpen(false);
         gc.setBaseColumnList(true);
         gc.setBaseResultMap(true);
@@ -35,17 +47,17 @@ public class MybatisGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://172.16.2.182:3306/saas_persist?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl(JDBC_URL);
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("u_saas");
-        dsc.setPassword("saas123456");
+        dsc.setUsername(JDBC_USERNAME);
+        dsc.setPassword(JDBC_PASSWORD);
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.remarkmedia");
+        pc.setParent(PACKAGE_NAME);
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -80,7 +92,7 @@ public class MybatisGenerator {
         TemplateConfig templateConfig = new TemplateConfig();
 
         // 配置自定义输出模板
-        //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
+        // 指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
         // templateConfig.setEntity("templates/entity2.java");
         // templateConfig.setService();
         // templateConfig.setController();
@@ -98,13 +110,13 @@ public class MybatisGenerator {
         // 公共父类
 //        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
         // 写于父类中的公共字段
-        strategy.setSuperEntityColumns("id");
+        strategy.setSuperEntityColumns(SUPER_ENTITY_COLUMNS);
 //        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
-        // todo 表名，多个表用,隔开
-        strategy.setInclude("p_account_base");
+        // 表名，多个表用,隔开
+        strategy.setInclude(TABLE_NAMES);
         strategy.setControllerMappingHyphenStyle(true);
         // 表名前缀
-        strategy.setTablePrefix("p_");
+        strategy.setTablePrefix(TABLE_PREFIX);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
@@ -124,6 +136,5 @@ public class MybatisGenerator {
         }
         throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
-
 
 }

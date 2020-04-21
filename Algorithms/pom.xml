@@ -22,11 +22,11 @@
 
 	<dependencies>
 		<!-- https://github.com/sromku/polygon-contains-point -->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.remarkmedia.tools</groupId>
 			<artifactId>polygon</artifactId>
 			<version>1.0.2</version>
-		</dependency>
+		</dependency>-->
 
 		<!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
 		<dependency>
@@ -41,24 +41,24 @@
 		</dependency>
 
 
-		<dependency>
+		<!--<dependency>
 			<groupId>edu.colostate.cs</groupId>
 			<artifactId>geohashes-in-any-shape</artifactId>
 			<version>1.0</version>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>com.zb.demo</groupId>
 			<artifactId>commons-util</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 
-		<dependency>
+	<!--	<dependency>
 			<groupId>ojdbc7</groupId>
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.2</version>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
@@ -612,6 +612,14 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+
+			<!-- jetty -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.27.v20200227</version>
+			</plugin>
+
 			<!-- 自己动手写javaagent -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
