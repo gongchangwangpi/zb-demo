@@ -27,6 +27,7 @@ public class MybatisGenerator {
     private static final String PACKAGE_NAME = "com.zb";
 
     private static final String AUTHOR = "zhangbo";
+    private static final boolean SWAGGER_2 = false;
 
     public static void main(String[] args) {
 
@@ -41,8 +42,7 @@ public class MybatisGenerator {
         gc.setOpen(false);
         gc.setBaseColumnList(true);
         gc.setBaseResultMap(true);
-//        gc.set
-        // gc.setSwagger2(true); 实体属性 Swagger2 注解
+        gc.setSwagger2(SWAGGER_2);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -119,8 +119,8 @@ public class MybatisGenerator {
         strategy.setTablePrefix(TABLE_PREFIX);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
-        mpg.execute();
 
+        mpg.execute();
     }
 
     public static String scanner(String tip) {
