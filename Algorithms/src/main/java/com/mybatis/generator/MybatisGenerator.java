@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 public class MybatisGenerator {
 
+    private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
     private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&useSSL=false&characterEncoding=utf8";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "root";
@@ -49,7 +50,7 @@ public class MybatisGenerator {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(JDBC_URL);
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsc.setDriverName(DRIVER_CLASS_NAME);
         dsc.setUsername(JDBC_USERNAME);
         dsc.setPassword(JDBC_PASSWORD);
         mpg.setDataSource(dsc);
