@@ -1,14 +1,13 @@
 package com.zb.springboot.demo.entity;
 
-import com.zb.springboot.demo.enums.GenderEnum;
-import com.zb.springboot.demo.enums.JobEnum;
-import lombok.AllArgsConstructor;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -20,18 +19,16 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-//@TableName("t_man_user")
-public class ManUser implements Serializable {
+@TableName("t_user")
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 代理主键
      */
-//    @TableId(type = IdType.NONE)
     private Long id;
 
     /**
@@ -40,19 +37,13 @@ public class ManUser implements Serializable {
     private String username;
 
     /**
-     * 密码
+     * 年龄
      */
-    private String password;
+    private Integer age;
 
     /**
-     * 性别M F
+     * 创建时间
      */
-    private GenderEnum gender;
-
-    /**
-     * 职业
-     */
-    private JobEnum job;
-
+    private Date createTime;
 
 }
