@@ -17,7 +17,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by wangxinghao on 2019/12/27.
+ * @author zhangbo
+ * @date 2020/4/24
  */
 @Configuration
 public class QuartzConfig {
