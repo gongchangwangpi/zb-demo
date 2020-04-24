@@ -1,4 +1,4 @@
-package com.test;
+package com.test.format;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.ValueFilter;

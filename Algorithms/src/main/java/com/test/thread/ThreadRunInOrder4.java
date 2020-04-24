@@ -1,4 +1,4 @@
-package com.test;
+package com.test.thread;
 
 import com.books.bingfayishu.d4.SleepUtils;
 import lombok.extern.slf4j.Slf4j;

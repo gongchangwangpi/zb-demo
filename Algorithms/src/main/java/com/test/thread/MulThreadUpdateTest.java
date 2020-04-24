@@ -1,4 +1,4 @@
-package com.test;
+package com.test.thread;
 
 /**
  *  多线程情况下，可能会存在 i != i 的情况
