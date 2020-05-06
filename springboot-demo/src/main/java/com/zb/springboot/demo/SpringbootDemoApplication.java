@@ -1,13 +1,17 @@
 package com.zb.springboot.demo;
 
+import com.zb.springboot.demo.entity.User;
 import com.zb.springboot.demo.job.InsertUserJob;
+import com.zb.springboot.demo.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.quartz.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Slf4j
 @MapperScan(value = "com.zb.springboot.demo.mapper")
@@ -18,16 +22,21 @@ public class SpringbootDemoApplication {
         ConfigurableApplicationContext context = SpringApplication.run(SpringbootDemoApplication.class, args);
 
 //        MailSenderUtil mailSenderUtil = context.getBean(MailSenderUtil.class);
-//
 //        mailSenderUtil.sendSimpleMail();
 
 //        SchedulerFactoryBean schedulerFactoryBean = context.getBean(SchedulerFactoryBean.class);
-//
 //        Scheduler scheduler = schedulerFactoryBean.getObject();
-//
 //        scheduler.scheduleJob(getJobDetail(jobDataMap()), getTrigger());
+//        System.out.println(" ----------------- scheduler");
 
-        System.out.println(" ----------------- scheduler");
+        UserService userService = context.getBean(UserService.class);
+        User user = new User();
+        user.setUsername("user1");
+        user.setAge(11);
+        user.setCreateTime(new Date());
+        user.setRegisterTime(LocalDateTime.now());
+        userService.insert(user);
+
     }
 
     public static Trigger getTrigger() {
