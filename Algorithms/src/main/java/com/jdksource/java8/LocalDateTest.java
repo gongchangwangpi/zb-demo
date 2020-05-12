@@ -20,6 +20,8 @@ public class LocalDateTest {
 
         ZoneId zoneId = ZoneId.systemDefault();
         Instant instant = today.atStartOfDay(zoneId).toInstant();
+        System.out.println(today.toEpochDay());
+        System.out.println(today.toEpochDay()/365);
 
         Date date = Date.from(instant);
         System.out.println(date);
