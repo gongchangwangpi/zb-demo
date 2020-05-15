@@ -24,4 +24,6 @@ public @interface Track {
 
     boolean parameters() default true;
 
+    boolean response() default true;
+
 }

@@ -9,11 +9,13 @@ import org.quartz.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Slf4j
+//@EnableAspectJAutoProxy(proxyTargetClass = true)
 @MapperScan(value = "com.zb.springboot.demo.mapper")
 @SpringBootApplication
 public class SpringbootDemoApplication {

@@ -3,6 +3,7 @@ package com.zb.springboot.demo.controller;
 import com.zb.springboot.demo.track.Track;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +24,10 @@ public class UserTrackTestController {
     }
 
     @Track(application = "user", eventType = "get")
-    @GetMapping(value = "/get")
-    public String get() {
-        log.info("get === ");
+//    @GetMapping(value = "/get/{id}")
+    @RequestMapping(value = "/get/{id}")
+    public String get(@PathVariable("id") Long id) {
+        log.info("get === {}", id);
         return "Get OK";
     }
 

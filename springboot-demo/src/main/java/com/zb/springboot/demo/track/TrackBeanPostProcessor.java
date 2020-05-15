@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
  * @date 2020/4/29
  */
 @Slf4j
-@Component
+//@Component
 public class TrackBeanPostProcessor extends AbstractAutoProxyCreator {
 
     @Override

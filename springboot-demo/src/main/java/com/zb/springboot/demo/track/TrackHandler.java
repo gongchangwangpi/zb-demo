@@ -16,17 +16,18 @@ public class TrackHandler implements MethodInterceptor {
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
+        Object resp = invocation.proceed();
 
         Method method = invocation.getMethod();
         Track track = method.getDeclaredAnnotation(Track.class);
         if (track != null) {
-            track(invocation, method, track);
+            track(invocation, method, track, resp);
         }
 
-        return invocation.proceed();
+        return resp;
     }
 
-    private void track(MethodInvocation invocation, Method method, Track track) {
+    private void track(MethodInvocation invocation, Method method, Track track, Object resp) {
         TrackEvent trackEvent = new TrackEvent();
         trackEvent.setApplication(track.application());
         trackEvent.setEventType(track.eventType());
@@ -42,8 +43,12 @@ public class TrackHandler implements MethodInterceptor {
                         attach.put(parameters[i].getName(), arguments[i]);
                     }
                 }
-                trackEvent.setAttach(attach);
+                trackEvent.setParameters(attach);
             }
+        }
+
+        if (track.response()) {
+            trackEvent.setResponse(resp);
         }
 
         TrackSender.send(trackEvent);

@@ -15,6 +15,7 @@ public class TrackEvent {
     private String application;
     private String eventType;
     private long timestamp = System.currentTimeMillis();
-    private Map<String, Object> attach = new HashMap<>();
+    private Map<String, Object> parameters = new HashMap<>();
+    private Object response;
 
 }
