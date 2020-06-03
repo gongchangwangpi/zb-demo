@@ -19,9 +19,11 @@ public class ConsumerTest {
     public static void main(String[] args) {
 
         Properties props = new Properties();
-        props.setProperty("bootstrap.servers", "localhost:9093,localhost:9092,localhost:9091");
+//        props.setProperty("bootstrap.servers", "localhost:9093,localhost:9092,localhost:9091");
+        props.setProperty("bootstrap.servers", "10.206.6.100:9092");
 //        props.setProperty("zookeeper", "localhost:2181");
         props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "test");
+        props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         // 延迟提交offset
         props.setProperty("auto.commit.interval.ms", "1000");
@@ -30,7 +32,7 @@ public class ConsumerTest {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
         // 订阅主题
-        consumer.subscribe(Arrays.asList("first", "cluster-partition-3"));
+        consumer.subscribe(Arrays.asList("trace_collect"));
 
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));

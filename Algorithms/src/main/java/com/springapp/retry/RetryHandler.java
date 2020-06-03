@@ -23,7 +23,7 @@ public class RetryHandler extends AbstractAutoProxyCreator {
     @Override
     protected Object[] getAdvicesAndAdvisorsForBean(Class<?> beanClass, String beanName, TargetSource customTargetSource) throws BeansException {
 
-        beanClass = beanClass.getSuperclass();
+//        beanClass = beanClass.getSuperclass();
 
         Method[] declaredMethods = beanClass.getDeclaredMethods();
         

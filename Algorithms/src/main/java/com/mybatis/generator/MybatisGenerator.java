@@ -1,5 +1,6 @@
 package com.mybatis.generator;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -16,16 +17,29 @@ import java.util.Scanner;
 
 public class MybatisGenerator {
 
-    private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&useSSL=false&characterEncoding=utf8";
-    private static final String JDBC_USERNAME = "root";
-    private static final String JDBC_PASSWORD = "root";
 
-    private static final String TABLE_NAMES = "t_user,t_log";
+    // postgresql/redshift等使用
+//    private static final DbType DB_TYPE = DbType.POSTGRE_SQL;
+//    private static final String SCHEMA_NAME = "ck_ods";
+//    private static final String DRIVER_CLASS_NAME = "com.amazon.redshift.jdbc.Driver";
+//    private static final String JDBC_URL = "jdbc:redshift://cdp-hj.cj7qc24fzcvw.cn-northwest-1.redshift.amazonaws.com.cn:5439/cdp_ck?useSSL=false&useUnicode=true&characterEncoding=UTF-8";
+//    private static final String JDBC_USERNAME = "cdp_hj";
+//    private static final String JDBC_PASSWORD = "Cdp_hj123";
+
+    private static final DbType DB_TYPE = DbType.MYSQL;
+    private static final String SCHEMA_NAME = null;
+    private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
+    private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/cdp_config?useSSL=false&useUnicode=true&characterEncoding=UTF-8";
+//    private static final String JDBC_URL = "jdbc:mysql://cdp-maidian.crwinywugwak.rds.cn-northwest-1.amazonaws.com.cn:3306/trace_config?useSSL=false&useUnicode=true&characterEncoding=UTF-8";
+    private static final String JDBC_USERNAME = "root";
+//    private static final String JDBC_PASSWORD = "Wxws2020!";
+    private static final String JDBC_PASSWORD = "123456";
+
+    private static final String TABLE_NAMES = "t_company";
     private static final String TABLE_PREFIX = "t_";
 
     private static final String[] SUPER_ENTITY_COLUMNS = {};
-    private static final String PACKAGE_NAME = "com.zb";
+    private static final String PACKAGE_NAME = "com.mydataway.cdpservice.ods.app";
 
     private static final String AUTHOR = "zhangbo";
     private static final boolean SWAGGER_2 = false;
@@ -49,7 +63,11 @@ public class MybatisGenerator {
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(JDBC_URL);
-        // dsc.setSchemaName("public");
+        // POSTGRE_SQL的schema_name
+        if (org.apache.commons.lang3.StringUtils.isNotEmpty(SCHEMA_NAME)) {
+            dsc.setSchemaName(SCHEMA_NAME);
+        }
+        dsc.setDbType(DB_TYPE);
         dsc.setDriverName(DRIVER_CLASS_NAME);
         dsc.setUsername(JDBC_USERNAME);
         dsc.setPassword(JDBC_PASSWORD);

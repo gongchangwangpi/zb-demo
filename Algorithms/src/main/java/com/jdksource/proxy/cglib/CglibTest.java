@@ -6,7 +6,7 @@ import net.sf.cglib.proxy.Enhancer;
 /**
  * @author zhangbo
  */
-public class Test {
+public class CglibTest {
 
     public static void main(String[] args) {
 

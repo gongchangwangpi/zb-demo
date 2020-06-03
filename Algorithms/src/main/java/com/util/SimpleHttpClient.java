@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * SIMPLE HTTP CLIENT 工具类
  *
- * @author EDISON
+ * @author zhangbo
  *
  */
 @Getter
@@ -110,7 +110,7 @@ public class SimpleHttpClient {
      * @return response
      * @throws HttpRemoteException
      */
-    public String postBySingleString(String url, String requestParam, String charset) {
+    public String postByJsonString(String url, String requestParam, String charset) {
 
         customLog("url", url);
 
@@ -232,7 +232,7 @@ public class SimpleHttpClient {
     }
 
     public String post(String url, String param) {
-        return postBySingleString(url, param, DEFAULT_CHARSET);
+        return postByJsonString(url, param, DEFAULT_CHARSET);
     }
 
     public String post(String url, Map<String, String> paramMap) {

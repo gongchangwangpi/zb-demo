@@ -9,7 +9,7 @@ import java.lang.reflect.Proxy;
  * @author zhangbo
  */
 @Slf4j
-public class Test {
+public class JdkProxyTest {
 
     public static void main(String[] args) throws Exception {
         
@@ -24,7 +24,7 @@ public class Test {
 
         LogInvocationHandler logInvocationHandler = new LogInvocationHandler(helloService);
 
-        ClassLoader classLoader = Test.class.getClassLoader();
+        ClassLoader classLoader = JdkProxyTest.class.getClassLoader();
 
         Object proxyInstance = Proxy.newProxyInstance(classLoader, proxyInterface, logInvocationHandler);
         
