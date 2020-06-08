@@ -14,7 +14,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @author zhangbo
  */
 @Slf4j
-public class Main {
+public class BeanLifeCycleMain {
 
     public static void main(String[] args) {
 

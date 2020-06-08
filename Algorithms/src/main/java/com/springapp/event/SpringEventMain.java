@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 
  * Created by books on 2017/9/29.
  */
-public class Main {
+public class SpringEventMain {
 
     public static void main(String[] args) {
 
