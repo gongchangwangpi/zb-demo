@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.sql.*;
+import java.time.Instant;
 import java.util.Calendar;
 
 /**
@@ -43,8 +44,7 @@ public class CPrepareStatement implements PreparedStatement {
     @Override
     public ResultSet executeQuery() throws SQLException {
         this.resultSet = cqlSession.execute(sql);
-//        System.out.println(CassandraPageTest.parseResultSet(resultSet));
-        return null;
+        return new CResultSet(resultSet);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class CPrepareStatement implements PreparedStatement {
 
     @Override
     public void setTimestamp(int parameterIndex, Timestamp x) throws SQLException {
-//        boundStatement = boundStatement.setInstant(getParameterIndex(parameterIndex), x);
+        boundStatement = boundStatement.setInstant(getParameterIndex(parameterIndex), Instant.ofEpochMilli(x.getTime()));
     }
 
     @Override
@@ -154,9 +154,7 @@ public class CPrepareStatement implements PreparedStatement {
 
     @Override
     public boolean execute() throws SQLException {
-        com.datastax.oss.driver.api.core.cql.ResultSet resultSet = cqlSession.execute(boundStatement);
-//        System.out.println(CassandraPageTest.parseResultSet(resultSet));
-        this.resultSet = resultSet;
+        this.resultSet = cqlSession.execute(boundStatement);
         return true;
     }
 
