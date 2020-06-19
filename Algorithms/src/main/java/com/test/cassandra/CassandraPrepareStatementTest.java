@@ -2,20 +2,23 @@ package com.test.cassandra;
 
 import com.alibaba.fastjson.JSON;
 import com.datastax.oss.driver.api.core.CqlSession;
-import com.datastax.oss.driver.api.core.cql.ColumnDefinition;
+import com.datastax.oss.driver.api.core.cql.BoundStatement;
 import com.datastax.oss.driver.api.core.cql.ColumnDefinitions;
+import com.datastax.oss.driver.api.core.cql.PreparedStatement;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.internal.core.metadata.DefaultEndPoint;
-import org.springframework.util.CollectionUtils;
 
 import java.net.InetSocketAddress;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhangbo
  * @date 2020/5/18
  */
-public class CassandraTest {
+public class CassandraPrepareStatementTest {
 
     private static final String host = "127.0.0.1";
     private static final int port = 9042;
@@ -28,22 +31,20 @@ public class CassandraTest {
 
         try {
             session = getSession();
-//            ResultSet resultSet = session.execute("select * from customer where id = 3 limit 1");
-//            ResultSet resultSet = session.execute("select * from customer");
-            String cql = "select * from customer";
-            List<Map<String, Object>> result = null;
-            Integer lastId = null;
-            do {
-                ResultSet resultSet = page(cql, lastId, 6);
-                result = parseResultSet(resultSet);
-                System.out.println(JSON.toJSONString(result));
-                if (!CollectionUtils.isEmpty(result)) {
-                    lastId = (Integer) result.get(result.size() - 1).get("id");
-                }
+            String cql = "select * from customer where id = ? and name = ?";
 
-            } while (!CollectionUtils.isEmpty(result));
+            PreparedStatement preparedStatement = session.prepare(cql);
+            BoundStatement boundStatement = preparedStatement.bind(new Object[0]);
+//            boundStatement = boundStatement.setInt("id", 5);
+//            boundStatement = boundStatement.setString("name", "name5");
+            boundStatement = boundStatement.setInt(0, 5);
+            boundStatement = boundStatement.setString(1, "name5");
 
+            ResultSet resultSet = session.execute(boundStatement);
             // 返回结果的列信息，可根据此返回通用的map
+            List<Map<String, Object>> maps = parseResultSet(resultSet);
+            System.out.println(JSON.toJSONString(maps));
+
         } finally {
             if (session != null) {
                 session.close();
@@ -51,16 +52,6 @@ public class CassandraTest {
         }
     }
 
-    private static ResultSet page(String cql, Integer lastId, int pageSize) {
-        pageSize = pageSize < 1 ? 10 : pageSize;
-        if (lastId == null) {
-            // 第一页
-            cql = cql + " limit " + pageSize;
-        } else {
-            cql = cql + " where token(id) > token(" + lastId + ") limit " + pageSize;
-        }
-        return session.execute(cql);
-    }
 
     public static CqlSession getSession() {
         return CqlSession.builder().addContactEndPoint(new DefaultEndPoint(new InetSocketAddress(host, port))).withKeyspace(keySpace).withLocalDatacenter(dataCenter).build();

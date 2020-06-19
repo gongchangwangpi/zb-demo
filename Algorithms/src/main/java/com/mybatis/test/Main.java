@@ -29,32 +29,38 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        String resource = "mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
+        // 配置文件
+//        String resource = "mybatis-config.xml";
+//        InputStream inputStream = Resources.getResourceAsStream(resource);
+//        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+//        SqlSessionFactory factory = builder.build(inputStream);
+//        Configuration configuration = factory.getConfiguration();
+
+        // 编程式
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/cdp_config");
+        dataSource.setUsername("root");
+        dataSource.setPassword("123456");
+        TransactionFactory transactionFactory = new JdbcTransactionFactory();
+        Environment environment = new Environment("development", transactionFactory, dataSource);
+        Configuration configuration = new Configuration(environment);
+        configuration.addMappers("com.mydataway.cdpservice.api.mapper");
+
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-        SqlSessionFactory factory = builder.build(inputStream);
-
-//        DataSource dataSource = new DruidDataSource();
-//        TransactionFactory transactionFactory = new JdbcTransactionFactory();
-
-//        Environment environment = new Environment("development", transactionFactory, dataSource);
+        SqlSessionFactory factory = builder.build(configuration);
+//        System.out.println(configuration);
 //
-//        Configuration configuration = new Configuration(environment);
-
-        Configuration configuration = factory.getConfiguration();
-
-        System.out.println(configuration);
-
         Collection<MappedStatement> mappedStatements = configuration.getMappedStatements();
-
         System.out.println(mappedStatements.size());
-        MappedStatement mappedStatement = configuration.getMappedStatement("com.mydataway.cdpservice.api.mapper.CassandraConfigMapper.selectByEntId");
-        System.out.println(mappedStatement.getSqlSource());
-        System.out.println(mappedStatement.getBoundSql(1).getSql());
+//
+//        MappedStatement mappedStatement = configuration.getMappedStatement("com.mydataway.cdpservice.api.mapper.CassandraConfigMapper.selectById");
+//        System.out.println(mappedStatement.getSqlSource());
+//        System.out.println(mappedStatement.getBoundSql(1).getSql());
 
         SqlSession sqlSession = factory.openSession();
         CassandraConfigMapper cassandraConfigMapper = sqlSession.getMapper(CassandraConfigMapper.class);
-        List<CassandraConfig> cassandraConfigs = cassandraConfigMapper.selectByEntity(new CassandraConfig());
+        CassandraConfig cassandraConfigs = cassandraConfigMapper.selectById(1);
 
         System.out.println(JSON.toJSONString(cassandraConfigs));
         System.out.println("=======");

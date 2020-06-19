@@ -65,11 +65,11 @@
         where company_code = #{companyCode}
     </select>
 
-    <select id="selectByEntId" resultMap="BaseResultMap">
+    <select id="selectById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from app_cassandra_config
-        where ent_id = #{entId}
+        where id = #{id}
     </select>
 
     <select id="selectByEntity" resultMap="BaseResultMap">
