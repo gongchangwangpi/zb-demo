@@ -38,13 +38,13 @@ public class SpringbootDemoApplication {
 //        scheduler.scheduleJob(getJobDetail(jobDataMap()), getTrigger());
 //        System.out.println(" ----------------- scheduler");
 
-        UserService userService = context.getBean(UserService.class);
-        User user = new User();
-        user.setUsername("user1");
-        user.setAge(11);
-        user.setCreateTime(new Date());
-        user.setRegisterTime(LocalDateTime.now());
-        userService.insert(user);
+//        UserService userService = context.getBean(UserService.class);
+//        User user = new User();
+//        user.setUsername("user1");
+//        user.setAge(11);
+//        user.setCreateTime(new Date());
+//        user.setRegisterTime(LocalDateTime.now());
+//        userService.insert(user);
 
     }
 
