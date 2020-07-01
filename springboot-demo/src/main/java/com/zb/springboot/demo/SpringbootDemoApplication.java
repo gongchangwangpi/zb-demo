@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Slf4j
-@EnableAsync
+//@EnableAsync
 //@EnableAspectJAutoProxy(proxyTargetClass = true)
 @MapperScan(value = "com.zb.springboot.demo.mapper")
 @SpringBootApplication
@@ -54,7 +54,7 @@ public class SpringbootDemoApplication {
         return JobBuilder.newJob(InsertUserJob.class).withIdentity(new JobKey("InsertUser")).withDescription("插入用户").setJobData(map).build();
     }
 
-    private static JobDataMap jobDataMap() {
+    private static JobDataMap jobdatamap() {
         JobDataMap map = new JobDataMap();
         map.put("name", "InsertUser");
         map.put("jobGroup", "User");
