@@ -15,15 +15,15 @@ import java.util.Map;
 /**
  * 原生 JDBC
  * 
- * Created by books on 2017/12/15.
+ * @author zhangbo
  */
 public class JdbcUtil {
     
     private static Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
 
-    private static final String DEFAULT_URL = "jdbc:mysql://127.0.0.1:3306/maven-web?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai";
+    private static final String DEFAULT_URL = "jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai";
     private static final String DEFAULT_USERNAME = "root";
-    private static final String DEFAULT_PASSWORD = "root";
+    private static final String DEFAULT_PASSWORD = "123456";
     
     /*static {
         try {
