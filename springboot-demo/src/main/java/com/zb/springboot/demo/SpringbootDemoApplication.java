@@ -15,9 +15,14 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+/**
+ * Springboot 启动类
+ *
+ * @author zhangbo
+ */
 @Slf4j
-//@EnableAsync
-//@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableAsync
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 @MapperScan(value = "com.zb.springboot.demo.mapper")
 @SpringBootApplication
 public class SpringbootDemoApplication {
