@@ -1,6 +1,8 @@
 package com.test.cassandra;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.bedpotato.alg4.ST;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.*;
 import com.datastax.oss.driver.internal.core.metadata.DefaultEndPoint;
@@ -10,10 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhangbo
@@ -25,9 +24,9 @@ public class CassandraPageKeyTest {
     private static final String host = "127.0.0.1";
     private static final int port = 9042;
     private static final String dataCenter = "datacenter1";
-    private static final String keySpace = "cdp_hj";
-    private static final String username = "1234";
-    private static final String password = "1234";
+    private static final String keySpace = "test";
+    private static final String username = "test";
+    private static final String password = "test";
 
     private static CqlSession session;
 
@@ -38,18 +37,21 @@ public class CassandraPageKeyTest {
             String cql = "select * from test";
             PageResultDto<Map<String, Object>> pageResultDto = null;
 
-            int pageSize = 20;
-            String pageKey = "0x06484a3030363500f07fffffaf00";
+            int pageSize = 50;
+//            String pageKey = "0x06484a3030363500f07fffffaf00";
+            String pageKey = "0x06484a3030343800f07fffffcd00";
             ResultSet resultSet = pageQuery(cql, pageKey, pageSize);
             pageResultDto = parseResultSet(resultSet);
 
             log.info(JSON.toJSONString(pageResultDto));
             log.info("pageKey = {}", pageResultDto.getPageKey());
+            log.info("fetch size = {}", pageResultDto.getData().size());
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+
     }
 
     private static ResultSet pageQuery(String cql, String pageKey, int pageSize) {
@@ -82,6 +84,9 @@ public class CassandraPageKeyTest {
         // 分页key
         ByteBuffer pagingState = resultSet.getExecutionInfo().getPagingState();
         pageResultDto.setPageKey(Bytes.toHexString(pagingState));
+        if (pagingState != null) {
+            log.info("pagingState = {}", new String(pagingState.array()));
+        }
         // 解析结果
         ColumnDefinitions columnDefinitions = resultSet.getColumnDefinitions();
         List<String> columnNameList = new ArrayList<>();
@@ -90,14 +95,15 @@ public class CassandraPageKeyTest {
         });
 
         List<Map<String, Object>> result = new ArrayList<>();
-        resultSet.forEach(row -> {
+        while (resultSet.getAvailableWithoutFetching() > 0) {
+            Row row = resultSet.one();
             // 取出结果集
             Map<String, Object> map = new HashMap<>();
             columnNameList.forEach(columnName -> {
                 map.put(columnName, row.getObject(columnName));
             });
             result.add(map);
-        });
+        }
 
         pageResultDto.setData(result);
         return pageResultDto;
