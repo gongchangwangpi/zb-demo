@@ -13,14 +13,17 @@ public class Pinyin4jTest {
 
     public static void main(String[] args) throws Exception {
         
-        String china = "中";
+        String china = "您好,去哪儿";
 
         HanyuPinyinOutputFormat outputFormat = new HanyuPinyinOutputFormat();
-        outputFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
-        outputFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        // 大小写
+        outputFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        // 声调方式
+        outputFormat.setToneType(HanyuPinyinToneType.WITH_TONE_NUMBER);
+        // 元音ü 的显示 v / ü / u:
         outputFormat.setVCharType(HanyuPinyinVCharType.WITH_U_UNICODE);
 
-        String s = PinyinHelper.toHanYuPinyinString(china, outputFormat, "---", false);
+        String s = PinyinHelper.toHanYuPinyinString(china, outputFormat, " ", false);
 
         System.out.println(s);
         
