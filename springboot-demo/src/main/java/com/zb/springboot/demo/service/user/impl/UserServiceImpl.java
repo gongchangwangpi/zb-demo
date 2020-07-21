@@ -1,5 +1,6 @@
 package com.zb.springboot.demo.service.user.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zb.springboot.demo.aspect.MyAspect;
 import com.zb.springboot.demo.entity.User;
 import com.zb.springboot.demo.mapper.UserMapper;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
  * @date 2020/4/23
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -25,4 +26,7 @@ public class UserServiceImpl implements UserService {
         int i = 1 / 0;
         return user.getId();
     }
+
+
+
 }

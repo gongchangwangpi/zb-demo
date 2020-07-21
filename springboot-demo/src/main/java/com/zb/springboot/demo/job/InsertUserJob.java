@@ -25,8 +25,11 @@ public class InsertUserJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        if (count.getAndIncrement() % 2 == 0) {
+            int i = 1 / 0;
+        }
         User user = new User();
-        user.setUsername("name" + count.getAndIncrement());
+        user.setUsername("name" + count.get());
         user.setAge(20);
         user.setCreateTime(new Date());
         log.info("insert username: {}, {}", user.getUsername(), this);

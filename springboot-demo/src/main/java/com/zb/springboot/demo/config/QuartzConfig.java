@@ -1,81 +1,60 @@
 package com.zb.springboot.demo.config;
 
+import com.zb.springboot.demo.job.listener.MyJobListener;
+import org.quartz.Scheduler;
 import org.quartz.spi.JobFactory;
 import org.quartz.spi.TriggerFiredBundle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.quartz.AdaptableJobFactory;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SpringBeanJobFactory;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
 
 /**
- * @author zhangbo
- * @date 2020/4/24
+ * quartz定时任务配置
+ *
+ *
  */
 @Configuration
 public class QuartzConfig {
 
-    //配置JobFactory
-    @Bean
-    public JobFactory jobFactory(ApplicationContext applicationContext) {
-        AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
-        jobFactory.setApplicationContext(applicationContext);
-        return jobFactory;
-    }
+    @Autowired
+    private AutowireCapableBeanFactory  capableBeanFactory;
 
     /**
-     * SchedulerFactoryBean这个类的真正作用提供了对org.quartz.Scheduler的创建与配置，并且会管理它的生命周期与Spring同步。
-     * org.quartz.Scheduler: 调度器。所有的调度都是由它控制。
-     *
-     * @param dataSource 为SchedulerFactory配置数据源
-     * @param jobFactory 为SchedulerFactory配置JobFactory
+     * 当触发器触发时，与之关联的任务被Scheduler中配置的JobFactory实例化，也就是每触发一次，就会创建一个任务的实例化对象
+     * (如果缺省)则调用Job类的newInstance方法生成一个实例
+     * (这里选择自定义)并将创建的Job实例化交给IoC管理
+     * @return
      */
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource, JobFactory jobFactory) throws IOException {
-        SchedulerFactoryBean factory = new SchedulerFactoryBean();
-        //可选,QuartzScheduler启动时更新己存在的Job,这样就不用每次修改targetObject后删除qrtz_job_details表对应记录
-        factory.setOverwriteExistingJobs(true);
-        factory.setAutoStartup(true); //设置自行启动
-        factory.setDataSource(dataSource);
-        factory.setJobFactory(jobFactory);
-        factory.setQuartzProperties(quartzProperties());
-        return factory;
+    public JobFactory jobFactory() {
+        return new AdaptableJobFactory() {
+            @Override
+            protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
+                Object jobInstance = super.createJobInstance(bundle);
+                capableBeanFactory.autowireBean(jobInstance);
+                return jobInstance;
+            }
+        };
     }
 
-    //从quartz.properties文件中读取Quartz配置属性
     @Bean
-    public Properties quartzProperties() throws IOException {
-        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-        propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
-        propertiesFactoryBean.afterPropertiesSet();
-        return propertiesFactoryBean.getObject();
+    public SchedulerFactoryBean schedulerFactoryBean() {
+        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+        schedulerFactoryBean.setJobFactory(jobFactory());
+        schedulerFactoryBean.setGlobalJobListeners(new MyJobListener());
+        //延迟启动
+        schedulerFactoryBean.setStartupDelay(1);
+        schedulerFactoryBean.setConfigLocation(new ClassPathResource("/quartz.properties"));
+        return schedulerFactoryBean;
     }
 
-    //配置JobFactory,为quartz作业添加自动连接支持
-    public final class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory implements
-            ApplicationContextAware {
-        private AutowireCapableBeanFactory beanFactory;
-
-        @Override
-        public void setApplicationContext(final ApplicationContext context) {
-            beanFactory = context.getAutowireCapableBeanFactory();
-        }
-
-        @Override
-        protected Object createJobInstance(final TriggerFiredBundle bundle) throws Exception {
-            final Object job = super.createJobInstance(bundle);
-            beanFactory.autowireBean(job);
-            return job;
-        }
+    @Bean
+    public Scheduler scheduler() {
+        return schedulerFactoryBean().getScheduler();
     }
-
 
 }

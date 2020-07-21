@@ -1,10 +1,14 @@
 package com.zb.springboot.demo.aspect;
 
+import com.zb.springboot.demo.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author zhangbo
@@ -36,7 +40,26 @@ public class LogAspect {
 
         log.info(" ===== around before ===== ");
 
-        Object result = proceedingJoinPoint.proceed();
+        Object target = proceedingJoinPoint.getTarget();
+        Object aThis = proceedingJoinPoint.getThis();
+
+        String shortName = proceedingJoinPoint.getSignature().toShortString();
+        String name = proceedingJoinPoint.getSignature().getName();
+        log.info("method shortName = {}", shortName);
+        log.info("methodName = {}", name);
+        User user = new User();
+        user.setUsername("user123");
+        user.setAge(123);
+        user.setCreateTime(new Date());
+        user.setRegisterTime(LocalDateTime.now());
+
+        Object result = null;
+        try {
+            result = proceedingJoinPoint.proceed();
+        } catch (Throwable throwable) {
+            log.error("aspect error", throwable);
+            throw  throwable;
+        }
 
         log.info(" ===== around after ===== ");
         return result;
