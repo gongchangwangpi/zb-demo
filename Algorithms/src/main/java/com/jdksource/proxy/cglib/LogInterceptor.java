@@ -15,7 +15,9 @@ public class LogInterceptor implements MethodInterceptor {
     @Override
     public Object intercept(Object target, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
 
-        //执行原有逻辑，注意这里是invokeSuper 
+        //执行原有逻辑，注意这里是invokeSuper,target为子类对象，spring的cglib
+        // org.springframework.aop.framework.CglibAopProxy.StaticUnadvisedExposedInterceptor中的target为父类对象
+        // org.springframework.aop.framework.CglibAopProxy.StaticUnadvisedInterceptor中的target为父类对象
         Object res = methodProxy.invokeSuper(target, args);
         
         //执行织入的日志

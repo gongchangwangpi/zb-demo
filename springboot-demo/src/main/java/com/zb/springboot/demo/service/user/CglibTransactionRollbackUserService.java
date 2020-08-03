@@ -16,7 +16,10 @@ import java.util.Date;
  *
  * 结论：cglib虽然是子类的形式代理，但通过this调用内部的方法，一样不能开启事务
  *
- * spring中的this
+ * spring中的this为父类对象，其中Spring在创建对象时，
+ * org.springframework.aop.framework.CglibAopProxy.StaticUnadvisedInterceptor中的target为父类对象
+ *
+ * 而自己通过cglib生成代理类时，Interceptor中的target一般为生成的子类代理对象
  *
  * @author zhangbo
  * @date 2020/8/3
@@ -27,6 +30,10 @@ public class CglibTransactionRollbackUserService {
 
     @Resource
     private UserMapper userMapper;
+
+    public CglibTransactionRollbackUserService() {
+        log.info(">>>>> CglibTransactionRollbackUserService Constructor <<<<< {}", this);
+    }
 
     public User txTest() {
         log.info("===== begin test cglib transaction =====");

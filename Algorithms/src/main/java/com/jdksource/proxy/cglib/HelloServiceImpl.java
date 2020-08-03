@@ -11,7 +11,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public /*final*/ class HelloServiceImpl implements HelloService {
-    
+
+    public HelloServiceImpl() {
+        log.info(">>>>> HelloServiceImpl Constructor : {}", this);
+    }
+
     @Override
     public /*final*/ String hello(String name) {
         log.info("----super this: {}", this);

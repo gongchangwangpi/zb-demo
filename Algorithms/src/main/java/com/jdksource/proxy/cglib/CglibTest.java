@@ -22,6 +22,7 @@ public class CglibTest {
         // 设置需要织入的逻辑
         enhancer.setCallback(new LogInterceptor());
         // 使用织入器创建子类
+//        HelloService helloService = (HelloService) enhancer.create();
         HelloService helloService = (HelloService) enhancer.create();
         // 实际调用的是子类的hello()方法，里面调用了LogInterceptor.intercept()方法
         // methodProxy.invokeSuper(target, args)
