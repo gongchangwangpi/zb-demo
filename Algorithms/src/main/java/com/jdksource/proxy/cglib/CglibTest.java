@@ -24,10 +24,11 @@ public class CglibTest {
         // 使用织入器创建子类
         HelloService helloService = (HelloService) enhancer.create();
         // 实际调用的是子类的hello()方法，里面调用了LogInterceptor.intercept()方法
-        // methodProxy.invokeSuper(target, args)最终调用生成类的CGLIB$hello$0(){super.hello();}
+        // methodProxy.invokeSuper(target, args)
+        // 最终调用生成类的CGLIB$hello$0(){super.hello();}
         String res = helloService.hello("test");
 
-        System.out.println(res);
+        System.out.println("return = " + res);
 
     }
     

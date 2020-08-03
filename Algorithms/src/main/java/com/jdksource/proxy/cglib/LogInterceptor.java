@@ -19,10 +19,8 @@ public class LogInterceptor implements MethodInterceptor {
         Object res = methodProxy.invokeSuper(target, args);
         
         //执行织入的日志
-        if (method.getName().equals("hello")) {
-            System.out.println("记录日志");
-        }
-        
+        System.out.println("记录日志 >>> " + method.getName());
+
         return res;
     }
 }
