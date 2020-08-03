@@ -22,7 +22,7 @@ import java.util.Date;
  */
 @Slf4j
 @EnableAsync
-@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @MapperScan(value = "com.zb.springboot.demo.mapper")
 @SpringBootApplication
 public class SpringbootDemoApplication {

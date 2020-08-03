@@ -31,12 +31,12 @@
 		</rollingPolicy>
 	</appender>
 
-	<appender name="redisLogger" class="com.zb.springboot.demo.logger.RedisLogger">
+	<appender name="redisLogger" class="com.zb.springboot.demo.logger.RedisLogger" />
 
-	</appender>
 
 	<!-- 打印SQL -->
 	<logger name="com.zb.springboot.demo.mapper" level="DEBUG"/>
+	<!-- 打印事务 -->
 	<logger name="org.springframework.transaction" level="trace"/>
 
 	<root level="INFO">
