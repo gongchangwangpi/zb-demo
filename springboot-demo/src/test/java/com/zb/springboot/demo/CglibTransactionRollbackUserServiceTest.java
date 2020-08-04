@@ -1,6 +1,7 @@
 package com.zb.springboot.demo;
 
 import com.zb.springboot.demo.service.user.CglibTransactionRollbackUserService;
+import com.zb.springboot.demo.service.user.CglibTransactionRollbackUserThisService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +22,19 @@ public class CglibTransactionRollbackUserServiceTest {
 
     @Resource
     private CglibTransactionRollbackUserService cglibTransactionRollbackUserService;
+    @Resource
+    private CglibTransactionRollbackUserThisService cglibTransactionRollbackUserThisService;
 
     @Test
     @Rollback(value = false)
     public void testSave() {
        cglibTransactionRollbackUserService.txTest();
+    }
+
+    @Test
+    @Rollback(value = false)
+    public void testThisSave() {
+       cglibTransactionRollbackUserThisService.txTest();
     }
 
 }
