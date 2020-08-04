@@ -1,8 +1,6 @@
 package com.zb.springboot.demo;
 
-import com.zb.springboot.demo.entity.User;
 import com.zb.springboot.demo.job.InsertUserJob;
-import com.zb.springboot.demo.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.quartz.*;
@@ -11,9 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Springboot 启动类
@@ -28,6 +23,7 @@ import java.util.Date;
 public class SpringbootDemoApplication {
 
     public static void main(String[] args) throws SchedulerException {
+//        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, System.getProperty("user.dir"));
         ConfigurableApplicationContext context = SpringApplication.run(SpringbootDemoApplication.class, args);
 
 //        MailSenderUtil mailSenderUtil = context.getBean(MailSenderUtil.class);

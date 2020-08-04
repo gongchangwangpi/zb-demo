@@ -25,7 +25,7 @@ public class CglibTransactionRollbackUserServiceTest {
     @Test
     @Rollback(value = false)
     public void testSave() {
-        cglibTransactionRollbackUserService.txTest();
+       cglibTransactionRollbackUserService.txTest();
     }
 
 }

@@ -1,19 +1,19 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
     name: zb-springboot-demo
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   mail:
     protocol: smtp
     host: smtp.163.com
-    username: 123456@163.com
-    password: 123456
+    username: cookie_zhangbo@163.com
+    password: zhangb0312
 
 mybatis-plus:
   configuration:

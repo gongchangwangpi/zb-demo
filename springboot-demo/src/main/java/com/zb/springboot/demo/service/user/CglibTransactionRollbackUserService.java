@@ -21,6 +21,8 @@ import java.util.Date;
  *
  * 而自己通过cglib生成代理类时，Interceptor中的target一般为生成的子类代理对象
  *
+ * see Algorithms/SpringCglibTest
+ *
  * @author zhangbo
  * @date 2020/8/3
  */
