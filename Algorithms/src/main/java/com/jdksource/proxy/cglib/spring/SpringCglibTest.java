@@ -1,14 +1,16 @@
-package com.jdksource.proxy.cglib;
+package com.jdksource.proxy.cglib.spring;
 
-import net.sf.cglib.core.DebuggingClassWriter;
-import net.sf.cglib.core.DefaultGeneratorStrategy;
-import net.sf.cglib.core.GeneratorStrategy;
-import net.sf.cglib.proxy.Enhancer;
+import com.jdksource.proxy.cglib.HelloService;
+import com.jdksource.proxy.cglib.HelloServiceImpl;
+import org.springframework.aop.framework.CglibAopProxy;
+import org.springframework.cglib.core.DebuggingClassWriter;
+import org.springframework.cglib.core.SpringNamingPolicy;
+import org.springframework.cglib.proxy.Enhancer;
 
 /**
  * @author zhangbo
  */
-public class CglibTest {
+public class SpringCglibTest {
 
     public static void main(String[] args) {
 
@@ -22,9 +24,16 @@ public class CglibTest {
         // 如果父类的方法是final修饰的，可以执行被代理方法的逻辑，但额外的代理逻辑不会执行
         enhancer.setSuperclass(HelloServiceImpl.class);
         // 设置需要织入的逻辑
-        enhancer.setCallback(new LogInterceptor());
-        enhancer.setStrategy(DefaultGeneratorStrategy.INSTANCE);
-//        enhancer.setNamingPolicy();
+//        enhancer.setCallback(new LogInterceptor());
+        enhancer.setInterfaces(new Class[]{HelloService.class});
+        enhancer.setInterceptDuringConstruction(false);
+        enhancer.setCallbackType(LogTargetInterceptor.class);
+        // spring使用cglib生成代理类的方式
+        // @see org.springframework.aop.framework.CglibAopProxy.getCallbacks
+        enhancer.setCallback(new LogTargetInterceptor(new HelloServiceImpl()));
+        enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
+        enhancer.setStrategy(new CglibAopProxy.ClassLoaderAwareUndeclaredThrowableStrategy(SpringCglibTest.class.getClassLoader()));
+
         // 使用织入器创建子类
 //        HelloService helloService = (HelloService) enhancer.create();
         HelloService helloService = (HelloService) enhancer.create();

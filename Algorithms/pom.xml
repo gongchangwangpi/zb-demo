@@ -17,7 +17,7 @@
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.3.13.RELEASE</spring.version>
+		<spring.version>5.1.9.RELEASE</spring.version>
 		<jackson.version>2.9.10</jackson.version>
 	</properties>
 
@@ -215,8 +215,13 @@
 			<version>3.18.1-GA</version>
 		</dependency>
 
+		<!-- spring start -->
 		<dependency>
-			<!-- spring start -->
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
