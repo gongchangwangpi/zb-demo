@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>vue test</title>
+<!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <h2>VUE Note</h2>
+        点击 enter 保存笔记<br/>
+        <input type="text" v-on:keyup.enter="addNote" v-model="note">
+        <ul>
+            <li v-for="(n, idx) in list">{{ idx+1 }}.{{ n }} <span v-on:click="remove(idx)">删除</span></li>
+        </ul>
+        <footer>
+            <span v-show="this.list.length>0" v-on:click="clear">clear</span>
+        </footer>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                note: "hello vue",
+                list: []
+            },
+            methods: {
+                addNote: function () {
+                    this.list.push(this.note);
+                },
+                clear: function () {
+                    this.list = [];
+                },
+                remove: function (idx) {
+                    this.list.splice(idx, 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
