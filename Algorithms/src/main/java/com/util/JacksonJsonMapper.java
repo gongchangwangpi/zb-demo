@@ -110,7 +110,7 @@ public class JacksonJsonMapper {
         }
     }
 
-    public <T> T fromJson(String jsonString, TypeReference typeReference) {
+    public <T> T fromJson(String jsonString, TypeReference<T> typeReference) {
         if (StringUtils.isEmpty(jsonString)) {
             return null;
         }
