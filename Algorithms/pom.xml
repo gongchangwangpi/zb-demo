@@ -382,17 +382,17 @@
 
 
 		<!-- redis -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
 			<version>1.3.0.RELEASE</version>
-		</dependency>
+		</dependency>-->
 
-		<dependency>
+		<!--<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>2.4.2</version>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.redisson</groupId>
@@ -628,6 +628,10 @@
 					<groupId>org.springframework</groupId>
 					<artifactId>spring</artifactId>
 				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
@@ -694,7 +698,13 @@
 			<artifactId>jpinyin</artifactId>
 			<version>1.1.8</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.3.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 	<repositories>
 		<repository>
