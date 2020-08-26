@@ -2,11 +2,14 @@ package com.test.hutool.excel;
 
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.books.jdbc.JdbcUtil;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,6 +56,18 @@ public class DistrictTest {
             System.out.println(region);
         }
         System.out.println(regionList.size());
+
+        // 保存数据库
+        Connection connection = JdbcUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into t_region (code, name, parent_code, level) values (?, ?, ?, ?)");
+        for (Region region : regionList) {
+            preparedStatement.setString(1, region.code);
+            preparedStatement.setString(2, region.name);
+            preparedStatement.setString(3, StringUtils.trimToEmpty(region.parentCode));
+            preparedStatement.setInt(4, region.level);
+            preparedStatement.addBatch();
+        }
+        preparedStatement.executeBatch();
 
 //        process(originRegionList, regionList);
 
