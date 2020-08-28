@@ -1,2 +1,2 @@
-impl1=com.dubbo.test.spi.SayHiImpl1
-impl2=com.dubbo.test.spi.SayHiImpl2
+impl1=com.middlesoftware.dubbo.test.spi.SayHiImpl1
+impl2=com.middlesoftware.dubbo.test.spi.SayHiImpl2
