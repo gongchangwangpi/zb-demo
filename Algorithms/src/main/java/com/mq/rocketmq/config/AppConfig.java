@@ -1,5 +1,8 @@
 package com.mq.rocketmq.config;
 
+import com.mq.rocketmq.MyConsumerPull1;
+import com.mq.rocketmq.MyConsumerPull2;
+import com.mq.rocketmq.MyProducer;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
