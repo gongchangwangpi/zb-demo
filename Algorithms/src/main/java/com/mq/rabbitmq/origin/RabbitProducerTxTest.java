@@ -1,6 +1,6 @@
 package com.mq.rabbitmq.origin;
 
-import com.mq.rabbitmq.ProviderUtil;
+import com.mq.rabbitmq.RabbitProducerUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.MessageProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author zhangbo
  */
 @Slf4j
-public class ProviderTx {
+public class RabbitProducerTxTest {
     
     private static String exchangeName = "exchange_test";
     private static String queueName = "queue_test";
@@ -19,7 +19,7 @@ public class ProviderTx {
 
     public static void main(String[] args) throws Exception {
 
-        Channel channel = ProviderUtil.getChannel(exchangeName, queueName, routingkeyName, ProviderUtil.EXCHANGE_DIRECT);
+        Channel channel = RabbitProducerUtil.getChannel(exchangeName, queueName, routingkeyName, RabbitProducerUtil.EXCHANGE_DIRECT);
 
         String message = "hello rabbitmq";
         
@@ -40,7 +40,7 @@ public class ProviderTx {
             channel.txRollback();
         }
 
-        ProviderUtil.close();
+        RabbitProducerUtil.close();
     }
     
 }

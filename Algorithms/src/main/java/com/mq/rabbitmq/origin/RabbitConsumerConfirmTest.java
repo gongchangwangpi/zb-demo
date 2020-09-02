@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author zhangbo
  */
-public class ConsumerConfirm {
+public class RabbitConsumerConfirmTest {
     
     private static String exchangeName = "exchange_test";
     private static String queueName = "queue_confirm_test";

@@ -1,6 +1,6 @@
 package com.mq.rabbitmq.origin;
 
-import com.mq.rabbitmq.ProviderUtil;
+import com.mq.rabbitmq.RabbitProducerUtil;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmListener;
 import com.rabbitmq.client.MessageProperties;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @author zhangbo
  */
 @Slf4j
-public class ProviderConfirm {
+public class RabbitProducerConfirmTest {
     
     private static String exchangeName = "exchange_test";
     private static String queueName = "queue_confirm_test";
@@ -28,7 +28,7 @@ public class ProviderConfirm {
 
     public static void main(String[] args) throws Exception {
 
-        Channel channel = ProviderUtil.getChannel(exchangeName, queueName, routingkeyName, ProviderUtil.EXCHANGE_DIRECT);
+        Channel channel = RabbitProducerUtil.getChannel(exchangeName, queueName, routingkeyName, RabbitProducerUtil.EXCHANGE_DIRECT);
 
         // 开启确认机制,和事务互斥,在queue上开启了事务就不能再开启确认,反之亦然.
         channel.confirmSelect();
@@ -105,7 +105,7 @@ public class ProviderConfirm {
 
         // 等待5秒,不然channel关闭后,不能收到确认消息
         TimeUnit.SECONDS.sleep(5);
-        ProviderUtil.close();
+        RabbitProducerUtil.close();
     }
     
 }
