@@ -1,0 +1,1 @@
+alter table t_user add column sex varchar(1) comment '性别';

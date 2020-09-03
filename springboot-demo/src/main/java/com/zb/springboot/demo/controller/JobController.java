@@ -22,6 +22,33 @@ public class JobController {
     @Resource
     private Scheduler scheduler;
 
+    @PostMapping(value = "/add/simple")
+    public String addSimpleJob(@RequestBody JobDto jobDto) throws Exception {
+        // 构建job信息
+        JobDetail jobDetail = JobBuilder.newJob(getClass(jobDto.getJobClassName()))
+                .withIdentity(JobKey.jobKey(jobDto.getJobClassName(), jobDto.getJobGroupName()))
+                .withDescription(jobDto.getJobDescription())
+                .build();
+
+        // 表达式调度构建器(即任务执行的时间)
+        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.repeatMinutelyForever(jobDto.getMinutes());
+
+        // 按新的cronExpression表达式构建一个新的trigger
+        SimpleTrigger trigger = TriggerBuilder.newTrigger()
+                .withIdentity(TriggerKey.triggerKey(jobDto.getJobClassName(), jobDto.getJobGroupName()))
+                .withSchedule(scheduleBuilder)
+                .withDescription(jobDto.getJobDescription())
+                .build();
+        try {
+            scheduler.scheduleJob(jobDetail, trigger);
+            log.info("Add job {}-{} success", jobDto.getJobClassName(), jobDto.getJobGroupName());
+        } catch (SchedulerException e) {
+            log.error("Add job error", e);
+            throw new Exception("add job error");
+        }
+        return "OK";
+    }
+
     @PostMapping(value = "/add")
     public String addJob(@RequestBody JobDto jobDto) throws Exception {
         // 构建job信息

@@ -12,8 +12,11 @@ spring:
   mail:
     protocol: smtp
     host: smtp.163.com
-    username: cookie_zhangbo@163.com
-    password: zhangb0312
+    username: 123456@163.com
+    password: 123456
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
 
 mybatis-plus:
   configuration:

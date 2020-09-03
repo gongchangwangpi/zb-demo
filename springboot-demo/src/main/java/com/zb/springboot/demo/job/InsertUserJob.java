@@ -3,9 +3,8 @@ package com.zb.springboot.demo.job;
 import com.zb.springboot.demo.entity.User;
 import com.zb.springboot.demo.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.apache.commons.lang3.time.FastDateFormat;
+import org.quartz.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -25,9 +24,16 @@ public class InsertUserJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        if (count.getAndIncrement() % 2 == 0) {
-            int i = 1 / 0;
-        }
+//        if (count.getAndIncrement() % 2 == 0) {
+//            int i = 1 / 0;
+//        }
+        Date previousFireTime = context.getPreviousFireTime();
+        Date nextFireTime = context.getNextFireTime();
+        FastDateFormat dateFormat = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss");
+//        SimpleTrigger trigger = (SimpleTrigger) context.getTrigger();
+
+        log.info("previousFireTime = {}, nextFireTime = {}, interval = {}", previousFireTime == null ? "" : dateFormat.format(previousFireTime), dateFormat.format(nextFireTime)/*, trigger.getRepeatInterval()*/);
+
         User user = new User();
         user.setUsername("name" + count.get());
         user.setAge(20);

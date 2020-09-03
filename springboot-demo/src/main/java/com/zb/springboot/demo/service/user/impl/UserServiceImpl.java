@@ -23,7 +23,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @MyAspect(value = "user-insert")
     public Long insert(User user) {
         userMapper.insert(user);
-        int i = 1 / 0;
+//        int i = 1 / 0;
         return user.getId();
     }
 

@@ -19,4 +19,6 @@ public class JobDto {
 
     private String jobDescription;
 
+    private Integer minutes;
+
 }
