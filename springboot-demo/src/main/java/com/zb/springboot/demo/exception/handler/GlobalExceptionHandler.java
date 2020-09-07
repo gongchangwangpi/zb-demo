@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public Object handle(Exception e) {
-        log.error(" ===== Exception =====");
+        log.error(" ===== Exception =====", e);
         return "Fail";
     }
 
