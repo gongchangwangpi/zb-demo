@@ -5,15 +5,15 @@ import java.util.Random;
 
 /**
  * 拼手气红包算法
- * 
+ *
  * Created by books on 2017/12/4.
  */
-public class HongBaoTest {
+public class HongBaoTest2 {
 
     public static void main(String[] args) {
 
-        int totalMoney = 50;
-        int count = 10;
+        int totalMoney = 20000;
+        int count = 30;
 
         for (int i = 0; i < 100; i++) {
             int[] redPacket = allocate(totalMoney, count);
@@ -22,7 +22,7 @@ public class HongBaoTest {
             validate(redPacket, totalMoney);
         }
     }
-    
+
     public static void validate(int[] redPacket, int totalMoney) {
         int sum = 0;
         for (int i = 0; i < redPacket.length; i++) {
@@ -39,7 +39,7 @@ public class HongBaoTest {
 
     /**
      * 计算手气红包
-     * 
+     *
      * @param money 红包总金额：分
      * @param count 红包个数
      * @return 每个红包的金额
@@ -52,13 +52,13 @@ public class HongBaoTest {
         if (count < 1) {
             throw new IllegalArgumentException("count < 1");
         }
-        
+
         if (count > money) {
             throw new IllegalArgumentException("count > money");
         }
-        
+
         int[] res = new int[count];
-        
+
         if (count == 1) {
             res[0] = money;
             return res;
@@ -74,10 +74,10 @@ public class HongBaoTest {
 
         // 倒数第二个，便于计算最后一个红包(最后一个直接减，不用再随机数)
         Random random = new Random();
-        for (int i = count - 1; i >= 0; i--) {
-            
+        for (int i = 0; i < count - 1; i++) {
+
             int currentRandom = random.nextInt(max - 1) + 1;
-            
+
             int currentRemainTemp = remain - currentRandom;
             // 每次取随机数和剩余金额的最小值为当前红包金额
             int current = Math.min(currentRandom, currentRemainTemp);
@@ -86,16 +86,16 @@ public class HongBaoTest {
             // 重新计算剩余的钱
             remain -= current;
 
-            if (i == 1) {
+            if (i == count - 2) {
                 // 循环到最后两次时，直接计算最后一个红包的金额，不在继续生成随机数
-                res[0] = remain;
+                res[count - 1] = remain;
                 break;
             }
 
             // 重新计算剩余可分配的最大金额
-            max = getMax(remain, i - 1);
+            max = getMax(remain, count - i - 1);
         }
-        
+
         return res;
     }
 
