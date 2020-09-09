@@ -21,7 +21,9 @@ spring:
 mybatis-plus:
   configuration:
     use-generated-keys: true
-  mapper-locations: mappers/*/*.xml
+    map-underscore-to-camel-case: true
+    local-cache-scope: statement
+  mapper-locations: mappers/*.xml
   global-config:
     db-config:
       id-type: auto

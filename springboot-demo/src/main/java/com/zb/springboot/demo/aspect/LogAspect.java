@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Slf4j
 @Aspect
-@Component
+//@Component
 public class LogAspect {
 
 //    @Pointcut(value = "execution(* com.zb.springboot.demo.service..*.*(..))")

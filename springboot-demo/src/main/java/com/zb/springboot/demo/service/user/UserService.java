@@ -11,4 +11,12 @@ public interface UserService extends IService<User> {
 
     Long insert(User user);
 
+    /**
+     * 测试事务隔离级别
+     * 前后查询两次，分别使用默认的隔离级别和read-committed
+     * 代码中sleep5秒，然后手动修改数据库中的值
+     *
+     * @return
+     */
+    User txIsolationTest();
 }

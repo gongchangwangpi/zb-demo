@@ -9,4 +9,8 @@
         (#{username}, #{age}, #{createTime}, #{registerTime})
     </insert>-->
 
+    <select id="selectByUserId" resultType="com.zb.springboot.demo.entity.User" flushCache="true">
+        select * from t_user
+        where id = #{id}
+    </select>
 </mapper>

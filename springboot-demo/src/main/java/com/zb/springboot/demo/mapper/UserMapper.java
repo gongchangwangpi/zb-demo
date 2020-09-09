@@ -14,4 +14,6 @@ import com.zb.springboot.demo.entity.User;
  */
 public interface UserMapper extends BaseMapper<User> {
 
+    User selectByUserId(Long id);
+
 }

@@ -19,7 +19,7 @@
     <properties>
         <java.version>1.8</java.version>
         <springboot.version>2.1.8.RELEASE</springboot.version>
-        <mybatis.plus.version>3.1.2</mybatis.plus.version>
+        <mybatis.plus.version>3.3.2</mybatis.plus.version>
         <fastjson.version>1.2.54</fastjson.version>
         <quartz.version>2.3.2</quartz.version>
     </properties>
