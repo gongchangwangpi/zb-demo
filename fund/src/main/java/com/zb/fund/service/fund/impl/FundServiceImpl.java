@@ -1,6 +1,6 @@
 package com.zb.fund.service.fund.impl;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zb.fund.domain.Fund;
 import com.zb.fund.mapper.FundMapper;
 import com.zb.fund.service.fund.FundService;
@@ -47,7 +47,7 @@ public class FundServiceImpl implements FundService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-    public PageInfo<Fund> pageList() {
+    public Page<Fund> pageList() {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.middlesoftware.netty.qwzn.chapter2.bio;
 
+import cn.hutool.core.io.IoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
@@ -62,7 +63,7 @@ public class TimeClient {
             } finally {
                 
                 IOUtils.closeQuietly(inputStream);
-                IOUtils.closeQuietly(socket);
+                IoUtil.close(socket);
             }
         }
     }

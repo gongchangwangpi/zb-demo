@@ -1,5 +1,6 @@
 package com.middlesoftware.netty.qwzn.chapter2.nio;
 
+import cn.hutool.core.io.IoUtil;
 import com.middlesoftware.netty.qwzn.chapter2.bio.TimeClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -49,7 +50,7 @@ public class NioServer {
                 executorService.execute(new Handler(selector));
             }
         } finally {
-            IOUtils.closeQuietly(serverSocketChannel);
+            IoUtil.close(serverSocketChannel);
             executorService.shutdown();
         }
     }
@@ -91,7 +92,7 @@ public class NioServer {
                     } catch (IOException e) {
                         log.error("Nio server error", e);
                     } finally {
-                        IOUtils.closeQuietly(socketChannel);
+                        IoUtil.close(socketChannel);
                     }
 
                 }

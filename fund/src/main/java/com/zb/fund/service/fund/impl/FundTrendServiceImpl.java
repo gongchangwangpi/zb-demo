@@ -1,7 +1,6 @@
 package com.zb.fund.service.fund.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zb.commons.date.DateUtil;
 import com.zb.fund.domain.Fund;
 import com.zb.fund.domain.FundTrend;
@@ -20,12 +19,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author zhangbo
@@ -60,14 +54,12 @@ public class FundTrendServiceImpl implements FundTrendService {
     }
 
     @Override
-    public PageInfo<FundTrend> pageList(FundTrendQuery query) {
+    public Page<FundTrend> pageList(FundTrendQuery query) {
         if (query.getStatisticsDate() == null) {
             // 默认查询最新的一期
             query.setStatisticsDate(fundTrendMapper.selectLatestStatisticsDate());
         }
-        PageHelper.startPage(query.getPageNum(), query.getPageSize(), query.orderBy());
-        List<FundTrend> list = fundTrendMapper.selectList(query);
-        return new PageInfo<>(list);
+        return fundTrendMapper.selectList(query);
     }
 
     private void saveFundTrends(List<FundTrendDto> dtoList, Date statDate) {

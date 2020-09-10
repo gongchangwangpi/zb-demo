@@ -1,12 +1,8 @@
 package com.util;
 
-import java.io.*;
-import java.net.SocketException;
-
+import cn.hutool.core.io.IoUtil;
 import com.test.pool.ObjectPool;
 import com.test.pool.ObjectPoolConfig;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -14,6 +10,9 @@ import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.SocketException;
 
 /**
  * FTP UTIL
@@ -352,7 +351,7 @@ public final class FTPPoolUtil {
     }
 
     private static void closeIO(Closeable closeable) {
-        IOUtils.closeQuietly(closeable);
+        IoUtil.close(closeable);
     }
 
     public static FTPClient initFtpClient() {

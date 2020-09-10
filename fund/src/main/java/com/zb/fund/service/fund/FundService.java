@@ -1,6 +1,6 @@
 package com.zb.fund.service.fund;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zb.fund.domain.Fund;
 
 import java.util.List;
@@ -18,6 +18,6 @@ public interface FundService {
 
     List<Fund> list();
 
-    PageInfo<Fund> pageList();
+    Page<Fund> pageList();
 
 }

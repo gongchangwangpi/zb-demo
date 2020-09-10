@@ -1,6 +1,6 @@
 package com.zb.fund.web.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zb.commons.date.DateUtil;
 import com.zb.commons.dto.RestfulResultDto;
 import com.zb.fund.domain.FundTrend;
@@ -49,7 +49,7 @@ public class FundTrendController {
     @GetMapping(value = "/list")
     public String list(FundTrendQuery query, Model model) {
         model.addAttribute("query", query);
-        PageInfo<FundTrend> pageInfo = fundTrendService.pageList(query);
+        Page<FundTrend> pageInfo = fundTrendService.pageList(query);
         model.addAttribute("pageInfo", pageInfo);
         return "/fund/trend/list";
     }
@@ -57,7 +57,7 @@ public class FundTrendController {
     @GetMapping(value = "/list/data")
     @ResponseBody
     public RestfulResultDto listData(FundTrendQuery query) {
-        PageInfo<FundTrend> pageInfo = fundTrendService.pageList(query);
+        Page<FundTrend> pageInfo = fundTrendService.pageList(query);
         return RestfulResultDto.succeed(pageInfo);
     }
     

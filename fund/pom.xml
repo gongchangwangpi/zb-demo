@@ -3,11 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<!--<version>1.5.9.RELEASE</version>-->
-		<version>2.1.1.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<artifactId>zb-demo</artifactId>
+		<groupId>com.zb.demo</groupId>
+		<version>1.0.0</version>
 	</parent>
 
 	<groupId>com.zb</groupId>
@@ -20,12 +18,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<commons.starter.version>2.0.0</commons.starter.version>
-		<fastjson.version>1.2.44</fastjson.version>
-		<druid.version>1.1.10</druid.version>
-		<pagehelper.version>1.2.3</pagehelper.version>
-		<mybatis.version>1.3.2</mybatis.version>
 		<cat.version>3.0.0</cat.version>
-		<mybatis.plus.version>3.1.2</mybatis.plus.version>
 	</properties>
 
 	<dependencies>
@@ -38,27 +31,17 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
 		</dependency>
 
-
-		<!-- druid starter -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>${druid.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-		<!-- pagehelper starter -->
-		<dependency>
-			<groupId>com.github.pagehelper</groupId>
-			<artifactId>pagehelper-spring-boot-starter</artifactId>
-			<version>${pagehelper.version}</version>
-		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
@@ -75,11 +58,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-activemq</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>${mybatis.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -94,7 +72,6 @@
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit</artifactId>
-			<!--<version>2.1.1.RELEASE</version>-->
 		</dependency>
 		<!--<dependency>
 			<groupId>com.rabbitmq</groupId>
@@ -122,7 +99,6 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
 		</dependency>
 
 		<!--<dependency>
@@ -134,27 +110,11 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>${mybatis.plus.version}</version>
 		</dependency>
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.mybatis.generator</groupId>
-				<artifactId>mybatis-generator-maven-plugin</artifactId>
-				<version>1.3.6</version>
-				<configuration>
-					<verbose>true</verbose>
-					<overwrite>true</overwrite>
-				</configuration>
-			</plugin>
-		</plugins>
+		<finalName>fund</finalName>
 	</build>
 
 </project>

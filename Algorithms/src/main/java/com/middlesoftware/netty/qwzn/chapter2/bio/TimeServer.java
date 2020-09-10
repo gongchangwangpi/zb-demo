@@ -1,5 +1,6 @@
 package com.middlesoftware.netty.qwzn.chapter2.bio;
 
+import cn.hutool.core.io.IoUtil;
 import com.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -37,7 +38,7 @@ public class TimeServer {
         } catch (IOException e) {
             log.error("出错啦", e);
         } finally {
-            IOUtils.closeQuietly(serverSocket);
+            IoUtil.close(serverSocket);
             log.info("ServerSocket shutdown");
         }
 
@@ -77,7 +78,7 @@ public class TimeServer {
             } finally {
                 IOUtils.closeQuietly(printStream);
                 IOUtils.closeQuietly(inputStream);
-                IOUtils.closeQuietly(socket);
+                IoUtil.close(socket);
             }
         }
     }

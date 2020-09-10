@@ -1,5 +1,6 @@
 package com.zb.fund.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zb.fund.domain.FundTrend;
 import com.zb.fund.domain.query.FundTrendQuery;
 
@@ -18,7 +19,7 @@ public interface FundTrendMapper {
 
     int batchInsert(List<FundTrend> trendList);
 
-    List<FundTrend> selectList(FundTrendQuery query);
+    Page<FundTrend> selectList(FundTrendQuery query);
 
     Date selectLatestStatisticsDate();
 }

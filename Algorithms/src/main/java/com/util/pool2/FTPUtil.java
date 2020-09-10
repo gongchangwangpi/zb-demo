@@ -1,13 +1,13 @@
 package com.util.pool2;
 
-import java.io.*;
-
-import org.apache.commons.io.IOUtils;
+import cn.hutool.core.io.IoUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
 
 /**
  * 
@@ -144,7 +144,7 @@ public final class FTPUtil {
 	}
 	
 	private void closeIO(Closeable closeable) {
-		IOUtils.closeQuietly(closeable);
+		IoUtil.close(closeable);
 	}
 	
 	private boolean isEmpty(String value) {

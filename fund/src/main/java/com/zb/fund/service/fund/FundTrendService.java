@@ -1,10 +1,11 @@
 package com.zb.fund.service.fund;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zb.fund.domain.FundTrend;
 import com.zb.fund.domain.query.FundTrendQuery;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author zhangbo
@@ -17,5 +18,5 @@ public interface FundTrendService {
      */
     void saveFromEastMoney(Date statDate);
 
-    PageInfo<FundTrend> pageList(FundTrendQuery query);
+    Page<FundTrend> pageList(FundTrendQuery query);
 }

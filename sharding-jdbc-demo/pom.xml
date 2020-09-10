@@ -3,10 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.10.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<artifactId>zb-demo</artifactId>
+		<groupId>com.zb.demo</groupId>
+		<version>1.0.0</version>
 	</parent>
 
 	<groupId>com.zb</groupId>
@@ -18,22 +17,17 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<sharding-sphere.version>4.0.0-RC3</sharding-sphere.version>
 	</properties>
 
 	<dependencies>
-		<!-- for spring boot -->
 		<dependency>
 			<groupId>org.apache.shardingsphere</groupId>
 			<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-			<version>${sharding-sphere.version}</version>
 		</dependency>
 
-		<!-- for spring namespace -->
 		<dependency>
 			<groupId>org.apache.shardingsphere</groupId>
 			<artifactId>sharding-jdbc-spring-namespace</artifactId>
-			<version>${sharding-sphere.version}</version>
 		</dependency>
 
 		<!--<dependency>
@@ -48,9 +42,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>2.1.1</version>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
 		</dependency>
 
 		<dependency>

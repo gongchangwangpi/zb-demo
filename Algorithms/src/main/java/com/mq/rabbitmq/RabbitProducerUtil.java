@@ -71,9 +71,9 @@ public class RabbitProducerUtil {
     private static Map<String, Object> getQueueArgs() {
         HashMap<String, Object> args = new HashMap<>();
         // 死信交换器,绑定在队列上。当出现以下3种情况时，消息将被路由到死信交换器
-        // 1.将队列上的消息对被拒绝(Basic.Reject/Basic.Nack)且requeue为false时
-        // 2.消息过期
-        // 3.队列达到最大长度
+        // 1.将队列上的消息对被消费者拒绝(Basic.Reject/Basic.Nack)且requeue为false时
+        // 2.消息过期(声明队列时加入x-message-ttl参数，单位毫秒；或x-expires参数声明队列的过期时间，单位毫秒；或者在发送消息时，加入消息的expiration参数，单位毫秒)
+        // 3.队列达到最大长度(声明队列时加x-max-length参数)
 //        args.put("x-dead-letter-exchange", "dlx-exchange-name");
         // 设置死信交换器的routing key，没有设置则使用原队列的routing key
 //        args.put("x-dead-letter-routing-key", "dlx-routing-key");
