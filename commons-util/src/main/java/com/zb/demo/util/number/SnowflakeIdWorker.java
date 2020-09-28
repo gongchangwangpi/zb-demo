@@ -1,6 +1,8 @@
 package com.zb.demo.util.number;
 
 
+import java.util.Random;
+
 /**
  * Twitter_Snowflake<br>
  * SnowFlake的结构如下(每部分用-分开):<br>
@@ -88,6 +90,11 @@ public class SnowflakeIdWorker {
      */
     private long lastTimestamp = -1L;
 
+    /**
+     * 解决每毫秒刚开始生成id时，sequence全为0导致数据分库分表时分配不均的问题
+     */
+    private Random random = new Random();
+
     //==============================Constructors=====================================
 
     /**
@@ -129,12 +136,13 @@ public class SnowflakeIdWorker {
             //毫秒内序列溢出
             if (sequence == 0) {
                 //阻塞到下一个毫秒,获得新的时间戳
+                sequence = random.nextInt(100);
                 timestamp = tilNextMillis(lastTimestamp);
             }
         }
         //时间戳改变，毫秒内序列重置
         else {
-            sequence = 0L;
+            sequence = random.nextInt(100);
         }
 
         //上次生成ID的时间截
