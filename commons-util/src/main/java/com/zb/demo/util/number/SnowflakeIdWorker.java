@@ -1,6 +1,11 @@
 package com.zb.demo.util.number;
 
 
+import javax.management.relation.RoleUnresolved;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -23,72 +28,72 @@ public class SnowflakeIdWorker {
     /**
      * 开始时间截 (2015-01-01)
      */
-    private final long twepoch = 1420041600000L;
+    private static final long twepoch = 1420041600000L;
 
     /**
      * 机器id所占的位数
      */
-    private final long workerIdBits = 5L;
+    private static final long workerIdBits = 5L;
 
     /**
      * 数据标识id所占的位数
      */
-    private final long datacenterIdBits = 5L;
+    private static final long datacenterIdBits = 5L;
 
     /**
      * 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数)
      */
-    private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
+    private static final long maxWorkerId = -1L ^ (-1L << workerIdBits);
 
     /**
      * 支持的最大数据标识id，结果是31
      */
-    private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
+    private static final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
 
     /**
      * 序列在id中占的位数
      */
-    private final long sequenceBits = 12L;
+    private static final long sequenceBits = 12L;
 
     /**
      * 机器ID向左移12位
      */
-    private final long workerIdShift = sequenceBits;
+    private static final long workerIdShift = sequenceBits;
 
     /**
      * 数据标识id向左移17位(12+5)
      */
-    private final long datacenterIdShift = sequenceBits + workerIdBits;
+    private static final long datacenterIdShift = sequenceBits + workerIdBits;
 
     /**
      * 时间截向左移22位(5+5+12)
      */
-    private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
+    private static final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
 
     /**
      * 生成序列的掩码，这里为4095 (0b111111111111=0xfff=4095)
      */
-    private final long sequenceMask = -1L ^ (-1L << sequenceBits);
+    private static final long sequenceMask = -1L ^ (-1L << sequenceBits);
 
     /**
      * 工作机器ID(0~31)
      */
-    private long workerId;
+    private static long workerId;
 
     /**
      * 数据中心ID(0~31)
      */
-    private long datacenterId;
+    private static long datacenterId;
 
     /**
      * 毫秒内序列(0~4095)
      */
-    private long sequence = 0L;
+    private static long sequence = 0L;
 
     /**
      * 上次生成ID的时间截
      */
-    private long lastTimestamp = -1L;
+    private static long lastTimestamp = -1L;
 
     /**
      * 解决每毫秒刚开始生成id时，sequence全为0导致数据分库分表时分配不均的问题
@@ -126,8 +131,21 @@ public class SnowflakeIdWorker {
 
         //如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
         if (timestamp < lastTimestamp) {
-            throw new RuntimeException(
-                    String.format("Clock moved backwards. Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
+//            throw new RuntimeException(String.format("Clock moved backwards. Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
+            long offset = lastTimestamp - timestamp;
+            if (offset < 50) {
+                try {
+                    // 如果时间回退小于50ms，默认等待50ms后重试
+                    wait(50);
+                    timestamp = timeGen();
+                    if (timestamp < lastTimestamp) {
+                        throw new RuntimeException("Clock moved backwards");
+                    }
+                } catch (InterruptedException e) {
+                    //
+                    throw new RuntimeException("Clock moved backwards");
+                }
+            }
         }
 
         //如果是同一时间生成的，则进行毫秒内序列
@@ -178,6 +196,25 @@ public class SnowflakeIdWorker {
         return System.currentTimeMillis();
     }
 
+    public static Map<String, String> decodeSnowflakeId(long snowflakeId) {
+        Map<String, String> map = new HashMap<>();
+        try {
+            long originTimestamp = (snowflakeId >> 22) + twepoch;
+            Date date = new Date(originTimestamp);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            map.put("timestamp", originTimestamp + "(" + sdf.format(date) + ")");
+
+            long workerId = (snowflakeId >> 12) ^ (snowflakeId >> 22 << 10);
+            map.put("workerId", String.valueOf(workerId));
+
+            long sequence = snowflakeId ^ (snowflakeId >> 12 << 12);
+            map.put("sequenceId", String.valueOf(sequence));
+        } catch (NumberFormatException e) {
+            map.put("errorMsg", "snowflake Id反解析发生异常!");
+        }
+        return map;
+    }
+
     //==============================Test=============================================
 
     /**
@@ -185,11 +222,13 @@ public class SnowflakeIdWorker {
      */
     public static void main(String[] args) {
         SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             long id = idWorker.nextId();
             System.out.println(Long.toBinaryString(id));
+            System.out.println(Long.toBinaryString(id).length());
             System.out.println(id);
         }
+        System.out.println(decodeSnowflakeId(idWorker.nextId()));
     }
 }
     
