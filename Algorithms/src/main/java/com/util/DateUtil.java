@@ -3,15 +3,21 @@ package com.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.time.DateUtils;
 
 /**
  * 时间处理工具类
  * 
  * Created by books on 2017/10/27.
  */
+@Slf4j
 public class DateUtil {
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
@@ -42,6 +48,26 @@ public class DateUtil {
     private static void notEmpty(String str, String tips) {
         if (StringUtils.isEmpty(str)) {
             throw new IllegalArgumentException(tips);
+        }
+    }
+
+    public static void main(String[] args) {
+        Date start = defaultParseDateTime("2020-10-20 00:00:00");
+        Date end = defaultParseDateTime("2020-10-29 23:59:59");
+        startEndConsume(start, end, date -> DateUtils.addDays(date, 1), (s, e) -> {
+            log.info("start = {}, end = {}", defaultFormatDateTime(s), defaultFormatDateTime(e));
+        });
+    }
+
+    public static void startEndConsume(Date start, Date end, Function<Date, Date> dateFunc, BiConsumer<Date, Date> consumer) {
+        notNull(start, "start is null");
+        notNull(end, "end is null");
+
+        while (start.compareTo(end) < 0) {
+            Date tmpEnd = dateFunc.apply(start);
+            tmpEnd = tmpEnd.compareTo(end) <= 0 ? tmpEnd : end;
+            consumer.accept(start, tmpEnd);
+            start = tmpEnd;
         }
     }
 

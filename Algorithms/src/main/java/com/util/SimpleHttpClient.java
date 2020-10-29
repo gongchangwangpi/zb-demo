@@ -15,13 +15,23 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -125,6 +135,40 @@ public class SimpleHttpClient {
 
                 customLog("params", requestParam);
             }
+
+            CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpEntity entity = httpResponse.getEntity();
+
+            body = EntityUtils.toString(entity);
+
+            customLog("response", body);
+
+            EntityUtils.consumeQuietly(entity);
+        } catch (IOException e) {
+            httpPost.abort();
+            customLog("error", e);
+            throw new HttpRemoteException(e);
+        }
+        return body;
+    }
+
+    public String upload(String url, File file, Map<String, String> paramMap) throws UnsupportedEncodingException {
+        customLog("url", url);
+
+        CloseableHttpClient httpClient = closeableHttpClient;
+        HttpPost httpPost = new HttpPost(url);
+//        httpPost.addHeader("Content-Type", "multipart/form-data");
+        String body = null;
+
+        try {
+            MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create().setCharset(StandardCharsets.UTF_8).addPart("file", new FileBody(file, ContentType.IMAGE_PNG))/*.addPart("filename", new StringBody(file.getName(), Charset.forName("ISO8859-1")))*/;
+
+            if (paramMap != null && !paramMap.isEmpty()) {
+                customLog("params", paramMap);
+                paramMap.forEach(multipartEntityBuilder::addTextBody);
+            }
+
+            httpPost.setEntity(multipartEntityBuilder.build());
 
             CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity entity = httpResponse.getEntity();
