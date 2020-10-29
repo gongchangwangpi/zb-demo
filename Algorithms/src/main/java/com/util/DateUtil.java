@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
  * 时间处理工具类
@@ -293,6 +294,51 @@ public class DateUtil {
             return simpleDateFormat.parse(dateStr);
         } catch (ParseException e) {
             throw new IllegalArgumentException("dateStr is not available");
+        }
+    }
+
+    public static Date tryParse(String dateStr) {
+        if (StringUtils.isBlank(dateStr)) {
+            return null;
+        }
+        try {
+            String dateFormat = switchDateFormat(dateStr);
+            return FastDateFormat.getInstance(dateFormat).parse(dateStr);
+        } catch (ParseException | IllegalArgumentException e) {
+            log.error("parse date error, source is {}", dateStr);
+        }
+        try {
+            long timestamp = Long.parseLong(dateStr);
+            return new Date(timestamp);
+        } catch (NumberFormatException e) {
+            log.error("parse date error: source is: {}", dateStr);
+        }
+        return null;
+    }
+
+    private static String switchDateFormat(String dateString) {
+        int length = dateString.length();
+        switch (length) {
+            case 19:
+                if (dateString.contains("-")) {
+                    return "yyyy-MM-dd HH:mm:ss";
+                } else {
+                    return "yyyy/MM/dd HH:mm:ss";
+                }
+            case 17:
+                return "yyyyMMdd HH:mm:ss";
+            case 14:
+                return "yyyyMMddHHmmss";
+            case 10:
+                if (dateString.contains("-")) {
+                    return "yyyy-MM-dd";
+                } else {
+                    return "yyyy/MM/dd";
+                }
+            case 8:
+                return "yyyyMMdd";
+            default:
+                throw new IllegalArgumentException("can not find date format for：" + dateString);
         }
     }
     
