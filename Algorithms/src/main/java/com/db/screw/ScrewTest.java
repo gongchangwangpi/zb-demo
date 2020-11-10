@@ -1,4 +1,4 @@
-package com.screw;
+package com.db.screw;
 
 import cn.smallbun.screw.core.Configuration;
 import cn.smallbun.screw.core.engine.EngineConfig;
