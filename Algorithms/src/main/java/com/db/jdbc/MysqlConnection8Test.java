@@ -1,4 +1,4 @@
-package com.books.jdbc;
+package com.db.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,10 +12,9 @@ public class MysqlConnection8Test {
 
     public static void main(String[] args) throws SQLException {
         
-        String url = "jdbc:mysql://172.18.8.35:3306/brokerage?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai";
-//        String url = "jdbc:mysql://172.18.8.35:3306/brokerage?useUnicode=true&characterEncoding=UTF-8&useSSL=false";
+        String url = "jdbc:mysql://127.0.0.1:3306/brokerage?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai";
         String username = "root";
-        String passowrd = "kl84fc1ah5d3";
+        String passowrd = "123456";
 
         Connection connection = JdbcUtil.getConnection(url, username, passowrd);
         

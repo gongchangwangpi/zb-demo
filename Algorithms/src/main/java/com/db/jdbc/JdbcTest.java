@@ -1,4 +1,4 @@
-package com.books.jdbc;
+package com.db.jdbc;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

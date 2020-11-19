@@ -1,4 +1,4 @@
-package com.books.jdbc;
+package com.db.jdbc;
 
 import lombok.extern.slf4j.Slf4j;
 

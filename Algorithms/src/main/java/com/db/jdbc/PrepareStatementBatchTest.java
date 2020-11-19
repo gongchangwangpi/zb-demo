@@ -1,4 +1,4 @@
-package com.books.jdbc;
+package com.db.jdbc;
 
 import java.sql.Connection;
 import java.sql.Date;

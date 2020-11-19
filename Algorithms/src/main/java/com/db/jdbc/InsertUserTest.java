@@ -1,4 +1,4 @@
-package com.books.jdbc;
+package com.db.jdbc;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
