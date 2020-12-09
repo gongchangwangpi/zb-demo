@@ -1,6 +1,7 @@
-package com.test.json;
+package com.test.json.fastjson;
 
 import com.alibaba.fastjson.JSON;
+import com.test.json.Student;
 
 import java.io.IOException;
 

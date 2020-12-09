@@ -1,8 +1,9 @@
-package com.test.json;
+package com.test.json.gson;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.test.json.Student;
 
 import java.io.IOException;
 

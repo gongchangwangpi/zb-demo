@@ -2,7 +2,7 @@ package com.test.hutool.excel;
 
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.books.jdbc.JdbcUtil;
+import com.db.jdbc.JdbcUtil;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 

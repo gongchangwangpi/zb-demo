@@ -1,5 +1,7 @@
 package com.spring.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.spring.domain.enums.SexEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +11,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@TableName("t_user")
 public class User {
 
+    @TableField(value = "")
     private Long id;
 
     private String username;

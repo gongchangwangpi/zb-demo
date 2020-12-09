@@ -1,7 +1,8 @@
-package com.test.json;
+package com.test.json.jsckson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.test.json.Student;
 
 import java.io.IOException;
 

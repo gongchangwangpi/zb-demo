@@ -15,5 +15,6 @@ public class Student {
     private String userName;
     private Long classId;
     private String sex;
+    private StudentStatusEnum status;
 
 }

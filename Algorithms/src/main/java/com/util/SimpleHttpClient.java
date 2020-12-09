@@ -19,8 +19,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -28,9 +26,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,15 +44,18 @@ import java.util.Map;
 @Slf4j
 public class SimpleHttpClient {
 
-    private static final String DEFAULT_CHARSET = "UTF-8";
+    protected static final String DEFAULT_CHARSET = "UTF-8";
 
-    private int timeout = 60;
+    protected int socketTimeout = 1000;
+    protected int connectTimeout = 60000;
+    protected int readTimeout = 60000;
 
-    private int poolSize = 30;
+    protected int maxConnTotal = 30;
+    protected int maxConnPerRoute = 10;
 
-    private LogLevel logLevel = LogLevel.INFO;
+    protected LogLevel logLevel = LogLevel.INFO;
 
-    private CloseableHttpClient closeableHttpClient;
+    protected CloseableHttpClient closeableHttpClient;
 
     /**
      * 自定义日志级别枚举
@@ -101,13 +100,13 @@ public class SimpleHttpClient {
      */
     public void init() {
         RequestConfig requestConfig = RequestConfig.custom()
-                .setSocketTimeout(timeout * 1000)
-                .setConnectTimeout(timeout * 1000)
-                .setConnectionRequestTimeout(timeout * 1000)
+                .setSocketTimeout(socketTimeout)
+                .setConnectTimeout(connectTimeout)
+                .setConnectionRequestTimeout(readTimeout)
                 .setStaleConnectionCheckEnabled(true)
                 .build();
 
-        closeableHttpClient = HttpClientBuilder.create().setMaxConnTotal(poolSize).setMaxConnPerRoute(poolSize)
+        closeableHttpClient = HttpClientBuilder.create().setMaxConnTotal(maxConnTotal).setMaxConnPerRoute(maxConnPerRoute)
                 .setDefaultRequestConfig(requestConfig).build();
     }
 

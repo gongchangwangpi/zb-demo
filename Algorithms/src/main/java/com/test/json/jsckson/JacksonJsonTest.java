@@ -1,4 +1,4 @@
-package com.test.json;
+package com.test.json.jsckson;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
