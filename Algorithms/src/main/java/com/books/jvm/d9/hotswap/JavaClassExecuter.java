@@ -18,7 +18,7 @@ public class JavaClassExecuter {
      * @return 执行结果
      */
     public static String execute(byte[] classByte) {
-        HackSystem.clearBuffer();
+//        HackSystem.clearBuffer();
         ClassModifier cm = new ClassModifier(classByte);
         byte[] modiBytes = cm.modifyUTF8Constant("java/lang/System", "com/books/jvm/d9/hotswap/HackSystem");
 
@@ -29,9 +29,10 @@ public class JavaClassExecuter {
             Method method = clazz.getMethod("main", new Class[]{String[].class});
             method.invoke(null, new String[]{null});
         } catch (Exception e) {
-            e.printStackTrace(HackSystem.out);
+//            e.printStackTrace(HackSystem.out);
         }
-        return HackSystem.getBufferString();
+//        return HackSystem.getBufferString();
+        return null;
     }
 
 }

@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.books.jdbc.JdbcUtil;
+import com.db.jdbc.JdbcUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
