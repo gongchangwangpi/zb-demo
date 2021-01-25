@@ -15,7 +15,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Object handle(Exception e) {
         log.error(" ===== Exception =====", e);
-        return "Fail";
+//        throw new IllegalArgumentException(e);
+        return e.getMessage();
     }
 
 }

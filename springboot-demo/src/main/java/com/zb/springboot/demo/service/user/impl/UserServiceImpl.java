@@ -6,12 +6,17 @@ import com.zb.springboot.demo.entity.User;
 import com.zb.springboot.demo.mapper.UserMapper;
 import com.zb.springboot.demo.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.AopContext;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author zhangbo
@@ -21,11 +26,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    private static final AtomicInteger count = new AtomicInteger(0);
+
     @Resource
     private UserMapper userMapper;
 
     @Override
 //    @MyAspect(value = "user-insert")
+    @Transactional(propagation = Propagation.REQUIRED)
     public Long insert(User user) {
         userMapper.insert(user);
 //        int i = 1 / 0;
@@ -56,6 +64,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             log.info("====>> false: {}, {}", user1.getUsername(), user2.getUsername());
         }
         return user1;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Long insertPropagation() throws Exception {
+        User user = new User();
+        user.setUsername("name" + count.incrementAndGet());
+        user.setAge(count.get());
+        user.setCreateTime(new Date());
+        userMapper.insert(user);
+
+//        int i = 1 / 0;
+        if (true) {
+            throw new Exception("");
+        }
+        //
+        UserService service = (UserService) AopContext.currentProxy();
+        service.insertPropagationNew();
+
+        return user.getId();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.NESTED)
+    public Long insertPropagationNew() {
+        User user = new User();
+        user.setUsername("name" + count.incrementAndGet());
+        user.setAge(count.get());
+        user.setCreateTime(new Date());
+        userMapper.insert(user);
+        return user.getId();
     }
 
 }

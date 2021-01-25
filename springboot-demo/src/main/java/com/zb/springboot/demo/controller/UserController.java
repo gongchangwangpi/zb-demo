@@ -27,4 +27,9 @@ public class UserController {
         return userService.txIsolationTest();
     }
 
+    @GetMapping(value = "/txPropagationTest")
+    public Long txPropagationTest() throws Exception {
+        return userService.insertPropagation();
+    }
+
 }

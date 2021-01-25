@@ -19,4 +19,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     User txIsolationTest();
+
+
+    Long insertPropagation() throws Exception;
+
+
+    Long insertPropagationNew();
+
 }
