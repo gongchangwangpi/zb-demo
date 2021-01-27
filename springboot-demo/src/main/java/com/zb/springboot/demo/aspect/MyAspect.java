@@ -1,7 +1,5 @@
 package com.zb.springboot.demo.aspect;
 
-import org.hibernate.validator.constraints.pl.REGON;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

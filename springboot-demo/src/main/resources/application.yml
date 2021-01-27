@@ -1,5 +1,6 @@
 server:
   port: 8081
+  shutdown: graceful
 
 spring:
   application:
@@ -12,7 +13,7 @@ spring:
   mail:
     protocol: smtp
     host: smtp.163.com
-    username: 123456@163.com
+    username: cookie_zhangbo@163.com
     password: 123456
   flyway:
     enabled: true
@@ -20,6 +21,8 @@ spring:
   jackson:
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
     date-format: yyyy-MM-dd HH:mm:ss
+  lifecycle:
+    timeout-per-shutdown-phase: 5s
 
 mybatis-plus:
   configuration:

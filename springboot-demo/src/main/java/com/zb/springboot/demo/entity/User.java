@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -36,7 +35,7 @@ public class User implements Serializable {
     /**
      * 用户名
      */
-    @Size(min = 2, max = 20, message = "长度2-20")
+//    @Size(min = 2, max = 20, message = "长度2-20")
     private String username;
 
     /**

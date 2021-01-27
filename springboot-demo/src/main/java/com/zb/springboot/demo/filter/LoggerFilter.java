@@ -28,7 +28,7 @@ public class LoggerFilter extends HttpFilter {
         } catch (Exception e) {
             throw e;
         } finally {
-            log.info("HTTP {} {}, cost {}ms", request.getMethod(), request.getRequestURI(), System.currentTimeMillis() - beginTime);
+            log.info("HTTP {} {}, response code {}, cost {}ms", request.getMethod(), request.getRequestURI(), response.getStatus(), System.currentTimeMillis() - beginTime);
         }
     }
 }
