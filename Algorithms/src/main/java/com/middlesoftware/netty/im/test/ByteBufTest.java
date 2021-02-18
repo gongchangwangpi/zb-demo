@@ -9,13 +9,26 @@ import io.netty.buffer.ByteBufAllocator;
 public class ByteBufTest {
 
     public static void main(String[] args) {
+
+        // 设置是使用池化还是非池化 unpooled/pooled
+        System.setProperty("io.netty.allocator.type", "unpooled");
+
+        // 默认使用直接内存
         ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(9, 100);
+        // 使用heap内存，底层为byte[]，在未使用池化的时候，具有较快的分配和释放速度，直接在堆中分配，无需操作系统介入
+//        ByteBuf buffer = ByteBufAllocator.DEFAULT.heapBuffer(9, 100);
+        // 使用操作系统直接内存，在网络IO等方面较快，不需在heap-direct-socket，直接在direct-socket，少一步copy的过程
+//        ByteBuf buffer = ByteBufAllocator.DEFAULT.directBuffer(9, 100);
 
         print("allocate ByteBuf(9, 100)", buffer);
 
         // write 方法改变写指针，写完之后写指针未到 capacity 的时候，buffer 仍然可写
         buffer.writeBytes(new byte[]{1, 2, 3, 4});
         print("writeBytes(1,2,3,4)", buffer);
+
+        // 使用heap内存时，然后true，然后 array()方法返回对应的byte数组
+        System.out.println("hasArray == " + buffer.hasArray());
+        System.out.println();
 
         // write 方法改变写指针，写完之后写指针未到 capacity 的时候，buffer 仍然可写, 写完 int 类型之后，写指针增加4
         buffer.writeInt(12);
