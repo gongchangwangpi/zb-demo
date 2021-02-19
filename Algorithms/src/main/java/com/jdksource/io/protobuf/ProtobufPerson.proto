@@ -1,0 +1,14 @@
+// 头部声明
+syntax="proto3";
+package com.jdksource.io.protobuf;
+
+// java配置
+option java_package="com.jdksource.io.protobuf";
+option java_outer_classname="ProtobufPerson";
+
+// 消息定义
+message Person {
+  int64 id = 1;
+  string name = 2;
+  int32 age = 3;
+}
