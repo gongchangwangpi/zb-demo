@@ -33,6 +33,9 @@ public class ProtobufPersonTest {
         System.out.println(JSON.toJSONString(bytes));
         System.out.println(Arrays.toString(bytes));
 
+//        System.out.println(person.toString());
+//        System.out.println(person.toByteString());
+
         // 反序列化
         ProtobufPerson.Person parse = ProtobufPerson.Person.parseFrom(bytes);
         // false
