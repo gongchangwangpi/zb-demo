@@ -35,9 +35,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //    @MyAspect(value = "user-insert")
     @Transactional(propagation = Propagation.REQUIRED)
     public Long insert(User user) {
+
+        if (isTest()) {
+            return -1L;
+        }
+
         userMapper.insert(user);
 //        int i = 1 / 0;
         return user.getId();
+    }
+
+    private boolean isTest() {
+        System.out.println("========== UserServiceImpl isTest ============");
+        return false;
     }
 
     @Override
@@ -95,6 +105,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setCreateTime(new Date());
         userMapper.insert(user);
         return user.getId();
+    }
+
+    @Override
+    public User get(Long id) {
+        return userMapper.selectByUserId(id);
+    }
+
+    @Override
+    public User get(String username) {
+        return userMapper.selectByUsername(username);
     }
 
 }

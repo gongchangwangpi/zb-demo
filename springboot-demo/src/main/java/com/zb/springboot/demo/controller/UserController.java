@@ -5,6 +5,7 @@ import com.zb.springboot.demo.service.user.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * @author zhangbo
@@ -30,6 +31,11 @@ public class UserController {
     @GetMapping(value = "/txPropagationTest")
     public Long txPropagationTest() throws Exception {
         return userService.insertPropagation();
+    }
+
+    @PostMapping(value = "/save")
+    public Long save(@RequestBody User user) {
+        return userService.insert(user);
     }
 
 }

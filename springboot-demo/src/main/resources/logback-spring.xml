@@ -35,11 +35,11 @@
 
 
 	<!-- 打印SQL -->
-	<logger name="com.zb.springboot.demo.mapper" level="DEBUG"/>
+<!--	<logger name="com.zb.springboot.demo.mapper" level="DEBUG"/>-->
 	<!-- 打印事务 -->
-	<logger name="org.springframework.transaction" level="trace"/>
+<!--	<logger name="org.springframework.transaction" level="trace"/>-->
 
-	<logger name="org.flywaydb" level="debug" />
+<!--	<logger name="org.flywaydb" level="debug" />-->
 
 	<root level="INFO">
 <!--		<appender-ref ref="redisLogger" />-->

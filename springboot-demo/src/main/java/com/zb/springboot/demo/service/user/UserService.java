@@ -26,4 +26,7 @@ public interface UserService extends IService<User> {
 
     Long insertPropagationNew();
 
+    User get(Long id);
+    User get(String username);
+
 }

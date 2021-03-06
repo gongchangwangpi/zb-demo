@@ -17,9 +17,18 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <testable.version>0.5.0</testable.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.alibaba.testable</groupId>
+            <artifactId>testable-all</artifactId>
+            <version>${testable.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!--<dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
@@ -178,6 +187,14 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <configuration>
                     <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-javaagent:${settings.localRepository}/com/alibaba/testable/testable-agent/${testable.version}/testable-agent-${testable.version}.jar</argLine>
                 </configuration>
             </plugin>
         </plugins>

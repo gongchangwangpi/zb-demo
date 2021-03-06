@@ -14,6 +14,10 @@ import com.zb.springboot.demo.entity.User;
  */
 public interface UserMapper extends BaseMapper<User> {
 
+    int insert(User user);
+
     User selectByUserId(Long id);
+
+    User selectByUsername(String username);
 
 }
