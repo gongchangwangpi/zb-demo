@@ -4,6 +4,7 @@ import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -53,6 +54,7 @@ public class ThreadPoolRejectPolicyAutoIncreMaxPoolSizeTest {
             } else {
                 log.info("reject task: {}", r);
                 // 继续其他的策略，如log, callRunner, discard task, throw exception, save in db等
+                throw new RejectedExecutionException();
             }
         }
 
@@ -63,6 +65,17 @@ public class ThreadPoolRejectPolicyAutoIncreMaxPoolSizeTest {
                 executor.setMaximumPoolSize(maximumPoolSize * 2);
             }
             executor.execute(r);
+        }
+    }
+
+    @Slf4j
+    private static class SaveInDbRejectPolicy implements RejectedExecutionHandler {
+        @Override
+        public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+            // 先保存到DB，同时记录日志，发送告警邮件等，等待后续空闲下来，在进行人工手动消费
+            log.warn("线程池超过负载...");
+//            save2DB(r);
+//            sendAlarmEmail();
         }
     }
 
