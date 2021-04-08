@@ -34,6 +34,8 @@ public class DistributionLock implements Watcher {
     
     private CountDownLatch countDownLatch;
 
+    private Thread lockThread;
+
     public DistributionLock(String host) {
         // 链接zk
         try {
@@ -52,6 +54,7 @@ public class DistributionLock implements Watcher {
 
     public void lock() {
         try {
+            lockThread = Thread.currentThread();
             tryLock();
         } catch (Exception e) {
             log.error("lock error", e);
@@ -126,6 +129,14 @@ public class DistributionLock implements Watcher {
 
     @Override
     public void process(WatchedEvent event) {
+        log.info("接收到事件：{}", event);
+        if (event.getState() == Event.KeeperState.Disconnected) {
+            log.info("zk服务端链接失败，准备打断lock");
+            if (lockThread != null) {
+                lockThread.interrupt();
+            }
+            return;
+        }
         if (this.countDownLatch != null) {
             countDownLatch.countDown();
         }

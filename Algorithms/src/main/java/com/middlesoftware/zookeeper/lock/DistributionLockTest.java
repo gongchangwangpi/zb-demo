@@ -15,8 +15,8 @@ public class DistributionLockTest {
 
     public static void main(String[] args) {
 
-        int count = 5;
-        String host = "172.18.8.22";
+        int count = 1;
+        String host = "127.0.0.1";
         
         ExecutorService executorService = Executors.newFixedThreadPool(count);
 
@@ -40,8 +40,11 @@ public class DistributionLockTest {
         public void run() {
             lock.lock();
             try {
-                log.info("获取到锁，模拟业务，休眠1秒");
-                SleepUtils.second(1);
+                int time = 30;
+                for (int i = 0; i < time; i++) {
+                    log.info("获取到锁，模拟业务，休眠 {} 秒", i);
+                    SleepUtils.second(1);
+                }
             } finally {
                 lock.unlock();
             }
