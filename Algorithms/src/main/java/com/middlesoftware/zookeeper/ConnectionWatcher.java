@@ -45,14 +45,17 @@ public class ConnectionWatcher implements Watcher {
     public void process(WatchedEvent watchedEvent) {
         if (watchedEvent.getState() == Event.KeeperState.SyncConnected) {
             countDownLatch.countDown();
-            log.info("watch .......");
+            log.info("KeeperState.SyncConnected .......");
         }
-        try {
-            log.info("----- 模拟耗时5秒");
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        log.info("process event = {}", watchedEvent);
+
+//        try {
+//            log.info("----- 模拟耗时5秒");
+//            TimeUnit.SECONDS.sleep(5);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
     
     public void close() throws InterruptedException {

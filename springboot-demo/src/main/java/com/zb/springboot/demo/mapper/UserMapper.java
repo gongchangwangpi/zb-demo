@@ -4,6 +4,8 @@ package com.zb.springboot.demo.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zb.springboot.demo.entity.User;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户信息表 Mapper 接口
@@ -20,4 +22,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     User selectByUsername(String username);
 
+    int batchInsert(List<User> userList);
 }

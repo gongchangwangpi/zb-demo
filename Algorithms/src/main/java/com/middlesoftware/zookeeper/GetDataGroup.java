@@ -10,9 +10,8 @@ import org.apache.zookeeper.KeeperException;
 public class GetDataGroup extends ConnectionWatcher {
     
     public void list(String groupName) throws KeeperException, InterruptedException {
-        String path = "/" + groupName;
-        byte[] data = zk.getData(path, false, null);
-        log.info("dubbo node {} data: {}", path, new String(data));
+        byte[] data = zk.getData(groupName, false, null);
+        log.info("node {} data: {}", groupName, new String(data));
     }
 
 
@@ -33,8 +32,8 @@ public class GetDataGroup extends ConnectionWatcher {
         GetDataGroup listGroup = new GetDataGroup();
 //        listGroup.connect(args[0]);
 //        listGroup.list(args[1]);
-        listGroup.connect("172.18.8.34");
-        listGroup.list("dubbo/com.jhjhome.biz.brokerage.api.EnterpriseAccountFacade/providers");
+        listGroup.connect("127.0.0.1");
+        listGroup.list("/dist_lock1");
         listGroup.close();
     }
 }

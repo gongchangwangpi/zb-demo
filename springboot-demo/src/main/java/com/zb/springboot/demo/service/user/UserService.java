@@ -3,6 +3,8 @@ package com.zb.springboot.demo.service.user;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zb.springboot.demo.entity.User;
 
+import java.util.List;
+
 /**
  * @author zhangbo
  * @date 2020/4/23
@@ -28,5 +30,7 @@ public interface UserService extends IService<User> {
 
     User get(Long id);
     User get(String username);
+
+    int batchInsert(List<User> userList);
 
 }

@@ -17,10 +17,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class InsertUserJob implements Job {
 
+    static long time = System.currentTimeMillis();
+
     @Resource
     private UserService userService;
     // Job对象不是单例
-    private static final AtomicInteger count = new AtomicInteger(0);
+    private static final AtomicInteger count = new AtomicInteger(100);
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -32,13 +34,16 @@ public class InsertUserJob implements Job {
         FastDateFormat dateFormat = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss");
 //        SimpleTrigger trigger = (SimpleTrigger) context.getTrigger();
 
-        log.info("previousFireTime = {}, nextFireTime = {}, interval = {}", previousFireTime == null ? "" : dateFormat.format(previousFireTime), dateFormat.format(nextFireTime)/*, trigger.getRepeatInterval()*/);
+        log.info("=====>>> InsertUserJob job run ... {}", System.currentTimeMillis() - time);
+        time = System.currentTimeMillis();
 
-        User user = new User();
-        user.setUsername("name" + count.get());
-        user.setAge(20);
-        user.setCreateTime(new Date());
-        log.info("insert username: {}, {}", user.getUsername(), this);
-        userService.insert(user);
+//        log.info("previousFireTime = {}, nextFireTime = {}, interval = {}", previousFireTime == null ? "" : dateFormat.format(previousFireTime), dateFormat.format(nextFireTime)/*, trigger.getRepeatInterval()*/);
+
+//        User user = new User();
+//        user.setUsername("name" + count.getAndIncrement());
+//        user.setAge(20);
+//        user.setCreateTime(new Date());
+//        log.info("insert username: {}, {}", user.getUsername(), this);
+//        userService.insert(user);
     }
 }

@@ -38,6 +38,11 @@ public class ProtobufPersonTest {
 
         // 反序列化
         ProtobufPerson.Person parse = ProtobufPerson.Person.parseFrom(bytes);
+
+        // 序列化和反序列化时，写入字节的长度
+//        person.writeDelimitedTo();
+//        ProtobufPerson.Person.parseDelimitedFrom();
+
         // false
         System.out.println("parse == person: " + (parse == person));
         // true

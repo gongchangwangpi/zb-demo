@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -115,6 +116,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User get(String username) {
         return userMapper.selectByUsername(username);
+    }
+
+    @Override
+    public int batchInsert(List<User> userList) {
+        return userMapper.batchInsert(userList);
     }
 
 }

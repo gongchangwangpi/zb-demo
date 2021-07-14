@@ -1,6 +1,7 @@
 package com.mq.rocketmq;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;
@@ -41,8 +42,9 @@ public class MyConsumer1 {
         defaultMQPushConsumer.setInstanceName(String.valueOf(System.currentTimeMillis()));
 
         // 订阅指定MyTopic下tags等于MyTag
-
         defaultMQPushConsumer.subscribe("MyTopic1", "MyTag1");
+        // 通过SQL方式过滤，其中a为发送时设置的userProperties属性
+//        defaultMQPushConsumer.subscribe("MyTopic1", MessageSelector.bySql("a between 0 and 5"));
 
         // 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费<br>
         // 如果非第一次启动，那么按照上次消费的位置继续消费

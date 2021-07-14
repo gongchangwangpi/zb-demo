@@ -47,4 +47,12 @@ public final class StringUtil {
         }
         return str;
     }
+
+    public static boolean isEmptyOrNullStr(String str) {
+        return str == null || "".equals(str) || "null".equals(str);
+    }
+
+    public static boolean isEmptyOrUndefinedStr(String str) {
+        return str == null || "".equals(str) || "undefined".equals(str);
+    }
 }

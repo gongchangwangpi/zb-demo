@@ -10,17 +10,22 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.db.jdbc.JdbcUtil;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MybatisGenerator {
 
-
     // postgresql/redshift等使用
 //    private static final DbType DB_TYPE = DbType.POSTGRE_SQL;
-//    private static final String SCHEMA_NAME = "test";
+//    private static final String SCHEMA_NAME = "xianhuogo_ods";
 //    private static final String DRIVER_CLASS_NAME = "com.amazon.redshift.jdbc.Driver";
 //    private static final String JDBC_URL = "jdbc:redshift://127.0.0.1:5439/test?useSSL=false&useUnicode=true&characterEncoding=UTF-8";
 //    private static final String JDBC_USERNAME = "test";
@@ -29,20 +34,23 @@ public class MybatisGenerator {
     private static final DbType DB_TYPE = DbType.MYSQL;
     private static final String SCHEMA_NAME = null;
     private static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/cdp_config?useSSL=false&useUnicode=true&characterEncoding=UTF-8";
+//
+    private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/house?useSSL=false&useUnicode=true&characterEncoding=UTF-8";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "123456";
 
-    private static final String TABLE_NAMES = "t_company";
-    private static final String TABLE_PREFIX = "t_";
+    private static final String[] TABLE_NAMES = {};
+    private static final String[] TABLE_PREFIX = {};
 
     private static final String[] SUPER_ENTITY_COLUMNS = {};
-    private static final String PACKAGE_NAME = "com";
+    private static final String PACKAGE_NAME = "com.zb.house";
 
     private static final String AUTHOR = "zhangbo";
     private static final boolean SWAGGER_2 = false;
 
-    public static void main(String[] args) {
+    private static final String ENTITY_SUFFIX = "";
+
+    public static void main(String[] args) throws Exception {
 
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -55,6 +63,8 @@ public class MybatisGenerator {
         gc.setOpen(false);
         gc.setBaseColumnList(true);
         gc.setBaseResultMap(true);
+        gc.setFileOverride(true);
+        gc.setEntityName(ENTITY_SUFFIX);
         gc.setSwagger2(SWAGGER_2);
         mpg.setGlobalConfig(gc);
 
@@ -121,26 +131,53 @@ public class MybatisGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-//        strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
+//        strategy.setEntityTableFieldAnnotationEnable(true);
+//        strategy.setSuperEntityClass(BaseDO.class);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         // 公共父类
 //        strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
         // 写于父类中的公共字段
-        strategy.setSuperEntityColumns(SUPER_ENTITY_COLUMNS);
-//        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
-        // 表名，多个表用,隔开
-        strategy.setInclude(TABLE_NAMES);
+        if (SUPER_ENTITY_COLUMNS != null && SUPER_ENTITY_COLUMNS.length != 0) {
+            strategy.setSuperEntityColumns(SUPER_ENTITY_COLUMNS);
+        }
         strategy.setControllerMappingHyphenStyle(true);
+
+        String[] tableNames = TABLE_NAMES;
+        if (tableNames == null || tableNames.length == 0) {
+            tableNames = getTableNames();
+        }
+        // 表名，多个表用,隔开
+        strategy.setInclude(tableNames);
+
+        String[] tablePrefix = TABLE_PREFIX;
+        if (tablePrefix == null || tablePrefix.length == 0) {
+            tablePrefix = getTablePrefix(tableNames);
+        }
         // 表名前缀
-        strategy.setTablePrefix(TABLE_PREFIX);
+        strategy.setTablePrefix(tablePrefix);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 
         mpg.execute();
     }
 
-    public static String scanner(String tip) {
+    private static String[] getTablePrefix(String[] tableNames) {
+        return Stream.of(tableNames).map(name -> name.substring(0, name.indexOf("_") + 1)).toArray(String[]::new);
+    }
+
+    private static String[] getTableNames() throws Exception {
+        Connection connection = JdbcUtil.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("show tables");
+        List<String> tableNameList = new ArrayList<>();
+        while (resultSet.next()) {
+            tableNameList.add(resultSet.getString(1));
+        }
+        return tableNameList.toArray(new String[0]);
+    }
+
+    private static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
         StringBuilder help = new StringBuilder();
         help.append("请输入" + tip + "：");

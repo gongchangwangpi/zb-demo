@@ -7,7 +7,7 @@ import redis.clients.jedis.Jedis;
  * 
  * @author zhangbo
  */
-@Slf4j
+//@Slf4j
 public class JedisTest {
 
     public static void main(String[] args) {
@@ -18,6 +18,9 @@ public class JedisTest {
 
         String test = jedis.get("test");
         System.out.println(test);
+
+        Object get_test = jedis.eval("redis.call('get', 'test')");
+        System.out.println(get_test);
 
     }
 }

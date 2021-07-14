@@ -22,7 +22,7 @@ public class JobController {
     @Resource
     private Scheduler scheduler;
 
-    @PostMapping(value = "/add/simple")
+    @PostMapping(value = "/add/simple", consumes = "application/json")
     public String addSimpleJob(@RequestBody JobDto jobDto) throws Exception {
         // 构建job信息
         JobDetail jobDetail = JobBuilder.newJob(getClass(jobDto.getJobClassName()))

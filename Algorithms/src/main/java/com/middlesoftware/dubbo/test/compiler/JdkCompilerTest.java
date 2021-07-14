@@ -14,6 +14,8 @@ public class JdkCompilerTest {
 
     public static void main(String[] args) throws Throwable {
 
+        long begin = System.currentTimeMillis();
+
         String source = JavaSourceUtil.getSource();
 
         JdkCompiler compiler = new JdkCompiler();
@@ -36,6 +38,7 @@ public class JdkCompilerTest {
         Object result = method.invoke(o, null);
         System.out.println("result = " + result);
 
+        System.out.println("total cost: " + (System.currentTimeMillis() - begin));
     }
     
 }

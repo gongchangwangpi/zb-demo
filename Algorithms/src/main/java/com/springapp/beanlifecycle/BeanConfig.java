@@ -1,5 +1,6 @@
 package com.springapp.beanlifecycle;
 
+import com.springapp.beans.ext.ExtensionBeanDefinitionRegistryPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,5 +25,10 @@ public class BeanConfig {
     @Bean
     public MyBeanPostProcessor myBeanPostProcessor() {
         return new MyBeanPostProcessor();
+    }
+
+    @Bean
+    public ExtensionBeanDefinitionRegistryPostProcessor extensionBeanDefinitionRegistryPostProcessor() {
+        return new ExtensionBeanDefinitionRegistryPostProcessor();
     }
 }

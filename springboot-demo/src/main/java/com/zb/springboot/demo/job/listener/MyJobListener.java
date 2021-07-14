@@ -19,16 +19,16 @@ public class MyJobListener extends JobListenerSupport {
 
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
-        log.info(" === jobToBeExecuted ");
+//        log.info(" === jobToBeExecuted ");
     }
 
     @Override
     public void jobExecutionVetoed(JobExecutionContext context) {
-        log.info(" ===<<< jobExecutionVetoed ");
+//        log.info(" ===<<< jobExecutionVetoed ");
     }
 
     @Override
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException) {
-        log.info(" ===>>> jobWasExecuted, jobException = {}", jobException == null ? "" : jobException.getMessage());
+//        log.info(" ===>>> jobWasExecuted, jobException = {}", jobException == null ? "" : jobException.getMessage());
     }
 }

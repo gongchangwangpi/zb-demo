@@ -1,13 +1,16 @@
 package com.db.jdbc;
 
+import com.google.common.base.CaseFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +24,7 @@ public class JdbcUtil {
     
     private static Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
 
+//    private static final String DEFAULT_URL = "jdbc:mysql://127.0.0.1:3306/investment?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai";
     private static final String DEFAULT_URL = "jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai";
     private static final String DEFAULT_USERNAME = "root";
     private static final String DEFAULT_PASSWORD = "123456";
@@ -70,6 +74,47 @@ public class JdbcUtil {
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static <T> List<T> parseResultSet(ResultSet resultSet, Class<T> type) {
+        List<T> list = new ArrayList<T>();
+        if (resultSet == null) {
+            return list;
+        }
+
+        Field[] declaredFields = type.getDeclaredFields();
+
+        try {
+            while (resultSet.next()) {
+                T instance = type.newInstance();
+
+                for (Field field : declaredFields) {
+                    try {
+                        Object object = resultSet.getObject(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, field.getName()));
+                        field.setAccessible(true);
+                        Class<?> fieldType = field.getType();
+                        if (fieldType.equals(String.class)) {
+                            object = String.valueOf(object);
+                        } else if (double.class.equals(fieldType)) {
+                            object = Double.parseDouble(String.valueOf(object));
+                        } else if (LocalDate.class.equals(fieldType)) {
+                            object = LocalDate.parse(String.valueOf(object));
+                        }
+                        field.set(instance, object);
+                    } catch (Exception e) {
+                    }
+                }
+                list.add(instance);
+            }
+        } catch (SQLException e) {
+            logger.error("解析结果集失败", e);
+            throw new RuntimeException("解析结果集失败");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
             e.printStackTrace();
         }
         return list;

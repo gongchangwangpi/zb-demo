@@ -42,8 +42,8 @@ public class ListGroup extends ConnectionWatcher {
         ListGroup listGroup = new ListGroup();
 //        listGroup.connect(args[0]);
 //        listGroup.list(args[1]);
-        listGroup.connect("172.18.8.34");
-        listGroup.list("dubbo/com.jhjhome.biz.brokerage.api.EnterpriseAccountFacade/consumers");
+        listGroup.connect("127.0.0.1");
+        listGroup.list("/");
         listGroup.close();
     }
 }

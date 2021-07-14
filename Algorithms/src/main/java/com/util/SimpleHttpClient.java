@@ -3,10 +3,13 @@ package com.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.base.Joiner;
+import java.io.InputStream;
+import java.util.HashMap;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -23,6 +26,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,12 +50,12 @@ public class SimpleHttpClient {
 
     protected static final String DEFAULT_CHARSET = "UTF-8";
 
-    protected int socketTimeout = 1000;
-    protected int connectTimeout = 60000;
-    protected int readTimeout = 60000;
+    protected int socketTimeout = 30000;
+    protected int connectTimeout = 30000;
+    protected int readTimeout = 30000;
 
     protected int maxConnTotal = 30;
-    protected int maxConnPerRoute = 10;
+    protected int maxConnPerRoute = 30;
 
     protected LogLevel logLevel = LogLevel.INFO;
 
@@ -120,6 +124,20 @@ public class SimpleHttpClient {
      * @throws HttpRemoteException
      */
     public String postByJsonString(String url, String requestParam, String charset) {
+        return postByJsonString(url, requestParam, null, charset);
+    }
+
+    /**
+     * POST请求
+     *
+     * @param url          URL地址
+     * @param requestParam 请求参数,通常是基于JSON格式的字符串
+     * @param header        请求头
+     * @param charset      编码
+     * @return response
+     * @throws HttpRemoteException
+     */
+    public String postByJsonString(String url, String requestParam, Map<String, String> header, String charset) {
 
         customLog("url", url);
 
@@ -128,6 +146,12 @@ public class SimpleHttpClient {
         String body = null;
         httpPost.addHeader("Content-Type", "application/json");
         httpPost.addHeader("Accept", "application/json");
+
+        if (!CollectionUtils.isEmpty(header)) {
+            header.forEach(httpPost::addHeader);
+            customLog("header", header);
+        }
+
         try {
             if (!StringUtils.isEmpty(requestParam)) {
                 httpPost.setEntity(new StringEntity(requestParam, charset));
@@ -313,6 +337,86 @@ public class SimpleHttpClient {
     }
 
     // ----- GET ----- //
+
+    public InputStream getImage(String url, Map<String, String> headers) {
+        customLog("url", url);
+
+        CloseableHttpClient httpClient = closeableHttpClient;
+        HttpGet httpGet = null;
+
+        try {
+            //创建HTTP GET请求
+            httpGet = new HttpGet(url);
+
+            //添加请求头,非必须
+            if (headers != null && !headers.isEmpty()) {
+
+                customLog("headers", headers);
+
+                for (Map.Entry<String, String> entry : headers.entrySet()) {
+                    httpGet.addHeader(entry.getKey(), entry.getValue());
+                }
+            }
+
+            CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
+
+            //获得响应体
+            HttpEntity entity = httpResponse.getEntity();
+            return entity.getContent();
+
+        } catch (IOException e) {
+            httpGet.abort();
+            customLog("error", e);
+            throw new HttpRemoteException(e);
+        }
+    }
+
+    public Map<String, String> getResponseHeader(String url, Map<String, String> headers) {
+        customLog("url", url);
+
+        CloseableHttpClient httpClient = closeableHttpClient;
+        HttpGet httpGet = null;
+
+        try {
+            //创建HTTP GET请求
+            httpGet = new HttpGet(url);
+
+            //添加请求头,非必须
+            if (headers != null && !headers.isEmpty()) {
+
+                customLog("headers", headers);
+
+                for (Map.Entry<String, String> entry : headers.entrySet()) {
+                    httpGet.addHeader(entry.getKey(), entry.getValue());
+                }
+            }
+
+            CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
+
+            //获得响应体
+            HttpEntity entity = httpResponse.getEntity();
+
+            String body = EntityUtils.toString(entity);
+
+            customLog("response", body);
+
+            EntityUtils.consumeQuietly(entity);
+
+            // 获取响应header
+            Map<String, String> respHeaders = new HashMap<>();
+            for (Header header : httpResponse.getAllHeaders()) {
+                respHeaders.put(header.getName(), header.getValue());
+            }
+            customLog("respHeaders", respHeaders);
+
+            return respHeaders;
+
+        } catch (IOException e) {
+            httpGet.abort();
+            customLog("error", e);
+            throw new HttpRemoteException(e);
+        }
+    }
 
     /**
      *

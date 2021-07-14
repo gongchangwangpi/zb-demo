@@ -7,4 +7,12 @@
         where username = #{username}
     </select>
 
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user
+        (username, age, create_time, register_time)
+        values
+        <foreach collection="list" item="user" separator=",">
+            (#{user.username}, #{user.age}, #{user.createTime}, #{user.registerTime})
+        </foreach>
+    </insert>
 </mapper>

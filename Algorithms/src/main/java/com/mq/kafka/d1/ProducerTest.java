@@ -31,6 +31,7 @@ public class ProducerTest {
         props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, interceptors);
 
         Producer<String, String> producer = new KafkaProducer<>(props);
+
 //        for (int i = 0; i < 10; i++) {
 //            producer.send(new ProducerRecord<>("cluster-partition-3", Integer.toString(i), Integer.toString(i)));
 //        }
