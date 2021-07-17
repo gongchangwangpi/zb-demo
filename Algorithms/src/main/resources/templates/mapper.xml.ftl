@@ -56,6 +56,27 @@
         )
     </insert>
 
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id">
+        insert into ${table.name}
+        (
+        <#list table.fields as field>
+            <#if !field.keyFlag>
+            ${field.name}<#sep>,</#sep>
+            </#if>
+        </#list>
+        )
+        values
+        <foreach collection="list" item="i" separator=",">
+            (
+            <#list table.fields as field>
+                <#if !field.keyFlag>
+                    <#noparse>#{i.</#noparse>${field.propertyName}}<#sep>,</#sep>
+                </#if>
+            </#list>
+            )
+        </foreach>
+    </insert>
+
     <update id="updateById" >
         update ${table.name}
         <set>

@@ -32,7 +32,8 @@
 		<springboot.version>2.3.0.RELEASE</springboot.version>
 		<quartz.version>2.3.2</quartz.version>
 		<sharding-sphere.version>4.0.0-RC3</sharding-sphere.version>
-		<druid.version>1.1.10</druid.version>
+		<druid.version>1.1.22</druid.version>
+		<mybatis.version>3.5.7</mybatis.version>
 		<mybatis-plus.version>3.3.2</mybatis-plus.version>
 		<pagehelper.version>1.2.3</pagehelper.version>
 		<cat.version>3.0.0</cat.version>
@@ -58,6 +59,12 @@
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>8.0.21</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
 			</dependency>
 
 			<dependency>

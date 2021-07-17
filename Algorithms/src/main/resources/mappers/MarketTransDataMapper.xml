@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.invest.mapper.MarketTransDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.invest.entity.MarketTransDataDO">
+        <id column="id" property="id" />
+        <result column="market" property="market" />
+        <result column="mark_date" property="markDate" />
+        <result column="pe" property="pe" />
+        <result column="pb" property="pb" />
+        <result column="point" property="point" />
+        <result column="create_time" property="createTime" />
+        <result column="source" property="source" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, market, mark_date, pe, pb, point, create_time, source
+    </sql>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into market_trans_data
+        (
+            market,
+            mark_date,
+            pe,
+            pb,
+            point,
+            create_time,
+            source
+        )
+        values
+        (
+            #{market},
+            #{markDate},
+            #{pe},
+            #{pb},
+            #{point},
+            #{createTime},
+            #{source}
+        )
+    </insert>
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id">
+        insert into market_trans_data
+        (
+            market,
+            mark_date,
+            pe,
+            pb,
+            point,
+            create_time,
+            source
+        )
+        values
+        <foreach collection="list" item="i" separator=",">
+            (
+                    #{i.market},
+                    #{i.markDate},
+                    #{i.pe},
+                    #{i.pb},
+                    #{i.point},
+                    #{i.createTime},
+                    #{i.source}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateById" >
+        update market_trans_data
+        <set>
+            <if test="market != null">
+                market = #{market},
+            </if>
+            <if test="markDate != null">
+                mark_date = #{markDate},
+            </if>
+            <if test="pe != null">
+                pe = #{pe},
+            </if>
+            <if test="pb != null">
+                pb = #{pb},
+            </if>
+            <if test="point != null">
+                point = #{point},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="source != null">
+                source = #{source}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
